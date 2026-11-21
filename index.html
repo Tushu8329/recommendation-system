@@ -86,34 +86,49 @@ name: "1. Top-N / Popularity Based",
 code: `import pandas as pd
 
 data = {
-    'Movie': ['A', 'B', 'C', 'D'],
-    'Ratings': [950, 800, 650, 300]
+    'Movie': ['A', 'B', 'C', 'D', 'E'],
+    'Ratings': [950, 800, 650, 300, 100]
 }
 
 df = pd.DataFrame(data)
-top = df.sort_values('Ratings', ascending=False)
 
-print(top.head(3))`
+# Sort movies by popularity
+df = df.sort_values(
+    by='Ratings',
+    ascending=False
+)
+
+# Recommend Top 3 movies
+top_3 = df.head(3)
+
+print("Top 3 Recommended Movies:")
+print(top_3)`
 },
 
 {
 name: "2. Cosine Similarity",
 code: `from sklearn.metrics.pairwise import cosine_similarity
+from scipy.stats import pearsonr
 
-A = [[5, 4, 1, 5]]
-B = [[4, 3, 1, 4]]
+# User ratings
+A = [5, 4, 1, 5]
+B = [4, 3, 1, 4]
 
-print(cosine_similarity(A, B))`
-},
+# Cosine Similarity
+cosine = cosine_similarity([A], [B])[0][0]
 
-{
-name: "3. Pearson Correlation",
-code: `from scipy.stats import pearsonr
+# Pearson Correlation
+pearson = pearsonr(A, B)[0]
 
-A = [5, 4, 3, 2]
-B = [4, 3, 2, 1]
+# Jaccard Similarity
+set_A = {"Avengers", "Avatar", "Titanic", "Batman"}
+set_B = {"Avengers", "Avatar", "Superman"}
 
-print(pearsonr(A, B)[0])`
+jaccard = len(set_A & set_B) / len(set_A | set_B)
+
+print("Cosine:", cosine)
+print("Pearson:", pearson)
+print("Jaccard:", jaccard)`
 },
 
 {
@@ -129,40 +144,44 @@ print("Jaccard:", score)`
 {
 name: "5. Content Based Filtering using TF-IDF",
 code: `from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
-movies = [
-    "action superhero",
-    "superhero technology",
-    "romantic love story"
+data = [
+    "Avengers superhero action",
+    "Iron Man superhero technology",
+    "Titanic romantic love story"
 ]
 
 tfidf = TfidfVectorizer()
-matrix = tfidf.fit_transform(movies)
 
-similarity = cosine_similarity(matrix)
+matrix = tfidf.fit_transform(data)
 
-print(similarity)`
+print(tfidf.get_feature_names_out())
+print(matrix.toarray())`
 },
 
 {
 name: "6. User Profile Learning",
-code: `from sklearn.feature_extraction.text import TfidfVectorizer
+code: `import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 
-movies = [
-    "action superhero",
-    "action adventure",
-    "romantic love"
-]
+movies = ['Action Superhero', 'Action', 'Romance', 'Fantasy']
 
-user_profile = ["action superhero"]
+# User profile
+user = ['Action Superhero']
 
+# TF-IDF
 tfidf = TfidfVectorizer()
-tfidf.fit(movies)
+matrix = tfidf.fit_transform(movies + user)
 
-profile = tfidf.transform(user_profile)
+# Similarity
+scores = cosine_similarity(matrix[-1], matrix[:-1])[0]
 
-print(profile.toarray())`
+# Ranking
+result = sorted(zip(movies, scores),
+                key=lambda x: x[1], reverse=True)
+
+print(result[:3])`
 },
 
 {
@@ -193,15 +212,22 @@ name: "8. User Based Collaborative Filtering",
 code: `import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-df = pd.DataFrame({
-    'A': [5, 5, 1],
-    'B': [4, 4, 1],
-    'C': [1, 2, 5]
-}, index=['User1', 'User2', 'User3'])
+data = {
+    'Avengers': [5, 5, 1],
+    'Iron Man': [4, 4, 2],
+    'Titanic': [1, 1, 5],
+    'Thor': [0, 5, 4]
+}
 
-similarity = cosine_similarity(df)
+df = pd.DataFrame(data, index=['A', 'B', 'C'])
 
-print(similarity)`
+# Find similar users
+sim = cosine_similarity(df)
+print("Similarity:", sim[0])
+
+# Recommend highest rated unseen movie
+scores = df.loc['B'].where(df.loc['A'] == 0)
+print("Recommendation:", scores.idxmax())`
 },
 
 {
@@ -209,15 +235,27 @@ name: "9. Item Based Collaborative Filtering",
 code: `import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 
-df = pd.DataFrame({
+data = {
     'A': [5, 5, 1],
     'B': [5, 4, 1],
-    'C': [4, 5, 2]
-})
+    'C': [4, 5, 2],
+    'D': [1, 1, 5]
+}
 
-similarity = cosine_similarity(df.T)
+df = pd.DataFrame(
+    data,
+    index=['User1', 'User2', 'User3']
+)
 
-print(similarity)`
+# Item similarity
+sim = cosine_similarity(df.T)
+
+similarity = pd.DataFrame(
+    sim, index=df.columns, columns=df.columns
+)
+
+# Avengers ke similar items
+print(similarity['A'].sort_values(ascending=False))`
 },
 
 {
@@ -231,11 +269,19 @@ R = np.array([
     [1, 1, 5]
 ], dtype=float)
 
+# SVD
 U, S, Vt = svds(R, k=2)
 
+# Predicted ratings
 pred = U @ np.diag(S) @ Vt
 
-print(np.round(pred, 2))`
+print(np.round(pred, 2))
+
+# Recommend highest predicted unrated movie
+user = 1
+pred[user][R[user] != 0] = -1
+
+print("Recommended Movie:", np.argmax(pred[user]))`
 },
 
 {
@@ -245,11 +291,14 @@ code: `import numpy as np
 content = np.array([0.9, 0.7, 0.4, 0.8])
 collab = np.array([0.6, 0.9, 0.8, 0.5])
 
+# Combine scores
 hybrid = 0.5 * content + 0.5 * collab
 
+# Rank recommendations
 top = np.argsort(hybrid)[::-1]
 
-print("Top Recommendations:", top[:3])`
+print("Top Recommendations:", top[:3])
+print("Hybrid Scores:", hybrid[top[:3]])`
 }
 
 ];
