@@ -1,0 +1,308 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Recommendation System Practicals</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  font-family: Arial;
+  background: #f1f5f9;
+  margin: 0;
+  padding: 20px;
+}
+header {
+  background: #172554;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  border-radius: 12px;
+}
+input {
+  width: 90%;
+  padding: 13px;
+  margin: 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.card {
+  background: white;
+  padding: 18px;
+  margin: 15px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px #ddd;
+}
+pre {
+  background: #111827;
+  color: #a7f3d0;
+  padding: 15px;
+  border-radius: 8px;
+  overflow-x: auto;
+  white-space: pre;
+}
+button {
+  background: #2563eb;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { background: #1d4ed8; }
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Recommendation System Hub</h1>
+<p>All Python Practicals in One Place</p>
+</header>
+
+<center>
+<input id="search" placeholder="Search practical..."
+oninput="searchCode()">
+</center>
+
+<div id="codes"></div>
+
+<footer>
+<p>Python Recommendation System Practicals</p>
+</footer>
+
+<script>
+
+const practicals = [
+
+{
+name: "1. Top-N / Popularity Based",
+code: `import pandas as pd
+
+data = {
+    'Movie': ['A', 'B', 'C', 'D'],
+    'Ratings': [950, 800, 650, 300]
+}
+
+df = pd.DataFrame(data)
+top = df.sort_values('Ratings', ascending=False)
+
+print(top.head(3))`
+},
+
+{
+name: "2. Cosine Similarity",
+code: `from sklearn.metrics.pairwise import cosine_similarity
+
+A = [[5, 4, 1, 5]]
+B = [[4, 3, 1, 4]]
+
+print(cosine_similarity(A, B))`
+},
+
+{
+name: "3. Pearson Correlation",
+code: `from scipy.stats import pearsonr
+
+A = [5, 4, 3, 2]
+B = [4, 3, 2, 1]
+
+print(pearsonr(A, B)[0])`
+},
+
+{
+name: "4. Jaccard Similarity",
+code: `A = {'Avengers', 'Avatar', 'Titanic'}
+B = {'Avengers', 'Avatar', 'Batman'}
+
+score = len(A & B) / len(A | B)
+
+print("Jaccard:", score)`
+},
+
+{
+name: "5. Content Based Filtering using TF-IDF",
+code: `from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+movies = [
+    "action superhero",
+    "superhero technology",
+    "romantic love story"
+]
+
+tfidf = TfidfVectorizer()
+matrix = tfidf.fit_transform(movies)
+
+similarity = cosine_similarity(matrix)
+
+print(similarity)`
+},
+
+{
+name: "6. User Profile Learning",
+code: `from sklearn.feature_extraction.text import TfidfVectorizer
+
+movies = [
+    "action superhero",
+    "action adventure",
+    "romantic love"
+]
+
+user_profile = ["action superhero"]
+
+tfidf = TfidfVectorizer()
+tfidf.fit(movies)
+
+profile = tfidf.transform(user_profile)
+
+print(profile.toarray())`
+},
+
+{
+name: "7. Item Ranking",
+code: `from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+items = ["action superhero", "action adventure",
+         "romantic love"]
+
+user = ["action superhero"]
+
+tfidf = TfidfVectorizer()
+matrix = tfidf.fit_transform(items)
+
+profile = tfidf.transform(user)
+
+scores = cosine_similarity(profile, matrix)[0]
+
+ranking = sorted(enumerate(scores),
+                 key=lambda x: x[1], reverse=True)
+
+print(ranking)`
+},
+
+{
+name: "8. User Based Collaborative Filtering",
+code: `import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+
+df = pd.DataFrame({
+    'A': [5, 5, 1],
+    'B': [4, 4, 1],
+    'C': [1, 2, 5]
+}, index=['User1', 'User2', 'User3'])
+
+similarity = cosine_similarity(df)
+
+print(similarity)`
+},
+
+{
+name: "9. Item Based Collaborative Filtering",
+code: `import pandas as pd
+from sklearn.metrics.pairwise import cosine_similarity
+
+df = pd.DataFrame({
+    'A': [5, 5, 1],
+    'B': [5, 4, 1],
+    'C': [4, 5, 2]
+})
+
+similarity = cosine_similarity(df.T)
+
+print(similarity)`
+},
+
+{
+name: "10. Matrix Factorization using SVD",
+code: `import numpy as np
+from scipy.sparse.linalg import svds
+
+R = np.array([
+    [5, 4, 1],
+    [4, 5, 0],
+    [1, 1, 5]
+], dtype=float)
+
+U, S, Vt = svds(R, k=2)
+
+pred = U @ np.diag(S) @ Vt
+
+print(np.round(pred, 2))`
+},
+
+{
+name: "11. Hybrid Recommender System",
+code: `import numpy as np
+
+content = np.array([0.9, 0.7, 0.4, 0.8])
+collab = np.array([0.6, 0.9, 0.8, 0.5])
+
+hybrid = 0.5 * content + 0.5 * collab
+
+top = np.argsort(hybrid)[::-1]
+
+print("Top Recommendations:", top[:3])`
+}
+
+];
+
+function display(items) {
+  const container = document.getElementById("codes");
+  container.innerHTML = "";
+
+  items.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "card";
+
+    const title = document.createElement("h3");
+    title.textContent = item.name;
+
+    const pre = document.createElement("pre");
+    const code = document.createElement("code");
+    code.textContent = item.code;
+    pre.appendChild(code);
+
+    const button = document.createElement("button");
+    button.textContent = "Copy Code";
+
+    button.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(item.code);
+        button.textContent = "Copied!";
+        setTimeout(() => {
+          button.textContent = "Copy Code";
+        }, 1500);
+      } catch {
+        button.textContent = "Copy failed";
+      }
+    };
+
+    card.append(title, pre, button);
+    container.appendChild(card);
+  });
+}
+
+function searchCode() {
+  const query = document.getElementById("search")
+    .value.toLowerCase();
+
+  const filtered = practicals.filter(item =>
+    item.name.toLowerCase().includes(query)
+  );
+
+  display(filtered);
+}
+
+display(practicals);
+
+</script>
+</body>
+</html>
