@@ -1,60 +1,189 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Recommendation System Practicals</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Practical Library</title>
 
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-  font-family: Arial;
-  background: #f1f5f9;
-  margin: 0;
-  padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: #f1f5f9;
+    padding: 30px 6%;
 }
+
 header {
-  background: #172554;
-  color: white;
-  text-align: center;
-  padding: 25px;
-  border-radius: 12px;
+    margin-bottom: 35px;
 }
-input {
-  width: 90%;
-  padding: 13px;
-  margin: 20px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
 }
-.card {
-  background: white;
-  padding: 18px;
-  margin: 15px auto;
-  max-width: 800px;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px #ddd;
+
+header p {
+    color: #94a3b8;
+    line-height: 1.6;
 }
-pre {
-  background: #111827;
-  color: #a7f3d0;
-  padding: 15px;
-  border-radius: 8px;
-  overflow-x: auto;
-  white-space: pre;
+
+.stats {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
 }
+
+.stat {
+    background: #151e33;
+    padding: 18px;
+    border-radius: 12px;
+    min-width: 130px;
+    border: 1px solid #26334c;
+}
+
+.stat h2 {
+    color: #818cf8;
+    margin-bottom: 5px;
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    background: #151e33;
+    border: 1px solid #334155;
+    border-radius: 10px;
+    color: white;
+    font-size: 15px;
+    margin-bottom: 25px;
+    outline: none;
+}
+
+.section-title {
+    margin: 30px 0 15px;
+    color: #a5b4fc;
+    font-size: 19px;
+}
+
+.practical {
+    background: #151e33;
+    border: 1px solid #26334c;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.practical h2 {
+    font-size: 19px;
+    margin-bottom: 12px;
+    line-height: 1.5;
+}
+
+.meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 18px;
+}
+
+.tag {
+    background: #252e4a;
+    color: #c7d2fe;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.info {
+    color: #cbd5e1;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 12px 0;
+}
+
+.info strong {
+    color: white;
+}
+
+textarea {
+    width: 100%;
+    height: 260px;
+    background: #080d19;
+    border: 1px solid #334155;
+    border-radius: 9px;
+    color: #a5f3fc;
+    padding: 15px;
+    font-family: monospace;
+    font-size: 13px;
+    resize: vertical;
+    outline: none;
+    margin-top: 12px;
+    white-space: pre;
+    overflow: auto;
+}
+
+textarea:focus {
+    border-color: #818cf8;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
 button {
-  background: #2563eb;
-  color: white;
-  padding: 10px 18px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    padding: 10px 17px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
 }
-button:hover { background: #1d4ed8; }
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #666;
+
+.copy {
+    background: #6366f1;
+    color: white;
+}
+
+.copy.done {
+    background: #16a34a;
+}
+
+.clear {
+    background: #334155;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+.footer {
+    text-align: center;
+    color: #64748b;
+    margin-top: 40px;
+    font-size: 13px;
+}
+
+@media(max-width:600px) {
+    body {
+        padding: 20px 4%;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .practical {
+        padding: 16px;
+    }
 }
 </style>
 </head>
@@ -62,296 +191,600 @@ footer {
 <body>
 
 <header>
-<h1>Recommendation System Hub</h1>
-<p>All Python Practicals in One Place</p>
+    <h1>⚡ AI Practical Library</h1>
+    <p>Your personal collection of Artificial Intelligence practicals, concepts and Python programs.</p>
+
+    <div class="stats">
+        <div class="stat">
+            <h2>10</h2>
+            <p>Total Practicals</p>
+        </div>
+        <div class="stat">
+            <h2>3</h2>
+            <p>Difficulty Levels</p>
+        </div>
+        <div class="stat">
+            <h2>Python</h2>
+            <p>Programming Language</p>
+        </div>
+    </div>
 </header>
 
-<center>
-<input id="search" placeholder="Search practical..."
-oninput="searchCode()">
-</center>
+<input
+    type="text"
+    class="search"
+    id="search"
+    placeholder="🔍 Search practical by name or number..."
+>
 
-<div id="codes"></div>
+<h3 class="section-title">📘 All Practicals</h3>
 
-<footer>
-<p>Python Recommendation System Practicals</p>
-</footer>
+<div id="practicalList"></div>
+
+<div class="footer">
+    AI Practical Library • Study • Practice • Learn
+</div>
 
 <script>
 
 const practicals = [
 
 {
-name: "1. Top-N / Popularity Based",
-code: `import pandas as pd
+name: "State Space Representation and Problem Formulation (8-Puzzle)",
+level: "Basic",
+skill: "S1",
+co: "CO1",
+marks: 2,
+aim: "To represent a problem using states, actions and goals.",
+description: "The 8-Puzzle is a 3×3 sliding puzzle containing 8 numbered tiles and one empty space. The objective is to arrange tiles in the correct order.",
+concepts: "Initial State, Goal State, Actions, Transition Model, Path Cost.",
+code: String.raw`# 8-Puzzle State Space Representation
 
-data = {
-    'Movie': ['A', 'B', 'C', 'D', 'E'],
-    'Ratings': [950, 800, 650, 300, 100]
+initial = (1, 2, 3,
+           4, 0, 6,
+           7, 5, 8)
+
+goal = (1, 2, 3,
+        4, 5, 6,
+        7, 8, 0)
+
+def display(state):
+    for i in range(0, 9, 3):
+        print(state[i:i+3])
+
+print("Initial State:")
+display(initial)
+
+print("\nGoal State:")
+display(goal)
+
+print("\nProblem Formulation:")
+print("Initial State:", initial)
+print("Goal State:", goal)
+print("Actions: Up, Down, Left, Right")
+print("Blank Tile: 0")
+`
+},
+
+{
+name: "Uninformed Search Algorithms (BFS, DFS, UCS) Using A*",
+level: "Basic",
+skill: "S2",
+co: "CO1",
+marks: 2,
+aim: "To implement search algorithms for finding a path from a starting node to a goal node.",
+description: "BFS explores level by level, DFS explores deeply, UCS selects the lowest-cost path, and A* uses path cost and heuristic cost.",
+concepts: "Breadth First Search, Depth First Search, Queue, Stack, Uniform Cost Search, A*.",
+code: String.raw`import heapq
+
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('D', 2), ('E', 5)],
+    'C': [('F', 3)],
+    'D': [('G', 3)],
+    'E': [('G', 2)],
+    'F': [('G', 2)],
+    'G': []
 }
 
-df = pd.DataFrame(data)
+# BFS
+def bfs(start, goal):
+    q = [[start]]
+    while q:
+        p = q.pop(0)
+        n = p[-1]
+        if n == goal:
+            return p
+        for v, c in graph[n]:
+            if v not in p:
+                q.append(p + [v])
 
-# Sort movies by popularity
-df = df.sort_values(
-    by='Ratings',
-    ascending=False
-)
+# DFS
+def dfs(start, goal):
+    s = [[start]]
+    while s:
+        p = s.pop()
+        n = p[-1]
+        if n == goal:
+            return p
+        for v, c in graph[n]:
+            if v not in p:
+                s.append(p + [v])
 
-# Recommend Top 3 movies
-top_3 = df.head(3)
+# UCS
+def ucs(start, goal):
+    q = [(0, [start])]
+    while q:
+        cost, p = heapq.heappop(q)
+        n = p[-1]
+        if n == goal:
+            return p, cost
+        for v, c in graph[n]:
+            if v not in p:
+                heapq.heappush(q, (cost+c, p+[v]))
 
-print("Top 3 Recommended Movies:")
-print(top_3)`
+# A*
+h = {'A':6, 'B':4, 'C':4, 'D':3,
+     'E':2, 'F':2, 'G':0}
+
+def astar(start, goal):
+    q = [(h[start], 0, [start])]
+    while q:
+        f, g, p = heapq.heappop(q)
+        n = p[-1]
+        if n == goal:
+            return p, g
+        for v, c in graph[n]:
+            if v not in p:
+                ng = g + c
+                heapq.heappush(q, (ng+h[v], ng, p+[v]))
+
+print("BFS:", bfs('A','G'))
+print("DFS:", dfs('A','G'))
+print("UCS:", ucs('A','G'))
+print("A*:", astar('A','G'))
+`
 },
 
 {
-name: "2. Cosine Similarity",
-code: `from sklearn.metrics.pairwise import cosine_similarity
-from scipy.stats import pearsonr
+name: "Informed Search Algorithms (Greedy Best First Search, A*)",
+level: "Basic",
+skill: "S2",
+co: "CO1",
+marks: 2,
+aim: "To implement heuristic-based search algorithms.",
+description: "Greedy Best First Search selects the node with the lowest heuristic value. A* uses both actual path cost and estimated cost.",
+concepts: "Heuristic Function, Greedy Search, A* Search, f(n) = g(n) + h(n).",
+code: String.raw`import heapq
 
-# User ratings
-A = [5, 4, 1, 5]
-B = [4, 3, 1, 4]
-
-# Cosine Similarity
-cosine = cosine_similarity([A], [B])[0][0]
-
-# Pearson Correlation
-pearson = pearsonr(A, B)[0]
-
-# Jaccard Similarity
-set_A = {"Avengers", "Avatar", "Titanic", "Batman"}
-set_B = {"Avengers", "Avatar", "Superman"}
-
-jaccard = len(set_A & set_B) / len(set_A | set_B)
-
-print("Cosine:", cosine)
-print("Pearson:", pearson)
-print("Jaccard:", jaccard)`
-},
-
-{
-name: "4. Jaccard Similarity",
-code: `A = {'Avengers', 'Avatar', 'Titanic'}
-B = {'Avengers', 'Avatar', 'Batman'}
-
-score = len(A & B) / len(A | B)
-
-print("Jaccard:", score)`
-},
-
-{
-name: "5. Content Based Filtering using TF-IDF",
-code: `from sklearn.feature_extraction.text import TfidfVectorizer
-
-data = [
-    "Avengers superhero action",
-    "Iron Man superhero technology",
-    "Titanic romantic love story"
-]
-
-tfidf = TfidfVectorizer()
-
-matrix = tfidf.fit_transform(data)
-
-print(tfidf.get_feature_names_out())
-print(matrix.toarray())`
-},
-
-{
-name: "6. User Profile Learning",
-code: `import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-movies = ['Action Superhero', 'Action', 'Romance', 'Fantasy']
-
-# User profile
-user = ['Action Superhero']
-
-# TF-IDF
-tfidf = TfidfVectorizer()
-matrix = tfidf.fit_transform(movies + user)
-
-# Similarity
-scores = cosine_similarity(matrix[-1], matrix[:-1])[0]
-
-# Ranking
-result = sorted(zip(movies, scores),
-                key=lambda x: x[1], reverse=True)
-
-print(result[:3])`
-},
-
-{
-name: "7. Item Ranking",
-code: `from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-items = ["action superhero", "action adventure",
-         "romantic love"]
-
-user = ["action superhero"]
-
-tfidf = TfidfVectorizer()
-matrix = tfidf.fit_transform(items)
-
-profile = tfidf.transform(user)
-
-scores = cosine_similarity(profile, matrix)[0]
-
-ranking = sorted(enumerate(scores),
-                 key=lambda x: x[1], reverse=True)
-
-print(ranking)`
-},
-
-{
-name: "8. User Based Collaborative Filtering",
-code: `import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
-
-data = {
-    'Avengers': [5, 5, 1],
-    'Iron Man': [4, 4, 2],
-    'Titanic': [1, 1, 5],
-    'Thor': [0, 5, 4]
+graph = {
+    'A': [('B', 1), ('C', 4)],
+    'B': [('D', 2), ('E', 5)],
+    'C': [('F', 3)],
+    'D': [('G', 3)],
+    'E': [('G', 2)],
+    'F': [('G', 2)],
+    'G': []
 }
 
-df = pd.DataFrame(data, index=['A', 'B', 'C'])
+h = {'A':6, 'B':4, 'C':4, 'D':3,
+     'E':2, 'F':2, 'G':0}
 
-# Find similar users
-sim = cosine_similarity(df)
-print("Similarity:", sim[0])
+# Greedy Best First Search
+def greedy(start, goal):
+    q = [(h[start], [start])]
 
-# Recommend highest rated unseen movie
-scores = df.loc['B'].where(df.loc['A'] == 0)
-print("Recommendation:", scores.idxmax())`
+    while q:
+        _, path = heapq.heappop(q)
+        n = path[-1]
+
+        if n == goal:
+            return path
+
+        for v, c in graph[n]:
+            if v not in path:
+                heapq.heappush(q, (h[v], path+[v]))
+
+# A* Search
+def astar(start, goal):
+    q = [(h[start], 0, [start])]
+
+    while q:
+        f, g, path = heapq.heappop(q)
+        n = path[-1]
+
+        if n == goal:
+            return path, g
+
+        for v, c in graph[n]:
+            if v not in path:
+                ng = g + c
+                heapq.heappush(q, (ng+h[v], ng, path+[v]))
+
+print("Greedy:", greedy('A','G'))
+print("A*:", astar('A','G'))
+`
 },
 
 {
-name: "9. Item Based Collaborative Filtering",
-code: `import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
+name: "Minimax Algorithm for Game Playing",
+level: "Basic",
+skill: "S3",
+co: "CO1",
+marks: 2,
+aim: "To implement the Minimax algorithm for decision-making in games.",
+description: "Minimax considers two players: MAX tries to maximize the score and MIN tries to minimize the score. It is used in games like Tic-Tac-Toe.",
+concepts: "Game Tree, MAX Player, MIN Player, Recursive Search, Optimal Move.",
+code: String.raw`# Minimax Algorithm
 
-data = {
-    'A': [5, 5, 1],
-    'B': [5, 4, 1],
-    'C': [4, 5, 2],
-    'D': [1, 1, 5]
+def minimax(tree, depth, isMax):
+
+    if isinstance(tree, int):
+        return tree
+
+    if isMax:
+        best = -999
+        for child in tree:
+            best = max(best, minimax(child, depth+1, False))
+        return best
+
+    else:
+        best = 999
+        for child in tree:
+            best = min(best, minimax(child, depth+1, True))
+        return best
+
+
+# Game Tree
+tree = [[3, 5], [2, 9]]
+
+print("Best Score:", minimax(tree, 0, True))
+`
+},
+
+{
+name: "Propositional Logic Inference using Resolution",
+level: "Moderate",
+skill: "S3",
+co: "CO2",
+marks: 2,
+aim: "To implement propositional logic inference using the resolution technique.",
+description: "Resolution combines logical clauses to derive new conclusions. Example: (A OR B) and (NOT A) give B.",
+concepts: "Propositions, Logical Operators, Literals, Clauses, Resolution.",
+code: String.raw`# Propositional Logic using Resolution
+
+def resolution(c1, c2):
+    for x in c1:
+        if -x in c2:
+            return (c1 - {x}) | (c2 - {-x})
+    return None
+
+# A = 1, NOT A = -1
+# B = 2, NOT B = -2
+
+c1 = {1, 2}      # A OR B
+c2 = {-1}        # NOT A
+
+result = resolution(c1, c2)
+
+print("Clause 1:", c1)
+print("Clause 2:", c2)
+print("Result:", result)
+`
+},
+
+{
+name: "First Order Logic Inference using Forward/Backward Chaining",
+level: "Moderate",
+skill: "S3",
+co: "CO2",
+marks: 2,
+aim: "To implement inference using Forward and Backward Chaining.",
+description: "Forward Chaining starts from known facts and derives conclusions. Backward Chaining starts from a goal and checks whether it can be proved.",
+concepts: "First Order Logic, Facts, Rules, Forward Chaining, Backward Chaining.",
+code: String.raw`# Forward and Backward Chaining
+
+facts = {"Human(Socrates)"}
+
+rules = {
+    "Mortal(Socrates)": ["Human(Socrates)"]
 }
 
-df = pd.DataFrame(
-    data,
-    index=['User1', 'User2', 'User3']
-)
+# Forward Chaining
+def forward():
+    for result, conditions in rules.items():
+        if all(x in facts for x in conditions):
+            facts.add(result)
+    print("Forward:", facts)
 
-# Item similarity
-sim = cosine_similarity(df.T)
+# Backward Chaining
+def backward(goal):
+    if goal in facts:
+        return True
 
-similarity = pd.DataFrame(
-    sim, index=df.columns, columns=df.columns
-)
+    if goal in rules:
+        return all(backward(x) for x in rules[goal])
 
-# Avengers ke similar items
-print(similarity['A'].sort_values(ascending=False))`
+    return False
+
+forward()
+
+print("Backward:", backward("Mortal(Socrates)"))
+`
 },
 
 {
-name: "10. Matrix Factorization using SVD",
-code: `import numpy as np
-from scipy.sparse.linalg import svds
+name: "Bayesian Inference using Bayes' Rule and Bayesian Networks",
+level: "Moderate",
+skill: "S4",
+co: "CO3",
+marks: 2,
+aim: "To implement Bayesian inference using probability.",
+description: "Bayes' Rule calculates conditional probability. Bayesian Networks represent probabilistic relationships between variables.",
+concepts: "Probability, Conditional Probability, Bayes' Rule, Bayesian Network.",
+code: String.raw`# Bayesian Inference using Bayes' Rule
 
-R = np.array([
-    [5, 4, 1],
-    [4, 5, 0],
-    [1, 1, 5]
-], dtype=float)
+# Probability values
+P_D = 0.01       # Disease
+P_Pos_D = 0.90   # Positive if disease
+P_Pos_ND = 0.05  # Positive without disease
 
-# SVD
-U, S, Vt = svds(R, k=2)
+# Bayes' Rule
+P_Pos = (P_Pos_D * P_D) + (P_Pos_ND * (1-P_D))
 
-# Predicted ratings
-pred = U @ np.diag(S) @ Vt
+result = (P_Pos_D * P_D) / P_Pos
 
-print(np.round(pred, 2))
+print("Probability of Disease:", round(result, 4))
 
-# Recommend highest predicted unrated movie
-user = 1
-pred[user][R[user] != 0] = -1
 
-print("Recommended Movie:", np.argmax(pred[user]))`
+# Simple Bayesian Network
+network = {
+    "Rain": 0.3,
+    "WetGrass_given_Rain": 0.9
+}
+
+prob = network["Rain"] * network["WetGrass_given_Rain"]
+
+print("Bayesian Network:", round(prob, 2))
+`
 },
 
 {
-name: "11. Hybrid Recommender System",
-code: `import numpy as np
+name: "Simple Machine Learning Algorithm (Naive Bayes / Decision Tree)",
+level: "Moderate",
+skill: "S3",
+co: "CO3",
+marks: 3,
+aim: "To implement a basic Machine Learning algorithm for prediction.",
+description: "Naive Bayes uses probability for classification, while Decision Tree uses a tree-like structure to make predictions.",
+concepts: "Machine Learning, Training Data, Classification, Naive Bayes, Decision Tree, Prediction.",
+code: String.raw`from sklearn.naive_bayes import GaussianNB
 
-content = np.array([0.9, 0.7, 0.4, 0.8])
-collab = np.array([0.6, 0.9, 0.8, 0.5])
+# Training Data
+X = [[2], [3], [4], [5], [6], [7]]
+y = ['Fail', 'Fail', 'Fail', 'Pass', 'Pass', 'Pass']
 
-# Combine scores
-hybrid = 0.5 * content + 0.5 * collab
+# Create Model
+model = GaussianNB()
 
-# Rank recommendations
-top = np.argsort(hybrid)[::-1]
+# Train Model
+model.fit(X, y)
 
-print("Top Recommendations:", top[:3])
-print("Hybrid Scores:", hybrid[top[:3]])`
+# Prediction
+result = model.predict([[6]])
+
+print("Prediction:", result[0])
+`
+},
+
+{
+name: "AI Planning Problem (STRIPS-based)",
+level: "Complex",
+skill: "S5",
+co: "CO3",
+marks: 4,
+aim: "To study and implement an AI planning problem using STRIPS.",
+description: "STRIPS is a planning representation used in Artificial Intelligence. It represents actions through preconditions, add effects and delete effects.",
+concepts: "Initial State, Goal State, Actions, Preconditions, Add List, Delete List.",
+code: String.raw`# STRIPS-based AI Planning (Blocks World)
+
+# Initial State and Goal State
+initial = {"On(A,Table)", "On(B,Table)", "Clear(A)", "Clear(B)", "HandEmpty"}
+goal = {"On(A,B)"}
+
+# Actions: preconditions, add list, delete list
+actions = {
+    "Pickup(A)": {
+        "pre": {"On(A,Table)", "Clear(A)", "HandEmpty"},
+        "add": {"Holding(A)"},
+        "delete": {"On(A,Table)", "Clear(A)", "HandEmpty"}
+    },
+    "Pickup(B)": {
+        "pre": {"On(B,Table)", "Clear(B)", "HandEmpty"},
+        "add": {"Holding(B)"},
+        "delete": {"On(B,Table)", "Clear(B)", "HandEmpty"}
+    },
+    "Stack(A,B)": {
+        "pre": {"Holding(A)", "Clear(B)"},
+        "add": {"On(A,B)", "Clear(A)", "HandEmpty"},
+        "delete": {"Holding(A)", "Clear(B)"}
+    },
+    "Stack(B,A)": {
+        "pre": {"Holding(B)", "Clear(A)"},
+        "add": {"On(B,A)", "Clear(B)", "HandEmpty"},
+        "delete": {"Holding(B)", "Clear(A)"}
+    }
+}
+
+# Planner (BFS over states)
+def plan(initial, goal):
+    queue = [(initial, [])]
+    visited = [initial]
+
+    while queue:
+        state, steps = queue.pop(0)
+
+        if goal <= state:
+            return steps
+
+        for name, a in actions.items():
+            if a["pre"] <= state:
+                new_state = (state - a["delete"]) | a["add"]
+                if new_state not in visited:
+                    visited.append(new_state)
+                    queue.append((new_state, steps + [name]))
+
+    return None
+
+print("Initial State:", initial)
+print("Goal State:", goal)
+
+result = plan(initial, goal)
+
+print("\nPlan:")
+for i, step in enumerate(result, 1):
+    print(i, step)
+`
+},
+
+{
+name: "Research Paper Study and Presentation in AI",
+level: "Complex",
+skill: "S5",
+co: "CO4",
+marks: 4,
+aim: "To study and present a recent research paper related to Artificial Intelligence.",
+description: "Study a research paper and understand its problem statement, methodology, results and applications.",
+concepts: "AI Search, Reasoning, Ethics, Applications, Research Methodology, Presentation.",
+code: ""
 }
 
 ];
 
-function display(items) {
-  const container = document.getElementById("codes");
-  container.innerHTML = "";
+const list = document.getElementById("practicalList");
 
-  items.forEach((item) => {
-    const card = document.createElement("div");
-    card.className = "card";
+function render(items) {
 
-    const title = document.createElement("h3");
-    title.textContent = item.name;
+    list.innerHTML = "";
 
-    const pre = document.createElement("pre");
-    const code = document.createElement("code");
-    code.textContent = item.code;
-    pre.appendChild(code);
+    items.forEach((p) => {
 
-    const button = document.createElement("button");
-    button.textContent = "Copy Code";
+        const idx = practicals.indexOf(p);
 
-    button.onclick = async () => {
-      try {
-        await navigator.clipboard.writeText(item.code);
-        button.textContent = "Copied!";
+        const card = document.createElement("div");
+        card.className = "practical";
+
+        card.innerHTML = `
+            <h2>Practical ${idx + 1}: ${p.name}</h2>
+
+            <div class="meta">
+                <span class="tag">${p.level} Level</span>
+                <span class="tag">Skill: ${p.skill}</span>
+                <span class="tag">${p.co}</span>
+                <span class="tag">${p.marks} ISE Marks</span>
+            </div>
+
+            <div class="info">
+                <strong>Aim:</strong> ${p.aim}
+            </div>
+
+            <div class="info">
+                <strong>About:</strong> ${p.description}
+            </div>
+
+            <div class="info">
+                <strong>Important Concepts:</strong> ${p.concepts}
+            </div>
+
+            <div class="info">
+                <strong>Python Code:</strong>
+            </div>
+
+            <textarea id="code${idx}" spellcheck="false"
+            placeholder="# Paste your Python code here..."></textarea>
+
+            <div class="actions">
+                <button class="copy" id="copyBtn${idx}" onclick="copyCode(${idx})">
+                    📋 Copy Code
+                </button>
+
+                <button class="clear" onclick="clearCode(${idx})">
+                    Clear Code
+                </button>
+            </div>
+        `;
+
+        list.appendChild(card);
+
+        // Fill saved code and keep it in sync with edits
+        const ta = card.querySelector("textarea");
+        ta.value = p.code;
+        ta.addEventListener("input", () => { p.code = ta.value; });
+    });
+}
+
+function copyCode(index) {
+
+    const code = document.getElementById("code" + index).value;
+    const btn = document.getElementById("copyBtn" + index);
+
+    if (!code.trim()) {
+        alert("Please add code before copying!");
+        return;
+    }
+
+    const showDone = () => {
+        btn.textContent = "✅ Copied!";
+        btn.classList.add("done");
         setTimeout(() => {
-          button.textContent = "Copy Code";
+            btn.textContent = "📋 Copy Code";
+            btn.classList.remove("done");
         }, 1500);
-      } catch {
-        button.textContent = "Copy failed";
-      }
     };
 
-    card.append(title, pre, button);
-    container.appendChild(card);
-  });
+    const fallback = () => {
+        const ta = document.getElementById("code" + index);
+        ta.select();
+        try {
+            document.execCommand("copy");
+            showDone();
+        } catch (e) {
+            alert("Copy failed. Please copy manually.");
+        }
+    };
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(showDone).catch(fallback);
+    } else {
+        fallback();
+    }
 }
 
-function searchCode() {
-  const query = document.getElementById("search")
-    .value.toLowerCase();
+function clearCode(index) {
 
-  const filtered = practicals.filter(item =>
-    item.name.toLowerCase().includes(query)
-  );
-
-  display(filtered);
+    if (confirm("Are you sure you want to clear this code?")) {
+        document.getElementById("code" + index).value = "";
+        practicals[index].code = "";
+    }
 }
 
-display(practicals);
+document.getElementById("search").addEventListener("input", function() {
+
+    const value = this.value.toLowerCase().trim();
+
+    const filtered = practicals.filter((p, i) =>
+        p.name.toLowerCase().includes(value) ||
+        p.level.toLowerCase().includes(value) ||
+        p.aim.toLowerCase().includes(value) ||
+        String(i + 1) === value
+    );
+
+    render(filtered);
+});
+
+render(practicals);
 
 </script>
+
 </body>
 </html>
