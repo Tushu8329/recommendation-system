@@ -26,9 +26,9 @@ nav{position:relative;z-index:5;background:var(--bg);border-block:1px solid var(
 .scroll{display:flex;gap:4px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
 .scroll a{flex:none;padding:10px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
 .scroll a:hover,.scroll a:focus-visible{background:var(--chip);color:var(--blue)}
-h2{font:600 22px/1.2 Spectral,Georgia,serif;color:var(--blue);margin:44px 0 6px}
-.exp{border-top:1px solid var(--line);padding:26px 0 30px}
-.head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+h2{font:600 22px/1.2 Spectral,Georgia,serif;color:var(--blue);margin:34px 0 4px}
+.exp{border-top:1px solid var(--line);padding:18px 0}
+.head{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .num{font:600 44px/1 Spectral,Georgia,serif;color:var(--blue);width:44px;flex:none;text-align:center}
 .ttl{flex:1 1 360px}
 h3{font:600 22px/1.25 Spectral,Georgia,serif;margin:2px 0 6px;text-wrap:balance}
@@ -52,16 +52,15 @@ footer{color:var(--mute);font-size:14px;padding:28px 0 48px;border-top:1px solid
 </style></head><body>
 <header class="wrap">
 <h1>Data Analytics Practicals &mdash; Short Python Codes</h1>
-<p class="lead">Saare 9 experiments ka chhota, ready-to-run code. <b>Copy code</b> dabao, Jupyter / VS Code mein paste karo, aur highlighted <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
+<p class="lead">Saare 9 experiments ka chhota, ready-to-run code. <b>Copy code</b> dabao aur Jupyter / VS Code mein paste karo. Code mein upar <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
 <div class="install"><code id="code-0">pip install pandas numpy matplotlib seaborn scikit-learn scipy statsmodels</code><button class="copy" type="button" data-copy="code-0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div>
 </header>
-<nav><div class="wrap scroll"><a href="#exp-1">Exp 1</a><a href="#exp-2">Exp 2</a><a href="#exp-3">Exp 3</a><a href="#exp-4">Exp 4</a><a href="#exp-5">Exp 5</a><a href="#exp-6">Exp 6</a><a href="#exp-7">Exp 7</a><a href="#exp-8">Exp 8</a><a href="#exp-9">Exp 9</a></div></nav>
 <main class="wrap">
 <section class="group"><h2>Level: Basic (all)</h2><article class="exp" id="exp-1">
 <div class="head"><div class="num">1</div><div class="ttl"><h3>Missing values, duplicate records &amp; inconsistent entries</h3>
 <p class="meta">Healthcare · S1 · CO1 · <span class="file">healthcare_dataset.csv</span> · <a href="https://www.kaggle.com/datasets/prasad22/healthcare-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
 <button class="copy" type="button" data-copy="code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
+<pre class="src" hidden><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
 import pandas as pd
 
 # Dataset path - download ke baad yahan apna path likho
@@ -105,7 +104,7 @@ print("Missing after cleaning:", df.isnull().sum().sum(), "| Duplicates:", df.du
 <div class="head"><div class="num">2</div><div class="ttl"><h3>Pearson correlation between variables</h3>
 <p class="meta">PIMA Indians Diabetes · S1 · CO1, CO3 · <span class="file">diabetes.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database" target="_blank" rel="noopener">Dataset</a></p></div>
 <button class="copy" type="button" data-copy="code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
+<pre class="src" hidden><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -145,7 +144,7 @@ plt.show()</code></pre>
 <div class="head"><div class="num">3</div><div class="ttl"><h3>Principal Component Analysis (PCA) to reduce features</h3>
 <p class="meta">Mall Customers · S1 · CO1, CO2 · <span class="file">Mall_Customers.csv</span> · <a href="https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python" target="_blank" rel="noopener">Dataset</a></p></div>
 <button class="copy" type="button" data-copy="code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
+<pre class="src" hidden><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
@@ -187,7 +186,7 @@ plt.show()</code></pre>
 <div class="head"><div class="num">4</div><div class="ttl"><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3>
 <p class="meta">Energy Efficiency · S2 · CO2 · <span class="file">ENB2012_data.csv</span> · <a href="https://www.kaggle.com/datasets/elikplim/eergy-efficiency-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
 <button class="copy" type="button" data-copy="code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
+<pre class="src" hidden><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -233,7 +232,7 @@ plt.title('Actual vs Predicted (Random Forest)'); plt.show()</code></pre>
 <div class="head"><div class="num">5</div><div class="ttl"><h3>SVM: is a tumour benign or malignant?</h3>
 <p class="meta">Breast Cancer Wisconsin · S2 · CO2 · <span class="file">data.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data" target="_blank" rel="noopener">Dataset</a></p></div>
 <button class="copy" type="button" data-copy="code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
+<pre class="src" hidden><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -273,7 +272,7 @@ print("Sample prediction:", "Malignant" if result == 1 else "Benign")</code></pr
 <div class="head"><div class="num">6</div><div class="ttl"><h3>Logistic Regression: is a customer likely to default?</h3>
 <p class="meta">Credit Card (mlg-ulb) · S2 · CO2 · <span class="file">creditcard.csv</span> · <a href="https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is link par credit-card dataset hai, isliye <code>Class = 1</code> ko default / fraud maana gaya hai.</p></div>
 <button class="copy" type="button" data-copy="code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
+<pre class="src" hidden><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -312,7 +311,7 @@ plt.title('Logistic Regression - Confusion Matrix'); plt.show()</code></pre>
 <div class="head"><div class="num">7</div><div class="ttl"><h3>End-to-end predictive analytics: build, evaluate, visualize</h3>
 <p class="meta">Finance Data · S3 · CO1, CO2, CO3 · <span class="file">Finance_data.csv</span> · <a href="https://www.kaggle.com/datasets/nitindatta/finance-data" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>TARGET</code> mein jo column predict karna hai woh likho. Column na mile to last column target ban jata hai.</p></div>
 <button class="copy" type="button" data-copy="code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
+<pre class="src" hidden><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -367,7 +366,7 @@ plt.title('Top 10 Important Features'); plt.tight_layout(); plt.show()</code></p
 <div class="head"><div class="num">8</div><div class="ttl"><h3>Twitter sentiment analysis</h3>
 <p class="meta">Twitter Entity Sentiment · S3 · CO1, CO2, CO3 · <span class="file">twitter_training.csv</span> <span class="file">twitter_validation.csv</span> · <a href="https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is code mein do path hain: <code>TRAIN_PATH</code> aur <code>TEST_PATH</code>.</p></div>
 <button class="copy" type="button" data-copy="code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
+<pre class="src" hidden><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -417,7 +416,7 @@ for tweet in ["I love this game, it's amazing!", "Worst update ever, totally bro
 <div class="head"><div class="num">9</div><div class="ttl"><h3>Time series analysis &amp; forecasting with ARIMA</h3>
 <p class="meta">Transportation · S3 · CO2, CO3 · <span class="file">transport.csv</span> · <a href="https://www.kaggle.com/datasets/abdelazizsami/time-series-analysis-for-transportation" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>DATA_PATH</code> mein downloaded CSV ka path likho. Date aur value column khud detect ho jate hain (chaho to <code>DATE_COL</code> / <code>VALUE_COL</code> set kar do).</p></div>
 <button class="copy" type="button" data-copy="code-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
+<pre class="src" hidden><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
 import warnings
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -485,30 +484,6 @@ plt.legend(); plt.title('ARIMA Forecast'); plt.show()</code></pre>
 <footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels. Plots <code>plt.show()</code> se khulenge (Jupyter mein inline).</footer>
 <script>
 {
-const KW = new Set('import from as def return for in if else elif not and or is None True False lambda with while class try except'.split(' '));
-const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-const RE = /(#[^\n]*)|([rRfFbBuU]{0,2}'(?:\\.|[^'\\\n])*'|[rRfFbBuU]{0,2}"(?:\\.|[^"\\\n])*")|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)/g;
-function hl(src) {
-  let out = '', last = 0, m;
-  RE.lastIndex = 0;
-  while ((m = RE.exec(src))) {
-    out += esc(src.slice(last, m.index));
-    if (m[1]) out += '<span class="c">' + esc(m[1]) + '</span>';
-    else if (m[2]) out += '<span class="s">' + esc(m[2]) + '</span>';
-    else if (m[3]) out += '<span class="n">' + m[3] + '</span>';
-    else {
-      const w = m[4];
-      out += KW.has(w) ? '<span class="k">' + w + '</span>' : (src[RE.lastIndex] === '(' ? '<span class="f">' + w + '</span>' : w);
-    }
-    last = RE.lastIndex;
-  }
-  return out + esc(src.slice(last));
-}
-document.querySelectorAll('pre code').forEach(c => {
-  const src = c.textContent, raw = src.split('\n');
-  c.innerHTML = hl(src).split('\n').map((h, i) => /^\w*PATH\s*=/.test(raw[i]) ? '<span class="pl">' + h + '</span>' : h).join('\n');
-});
-
 function fallbackCopy(text) {
   const ta = document.createElement('textarea');
   ta.value = text; ta.setAttribute('readonly', '');
@@ -530,7 +505,7 @@ document.addEventListener('click', e => {
   const text = el.textContent;
   const label = b.querySelector('span'), orig = b.dataset.label || (b.dataset.label = label.textContent);
   const done = ok => {
-    if (!ok) selectEl(el);
+    if (!ok) { el.parentElement.hidden = false; selectEl(el); }
     b.classList.toggle('done', ok);
     label.textContent = ok ? 'Copied!' : 'Selected - press Ctrl+C';
     clearTimeout(b._t);
