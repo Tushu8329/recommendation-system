@@ -1,790 +1,545 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Practical Library</title>
-
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Analytics Practical Codes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #0b1020;
-    color: #f1f5f9;
-    padding: 30px 6%;
-}
-
-header {
-    margin-bottom: 35px;
-}
-
-header h1 {
-    font-size: 32px;
-    margin-bottom: 10px;
-}
-
-header p {
-    color: #94a3b8;
-    line-height: 1.6;
-}
-
-.stats {
-    display: flex;
-    gap: 15px;
-    margin: 25px 0;
-    flex-wrap: wrap;
-}
-
-.stat {
-    background: #151e33;
-    padding: 18px;
-    border-radius: 12px;
-    min-width: 130px;
-    border: 1px solid #26334c;
-}
-
-.stat h2 {
-    color: #818cf8;
-    margin-bottom: 5px;
-}
-
-.search {
-    width: 100%;
-    padding: 14px;
-    background: #151e33;
-    border: 1px solid #334155;
-    border-radius: 10px;
-    color: white;
-    font-size: 15px;
-    margin-bottom: 25px;
-    outline: none;
-}
-
-.section-title {
-    margin: 30px 0 15px;
-    color: #a5b4fc;
-    font-size: 19px;
-}
-
-.practical {
-    background: #151e33;
-    border: 1px solid #26334c;
-    border-radius: 14px;
-    padding: 22px;
-    margin-bottom: 20px;
-}
-
-.practical h2 {
-    font-size: 19px;
-    margin-bottom: 12px;
-    line-height: 1.5;
-}
-
-.meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 9px;
-    margin-bottom: 18px;
-}
-
-.tag {
-    background: #252e4a;
-    color: #c7d2fe;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-}
-
-.info {
-    color: #cbd5e1;
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 12px 0;
-}
-
-.info strong {
-    color: white;
-}
-
-textarea {
-    width: 100%;
-    height: 260px;
-    background: #080d19;
-    border: 1px solid #334155;
-    border-radius: 9px;
-    color: #a5f3fc;
-    padding: 15px;
-    font-family: monospace;
-    font-size: 13px;
-    resize: vertical;
-    outline: none;
-    margin-top: 12px;
-    white-space: pre;
-    overflow: auto;
-}
-
-textarea:focus {
-    border-color: #818cf8;
-}
-
-.actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-}
-
-button {
-    padding: 10px 17px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.copy {
-    background: #6366f1;
-    color: white;
-}
-
-.copy.done {
-    background: #16a34a;
-}
-
-.clear {
-    background: #334155;
-    color: white;
-}
-
-button:hover {
-    opacity: 0.85;
-}
-
-.footer {
-    text-align: center;
-    color: #64748b;
-    margin-top: 40px;
-    font-size: 13px;
-}
-
-@media(max-width:600px) {
-    body {
-        padding: 20px 4%;
-    }
-
-    header h1 {
-        font-size: 25px;
-    }
-
-    .practical {
-        padding: 16px;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-    <h1>⚡ AI Practical Library</h1>
-    <p>Your personal collection of Artificial Intelligence practicals, concepts and Python programs.</p>
-
-    <div class="stats">
-        <div class="stat">
-            <h2>10</h2>
-            <p>Total Practicals</p>
-        </div>
-        <div class="stat">
-            <h2>3</h2>
-            <p>Difficulty Levels</p>
-        </div>
-        <div class="stat">
-            <h2>Python</h2>
-            <p>Programming Language</p>
-        </div>
-    </div>
+/* VOICE: calm lab manual, clear and practical
+   IDEA: a printed practical journal, one numbered experiment after another
+   PICTURE: the code blocks themselves, each with a big copy button
+   COLOUR and TYPE: white / ink / ultramarine; Spectral titles, Inter body, JetBrains Mono code
+   LAYOUT: one reading column, sticky experiment links, cards stacked by level */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d0e18);--ink:light-dark(#14110f,#e8e9f2);--mute:light-dark(#5b5f6e,#9ea1b5);--line:light-dark(#e2e4ec,#252941);--blue:light-dark(#1d2bd8,#8f99ff);--onblue:light-dark(#ffffff,#0d0e18);--codebg:light-dark(#f5f6fb,#13152a);--chip:light-dark(#eef0fd,#1a1e3b);
+--k:light-dark(#1d2bd8,#9aa3ff);--s:light-dark(#a3361b,#ffb38f);--c:light-dark(#7a7e8d,#7d819b);--n:light-dark(#8a2fb8,#dcaaff);--f:light-dark(#0b6577,#79d3e2);--mark:light-dark(#fff1b8,#3d3514)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:72px;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1040px;margin:0 auto;padding:0 max(4vw,16px)}
+header{padding:clamp(28px,5vw,56px) 0 20px}
+h1{font:600 clamp(32px,5vw,46px)/1.05 Spectral,Georgia,serif;margin:0 0 12px;text-wrap:balance;letter-spacing:-.01em}
+.lead{color:var(--mute);max-width:62ch;margin:0 0 20px}
+.install{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 16px}
+.install code{flex:1 1 280px;font:14px/1.5 'JetBrains Mono',ui-monospace,monospace}
+nav{position:relative;z-index:5;background:var(--bg);border-block:1px solid var(--line)}
+@media(min-width:900px){nav{position:sticky;top:0}}
+.scroll{display:flex;gap:4px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
+.scroll a{flex:none;padding:10px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
+.scroll a:hover,.scroll a:focus-visible{background:var(--chip);color:var(--blue)}
+h2{font:600 22px/1.2 Spectral,Georgia,serif;color:var(--blue);margin:44px 0 6px}
+.exp{border-top:1px solid var(--line);padding:26px 0 30px}
+.head{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:14px}
+.num{font:600 44px/1 Spectral,Georgia,serif;color:var(--blue);width:44px;flex:none;text-align:center}
+.ttl{flex:1 1 360px}
+h3{font:600 22px/1.25 Spectral,Georgia,serif;margin:2px 0 6px;text-wrap:balance}
+.meta{margin:0;color:var(--mute);font-size:14px}
+.meta a{color:var(--blue);font-weight:500}
+.file{font:13px 'JetBrains Mono',ui-monospace,monospace;background:var(--chip);color:var(--ink);padding:2px 7px;border-radius:6px;white-space:nowrap;margin-right:4px}
+.note{margin:8px 0 0;font-size:14px;padding:8px 12px;border-left:3px solid var(--blue);background:var(--codebg);border-radius:0 8px 8px 0}
+.note code{font:13px 'JetBrains Mono',ui-monospace,monospace}
+.copy{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;border:1.5px solid var(--blue);background:transparent;color:var(--blue);font:600 15px Inter,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.copy svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
+.copy:hover{background:var(--chip)}
+.copy:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.copy.done{background:var(--blue);color:var(--onblue)}
+pre{margin:0;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:18px 20px;overflow-x:auto;tab-size:4}
+pre code{font:13.5px/1.65 'JetBrains Mono',ui-monospace,monospace;white-space:pre}
+.pl{background:var(--mark);box-shadow:0 0 0 4px var(--mark);border-radius:3px}
+.k{color:var(--k);font-weight:600}.s{color:var(--s)}.c{color:var(--c);font-style:italic}.n{color:var(--n)}.f{color:var(--f)}
+footer{color:var(--mute);font-size:14px;padding:28px 0 48px;border-top:1px solid var(--line);margin-top:20px}
+@media(max-width:600px){.head{gap:10px}.num{font-size:34px;width:34px}.ttl{flex-basis:calc(100% - 50px)}.copy{width:100%;justify-content:center}pre{padding:14px;border-radius:10px}pre code{font-size:12.5px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.copy{transition:none}}
+</style></head><body>
+<header class="wrap">
+<h1>Data Analytics Practicals &mdash; Short Python Codes</h1>
+<p class="lead">Saare 9 experiments ka chhota, ready-to-run code. <b>Copy code</b> dabao, Jupyter / VS Code mein paste karo, aur highlighted <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
+<div class="install"><code id="code-0">pip install pandas numpy matplotlib seaborn scikit-learn scipy statsmodels</code><button class="copy" type="button" data-copy="code-0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div>
 </header>
+<nav><div class="wrap scroll"><a href="#exp-1">Exp 1</a><a href="#exp-2">Exp 2</a><a href="#exp-3">Exp 3</a><a href="#exp-4">Exp 4</a><a href="#exp-5">Exp 5</a><a href="#exp-6">Exp 6</a><a href="#exp-7">Exp 7</a><a href="#exp-8">Exp 8</a><a href="#exp-9">Exp 9</a></div></nav>
+<main class="wrap">
+<section class="group"><h2>Level: Basic (all)</h2><article class="exp" id="exp-1">
+<div class="head"><div class="num">1</div><div class="ttl"><h3>Missing values, duplicate records &amp; inconsistent entries</h3>
+<p class="meta">Healthcare · S1 · CO1 · <span class="file">healthcare_dataset.csv</span> · <a href="https://www.kaggle.com/datasets/prasad22/healthcare-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
+<button class="copy" type="button" data-copy="code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
+import pandas as pd
 
-<input
-    type="text"
-    class="search"
-    id="search"
-    placeholder="🔍 Search practical by name or number..."
->
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/healthcare_dataset.csv"
 
-<h3 class="section-title">📘 All Practicals</h3>
+df = pd.read_csv(DATA_PATH)
+print("Shape:", df.shape)
+print(df.head())
+df.info()
 
-<div id="practicalList"></div>
+# 1. Missing values
+print("\nMissing values per column:\n", df.isnull().sum())
+print("Total missing values:", df.isnull().sum().sum())
 
-<div class="footer">
-    AI Practical Library • Study • Practice • Learn
-</div>
+# 2. Duplicate records
+print("\nDuplicate rows:", df.duplicated().sum())
 
-<script>
+# 3. Inconsistent entries
+print("\nNames with irregular case (e.g. 'BoBBy jacKson'):", (df['Name'] != df['Name'].str.title()).sum())
+print("Negative Billing Amount:", (df['Billing Amount'] &lt; 0).sum())
+print("Invalid Age (&lt;0 or &gt;120):", ((df['Age'] &lt; 0) | (df['Age'] &gt; 120)).sum())
+adm = pd.to_datetime(df['Date of Admission'])
+dis = pd.to_datetime(df['Discharge Date'])
+print("Discharge date before admission:", (dis &lt; adm).sum())
+for col in ['Gender', 'Blood Type', 'Medical Condition', 'Admission Type', 'Test Results']:
+    print(col, "-&gt;", df[col].unique().tolist())
 
-const practicals = [
-
-{
-name: "State Space Representation and Problem Formulation (8-Puzzle)",
-level: "Basic",
-skill: "S1",
-co: "CO1",
-marks: 2,
-aim: "To represent a problem using states, actions and goals.",
-description: "The 8-Puzzle is a 3×3 sliding puzzle containing 8 numbered tiles and one empty space. The objective is to arrange tiles in the correct order.",
-concepts: "Initial State, Goal State, Actions, Transition Model, Path Cost.",
-code: String.raw`# 8-Puzzle State Space Representation
-
-initial = (1, 2, 3,
-           4, 0, 6,
-           7, 5, 8)
-
-goal = (1, 2, 3,
-        4, 5, 6,
-        7, 8, 0)
-
-def display(state):
-    for i in range(0, 9, 3):
-        print(state[i:i+3])
-
-print("Initial State:")
-display(initial)
-
-print("\nGoal State:")
-display(goal)
-
-print("\nProblem Formulation:")
-print("Initial State:", initial)
-print("Goal State:", goal)
-print("Actions: Up, Down, Left, Right")
-print("Blank Tile: 0")
-`
-},
-
-{
-name: "Uninformed Search Algorithms (BFS, DFS, UCS) Using A*",
-level: "Basic",
-skill: "S2",
-co: "CO1",
-marks: 2,
-aim: "To implement search algorithms for finding a path from a starting node to a goal node.",
-description: "BFS explores level by level, DFS explores deeply, UCS selects the lowest-cost path, and A* uses path cost and heuristic cost.",
-concepts: "Breadth First Search, Depth First Search, Queue, Stack, Uniform Cost Search, A*.",
-code: String.raw`import heapq
-
-graph = {
-    'A': [('B', 1), ('C', 4)],
-    'B': [('D', 2), ('E', 5)],
-    'C': [('F', 3)],
-    'D': [('G', 3)],
-    'E': [('G', 2)],
-    'F': [('G', 2)],
-    'G': []
-}
-
-# BFS
-def bfs(start, goal):
-    q = [[start]]
-    while q:
-        p = q.pop(0)
-        n = p[-1]
-        if n == goal:
-            return p
-        for v, c in graph[n]:
-            if v not in p:
-                q.append(p + [v])
-
-# DFS
-def dfs(start, goal):
-    s = [[start]]
-    while s:
-        p = s.pop()
-        n = p[-1]
-        if n == goal:
-            return p
-        for v, c in graph[n]:
-            if v not in p:
-                s.append(p + [v])
-
-# UCS
-def ucs(start, goal):
-    q = [(0, [start])]
-    while q:
-        cost, p = heapq.heappop(q)
-        n = p[-1]
-        if n == goal:
-            return p, cost
-        for v, c in graph[n]:
-            if v not in p:
-                heapq.heappush(q, (cost+c, p+[v]))
-
-# A*
-h = {'A':6, 'B':4, 'C':4, 'D':3,
-     'E':2, 'F':2, 'G':0}
-
-def astar(start, goal):
-    q = [(h[start], 0, [start])]
-    while q:
-        f, g, p = heapq.heappop(q)
-        n = p[-1]
-        if n == goal:
-            return p, g
-        for v, c in graph[n]:
-            if v not in p:
-                ng = g + c
-                heapq.heappush(q, (ng+h[v], ng, p+[v]))
-
-print("BFS:", bfs('A','G'))
-print("DFS:", dfs('A','G'))
-print("UCS:", ucs('A','G'))
-print("A*:", astar('A','G'))
-`
-},
-
-{
-name: "Informed Search Algorithms (Greedy Best First Search, A*)",
-level: "Basic",
-skill: "S2",
-co: "CO1",
-marks: 2,
-aim: "To implement heuristic-based search algorithms.",
-description: "Greedy Best First Search selects the node with the lowest heuristic value. A* uses both actual path cost and estimated cost.",
-concepts: "Heuristic Function, Greedy Search, A* Search, f(n) = g(n) + h(n).",
-code: String.raw`import heapq
-
-graph = {
-    'A': [('B', 1), ('C', 4)],
-    'B': [('D', 2), ('E', 5)],
-    'C': [('F', 3)],
-    'D': [('G', 3)],
-    'E': [('G', 2)],
-    'F': [('G', 2)],
-    'G': []
-}
-
-h = {'A':6, 'B':4, 'C':4, 'D':3,
-     'E':2, 'F':2, 'G':0}
-
-# Greedy Best First Search
-def greedy(start, goal):
-    q = [(h[start], [start])]
-
-    while q:
-        _, path = heapq.heappop(q)
-        n = path[-1]
-
-        if n == goal:
-            return path
-
-        for v, c in graph[n]:
-            if v not in path:
-                heapq.heappush(q, (h[v], path+[v]))
-
-# A* Search
-def astar(start, goal):
-    q = [(h[start], 0, [start])]
-
-    while q:
-        f, g, path = heapq.heappop(q)
-        n = path[-1]
-
-        if n == goal:
-            return path, g
-
-        for v, c in graph[n]:
-            if v not in path:
-                ng = g + c
-                heapq.heappush(q, (ng+h[v], ng, path+[v]))
-
-print("Greedy:", greedy('A','G'))
-print("A*:", astar('A','G'))
-`
-},
-
-{
-name: "Minimax Algorithm for Game Playing",
-level: "Basic",
-skill: "S3",
-co: "CO1",
-marks: 2,
-aim: "To implement the Minimax algorithm for decision-making in games.",
-description: "Minimax considers two players: MAX tries to maximize the score and MIN tries to minimize the score. It is used in games like Tic-Tac-Toe.",
-concepts: "Game Tree, MAX Player, MIN Player, Recursive Search, Optimal Move.",
-code: String.raw`# Minimax Algorithm
-
-def minimax(tree, depth, isMax):
-
-    if isinstance(tree, int):
-        return tree
-
-    if isMax:
-        best = -999
-        for child in tree:
-            best = max(best, minimax(child, depth+1, False))
-        return best
-
+# 4. Cleaning
+df['Name'] = df['Name'].str.strip().str.title()          # fix inconsistent case
+df = df.drop_duplicates()                                # remove duplicates
+df = df[df['Billing Amount'] &gt;= 0]                       # remove invalid billing
+for col in df.columns:                                   # fill missing values
+    if df[col].dtype.kind in 'if':
+        df[col] = df[col].fillna(df[col].median())
     else:
-        best = 999
-        for child in tree:
-            best = min(best, minimax(child, depth+1, True))
-        return best
+        df[col] = df[col].fillna(df[col].mode()[0])
+print("\nShape after cleaning:", df.shape)
+print("Missing after cleaning:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())</code></pre>
+</article><article class="exp" id="exp-2">
+<div class="head"><div class="num">2</div><div class="ttl"><h3>Pearson correlation between variables</h3>
+<p class="meta">PIMA Indians Diabetes · S1 · CO1, CO3 · <span class="file">diabetes.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database" target="_blank" rel="noopener">Dataset</a></p></div>
+<button class="copy" type="button" data-copy="code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import pearsonr
 
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/diabetes.csv"
 
-# Game Tree
-tree = [[3, 5], [2, 9]]
+df = pd.read_csv(DATA_PATH)
+print(df.head())
 
-print("Best Score:", minimax(tree, 0, True))
-`
-},
+# Pearson formula: r = sum((x - x_mean)(y - y_mean)) / sqrt(sum((x - x_mean)^2) * sum((y - y_mean)^2))
+def pearson(x, y):
+    xd, yd = x - x.mean(), y - y.mean()
+    return (xd * yd).sum() / np.sqrt((xd ** 2).sum() * (yd ** 2).sum())
 
+print("\nGlucose vs Outcome (manual formula):", round(pearson(df['Glucose'], df['Outcome']), 4))
+r, p = pearsonr(df['Glucose'], df['Outcome'])
+print(f"Glucose vs Outcome (scipy): r = {r:.4f}, p-value = {p:.4e}")
+
+# Full correlation matrix
+corr = df.corr(method='pearson')
+print("\nCorrelation of each feature with Outcome:\n", corr['Outcome'].sort_values(ascending=False))
+
+plt.figure(figsize=(9, 7))
+sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm')
+plt.title('Pearson Correlation Matrix - PIMA Diabetes')
+plt.tight_layout()
+plt.show()
+
+sns.regplot(x='Glucose', y='BMI', data=df, line_kws={'color': 'red'})
+plt.title(f"Glucose vs BMI (r = {df['Glucose'].corr(df['BMI']):.2f})")
+plt.show()</code></pre>
+</article><article class="exp" id="exp-3">
+<div class="head"><div class="num">3</div><div class="ttl"><h3>Principal Component Analysis (PCA) to reduce features</h3>
+<p class="meta">Mall Customers · S1 · CO1, CO2 · <span class="file">Mall_Customers.csv</span> · <a href="https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python" target="_blank" rel="noopener">Dataset</a></p></div>
+<button class="copy" type="button" data-copy="code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/Mall_Customers.csv"
+
+df = pd.read_csv(DATA_PATH)
+print(df.head())
+
+# Drop ID, encode Gender, scale features
+X = pd.get_dummies(df.drop(columns='CustomerID'), drop_first=True).astype(float)
+print("Features used:", list(X.columns))
+X_scaled = StandardScaler().fit_transform(X)
+
+# PCA with all components -&gt; check explained variance
+pca_full = PCA().fit(X_scaled)
+print("\nExplained variance ratio:", pca_full.explained_variance_ratio_.round(3))
+print("Cumulative variance     :", pca_full.explained_variance_ratio_.cumsum().round(3))
+
+plt.plot(range(1, X.shape[1] + 1), pca_full.explained_variance_ratio_.cumsum(), marker='o')
+plt.xlabel('Number of components'); plt.ylabel('Cumulative explained variance')
+plt.title('Scree Plot'); plt.grid(); plt.show()
+
+# Reduce to 2 components
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+print("\nOriginal shape:", X.shape, "-&gt; Reduced shape:", X_pca.shape)
+print("Variance kept by 2 PCs:", round(pca.explained_variance_ratio_.sum() * 100, 2), "%")
+print("\nPC loadings:\n", pd.DataFrame(pca.components_, columns=X.columns, index=['PC1', 'PC2']).round(3))
+
+plt.scatter(X_pca[:, 0], X_pca[:, 1], c=df['Spending Score (1-100)'], cmap='viridis')
+plt.colorbar(label='Spending Score')
+plt.xlabel('PC1'); plt.ylabel('PC2'); plt.title('Customers in 2D (PCA)')
+plt.show()</code></pre>
+</article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp" id="exp-4">
+<div class="head"><div class="num">4</div><div class="ttl"><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3>
+<p class="meta">Energy Efficiency · S2 · CO2 · <span class="file">ENB2012_data.csv</span> · <a href="https://www.kaggle.com/datasets/elikplim/eergy-efficiency-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
+<button class="copy" type="button" data-copy="code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/ENB2012_data.csv"
+
+df = pd.read_csv(DATA_PATH).dropna(axis=1, how='all').dropna().iloc[:, :10]
+df.columns = ['Relative_Compactness', 'Surface_Area', 'Wall_Area', 'Roof_Area', 'Overall_Height',
+              'Orientation', 'Glazing_Area', 'Glazing_Area_Distribution', 'Heating_Load', 'Cooling_Load']
+print(df.describe())
+
+# Relationship between design parameters and energy consumption
+print("\nCorrelation with Heating Load:\n", df.corr()['Heating_Load'].sort_values(ascending=False))
+plt.figure(figsize=(10, 7))
+sns.heatmap(df.corr(), annot=True, fmt='.2f', cmap='YlOrRd')
+plt.title('Correlation Matrix'); plt.tight_layout(); plt.show()
+
+# Regression model
+X = df.iloc[:, :8]
+y = df['Heating_Load']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+models = {'Linear Regression': LinearRegression(), 'Random Forest': RandomForestRegressor(random_state=42)}
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    pred = model.predict(X_test)
+    print(f"\n{name}: R2 = {r2_score(y_test, pred):.4f}, MAE = {mean_absolute_error(y_test, pred):.3f}, "
+          f"RMSE = {mean_squared_error(y_test, pred) ** 0.5:.3f}")
+
+print("\nLinear Regression coefficients:\n", pd.Series(models['Linear Regression'].coef_, index=X.columns).round(3))
+
+plt.scatter(y_test, pred, alpha=0.6)
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
+plt.xlabel('Actual Heating Load'); plt.ylabel('Predicted Heating Load')
+plt.title('Actual vs Predicted (Random Forest)'); plt.show()</code></pre>
+</article><article class="exp" id="exp-5">
+<div class="head"><div class="num">5</div><div class="ttl"><h3>SVM: is a tumour benign or malignant?</h3>
+<p class="meta">Breast Cancer Wisconsin · S2 · CO2 · <span class="file">data.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data" target="_blank" rel="noopener">Dataset</a></p></div>
+<button class="copy" type="button" data-copy="code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/data.csv"
+
+df = pd.read_csv(DATA_PATH).drop(columns=['id', 'Unnamed: 32'], errors='ignore')
+df['diagnosis'] = df['diagnosis'].map({'M': 1, 'B': 0})        # 1 = Malignant, 0 = Benign
+print(df['diagnosis'].value_counts())
+
+X = df.drop(columns='diagnosis')
+y = df['diagnosis']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+model = SVC(kernel='rbf', C=1.0, gamma='scale')
+model.fit(X_train, y_train)
+pred = model.predict(X_test)
+
+print("\nAccuracy:", round(accuracy_score(y_test, pred) * 100, 2), "%")
+print(classification_report(y_test, pred, target_names=['Benign', 'Malignant']))
+ConfusionMatrixDisplay.from_predictions(y_test, pred, display_labels=['Benign', 'Malignant'], cmap='Blues')
+plt.title('SVM - Confusion Matrix'); plt.show()
+
+# Predict a new sample (first test row)
+result = model.predict(X_test[:1])[0]
+print("Sample prediction:", "Malignant" if result == 1 else "Benign")</code></pre>
+</article><article class="exp" id="exp-6">
+<div class="head"><div class="num">6</div><div class="ttl"><h3>Logistic Regression: is a customer likely to default?</h3>
+<p class="meta">Credit Card (mlg-ulb) · S2 · CO2 · <span class="file">creditcard.csv</span> · <a href="https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is link par credit-card dataset hai, isliye <code>Class = 1</code> ko default / fraud maana gaya hai.</p></div>
+<button class="copy" type="button" data-copy="code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, roc_auc_score, ConfusionMatrixDisplay
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/creditcard.csv"
+
+df = pd.read_csv(DATA_PATH)
+print(df.shape)
+print("Class distribution (0 = No default, 1 = Default):\n", df['Class'].value_counts())
+
+X = df.drop(columns='Class')
+y = df['Class']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# class_weight='balanced' handles the highly imbalanced data
+model = LogisticRegression(max_iter=1000, class_weight='balanced')
+model.fit(X_train, y_train)
+pred = model.predict(X_test)
+prob = model.predict_proba(X_test)[:, 1]
+
+print("\nAccuracy:", round(accuracy_score(y_test, pred) * 100, 2), "%")
+print("ROC-AUC :", round(roc_auc_score(y_test, prob), 4))
+print(classification_report(y_test, pred, target_names=['No Default', 'Default']))
+ConfusionMatrixDisplay.from_predictions(y_test, pred, display_labels=['No Default', 'Default'], cmap='Blues')
+plt.title('Logistic Regression - Confusion Matrix'); plt.show()</code></pre>
+</article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp" id="exp-7">
+<div class="head"><div class="num">7</div><div class="ttl"><h3>End-to-end predictive analytics: build, evaluate, visualize</h3>
+<p class="meta">Finance Data · S3 · CO1, CO2, CO3 · <span class="file">Finance_data.csv</span> · <a href="https://www.kaggle.com/datasets/nitindatta/finance-data" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>TARGET</code> mein jo column predict karna hai woh likho. Column na mile to last column target ban jata hai.</p></div>
+<button class="copy" type="button" data-copy="code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/Finance_data.csv"
+
+df = pd.read_csv(DATA_PATH)
+TARGET = 'Avenue'                       # target column (loan data ho to e.g. 'Loan_Status' / 'default')
+if TARGET not in df.columns:
+    TARGET = df.columns[-1]
+
+# 1. Data understanding &amp; cleaning
+print(df.shape); print(df.head())
+print("Missing:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())
+df = df.drop_duplicates().dropna(axis=1, how='all')
+for col in df.columns:
+    df[col] = df[col].fillna(df[col].mode()[0])
+
+# 2. EDA
+sns.countplot(y=df[TARGET].astype(str)); plt.title(f'Target: {TARGET}'); plt.tight_layout(); plt.show()
+
+# 3. Encoding
+for col in df.select_dtypes(exclude='number').columns:
+    df[col] = LabelEncoder().fit_transform(df[col].astype(str))
+X, y = df.drop(columns=TARGET), df[TARGET]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+
+# 4. Model building &amp; evaluation
+models = {'Logistic Regression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),
+          'Random Forest': RandomForestClassifier(n_estimators=200, random_state=42)}
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    pred = model.predict(X_test)
+    print(f"\n{name} Accuracy: {accuracy_score(y_test, pred):.3f}")
+    print(classification_report(y_test, pred, zero_division=0))
+
+# 5. Visualization
+rf = models['Random Forest']
+ConfusionMatrixDisplay.from_predictions(y_test, rf.predict(X_test), cmap='Blues')
+plt.title('Random Forest - Confusion Matrix'); plt.show()
+pd.Series(rf.feature_importances_, index=X.columns).nlargest(10).sort_values().plot.barh()
+plt.title('Top 10 Important Features'); plt.tight_layout(); plt.show()</code></pre>
+</article><article class="exp" id="exp-8">
+<div class="head"><div class="num">8</div><div class="ttl"><h3>Twitter sentiment analysis</h3>
+<p class="meta">Twitter Entity Sentiment · S3 · CO1, CO2, CO3 · <span class="file">twitter_training.csv</span> <span class="file">twitter_validation.csv</span> · <a href="https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is code mein do path hain: <code>TRAIN_PATH</code> aur <code>TEST_PATH</code>.</p></div>
+<button class="copy" type="button" data-copy="code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
+import re
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+TRAIN_PATH = r"/path/to/twitter_training.csv"
+TEST_PATH = r"/path/to/twitter_validation.csv"
+
+cols = ['id', 'entity', 'sentiment', 'text']
+train = pd.read_csv(TRAIN_PATH, header=None, names=cols).dropna()
+test = pd.read_csv(TEST_PATH, header=None, names=cols).dropna()
+print(train.head())
+
+# Text cleaning
+def clean(t):
+    t = re.sub(r'http\S+|@\w+|#|[^a-zA-Z\s]', ' ', str(t).lower())
+    return re.sub(r'\s+', ' ', t).strip()
+
+train['clean'] = train['text'].apply(clean)
+test['clean'] = test['text'].apply(clean)
+
+train['sentiment'].value_counts().plot.bar(color=['tab:green', 'tab:red', 'tab:gray', 'tab:blue'])
+plt.title('Sentiment Distribution'); plt.ylabel('Tweets'); plt.show()
+
+# TF-IDF + Logistic Regression
+vec = TfidfVectorizer(max_features=20000, ngram_range=(1, 2), stop_words='english')
+X_train = vec.fit_transform(train['clean'])
+X_test = vec.transform(test['clean'])
+
+model = LogisticRegression(max_iter=1000)
+model.fit(X_train, train['sentiment'])
+pred = model.predict(X_test)
+
+print("\nAccuracy:", round(accuracy_score(test['sentiment'], pred) * 100, 2), "%")
+print(classification_report(test['sentiment'], pred))
+ConfusionMatrixDisplay.from_predictions(test['sentiment'], pred, cmap='Blues', xticks_rotation=45)
+plt.title('Confusion Matrix'); plt.tight_layout(); plt.show()
+
+# Try your own tweets
+for tweet in ["I love this game, it's amazing!", "Worst update ever, totally broken"]:
+    print(tweet, "-&gt;", model.predict(vec.transform([clean(tweet)]))[0])</code></pre>
+</article><article class="exp" id="exp-9">
+<div class="head"><div class="num">9</div><div class="ttl"><h3>Time series analysis &amp; forecasting with ARIMA</h3>
+<p class="meta">Transportation · S3 · CO2, CO3 · <span class="file">transport.csv</span> · <a href="https://www.kaggle.com/datasets/abdelazizsami/time-series-analysis-for-transportation" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>DATA_PATH</code> mein downloaded CSV ka path likho. Date aur value column khud detect ho jate hain (chaho to <code>DATE_COL</code> / <code>VALUE_COL</code> set kar do).</p></div>
+<button class="copy" type="button" data-copy="code-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
+<pre><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
+import warnings
+import pandas as pd
+import matplotlib.pyplot as plt
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.arima.model import ARIMA
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+warnings.filterwarnings('ignore')
+
+# Dataset path - download ke baad yahan apna path likho
+# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
+DATA_PATH = r"/path/to/transport.csv"
+
+df = pd.read_csv(DATA_PATH)
+print(df.head())
+DATE_COL = None                         # e.g. 'Date'   (None = auto detect)
+VALUE_COL = None                        # e.g. 'Vehicles' (None = auto detect)
+
+if DATE_COL is None:
+    DATE_COL = next(c for c in df.select_dtypes(exclude='number').columns
+                    if pd.to_datetime(df[c], errors='coerce').notna().mean() &gt; 0.8)
+if VALUE_COL is None:
+    nums = [c for c in df.select_dtypes('number').columns if 'id' not in c.lower()]
+    VALUE_COL = max(nums, key=lambda c: df[c].nunique())
+print("Date column:", DATE_COL, "| Value column:", VALUE_COL)
+
+# Prepare series
+df[DATE_COL] = pd.to_datetime(df[DATE_COL], errors='coerce')
+ts = df.dropna(subset=[DATE_COL]).groupby(DATE_COL)[VALUE_COL].sum().sort_index()
+step = ts.index.to_series().diff().median()
+if step &lt; pd.Timedelta('1D'):           # hourly/minute data -&gt; daily total
+    ts, step = ts.resample('D').sum(), pd.Timedelta('1D')
+ts = ts.interpolate()
+
+ts.plot(figsize=(12, 4), title=f'{VALUE_COL} over time'); plt.show()
+
+# Stationarity check (ADF test)
+p_value = adfuller(ts)[1]
+print("ADF p-value:", round(p_value, 4), "-&gt;", "Stationary" if p_value &lt; 0.05 else "Not stationary (use d=1)")
+d = 0 if p_value &lt; 0.05 else 1
+lags = min(30, len(ts) // 2 - 1)
+plot_acf(ts.diff().dropna() if d else ts, lags=lags); plot_pacf(ts.diff().dropna() if d else ts, lags=lags); plt.show()
+
+# Train / test split + ARIMA
+split = int(len(ts) * 0.8)
+train, test = ts[:split], ts[split:]
+model = ARIMA(train, order=(2, d, 2)).fit()
+print(model.summary())
+pred = model.forecast(len(test))
+pred.index = test.index
+print("MAE :", round(mean_absolute_error(test, pred), 3))
+print("RMSE:", round(mean_squared_error(test, pred) ** 0.5, 3))
+
+# Forecast next 30 periods
+future = ARIMA(ts, order=(2, d, 2)).fit().forecast(30)
+future.index = pd.date_range(ts.index[-1], periods=31, freq=pd.infer_freq(ts.index) or step)[1:]
+print("\nNext 30 forecasts:\n", future.round(2))
+
+plt.figure(figsize=(12, 5))
+plt.plot(train, label='Train'); plt.plot(test, label='Test')
+plt.plot(pred, label='ARIMA Prediction'); plt.plot(future, '--', label='Future Forecast')
+plt.legend(); plt.title('ARIMA Forecast'); plt.show()</code></pre>
+</article></section>
+</main>
+<footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels. Plots <code>plt.show()</code> se khulenge (Jupyter mein inline).</footer>
+<script>
 {
-name: "Propositional Logic Inference using Resolution",
-level: "Moderate",
-skill: "S3",
-co: "CO2",
-marks: 2,
-aim: "To implement propositional logic inference using the resolution technique.",
-description: "Resolution combines logical clauses to derive new conclusions. Example: (A OR B) and (NOT A) give B.",
-concepts: "Propositions, Logical Operators, Literals, Clauses, Resolution.",
-code: String.raw`# Propositional Logic using Resolution
-
-def resolution(c1, c2):
-    for x in c1:
-        if -x in c2:
-            return (c1 - {x}) | (c2 - {-x})
-    return None
-
-# A = 1, NOT A = -1
-# B = 2, NOT B = -2
-
-c1 = {1, 2}      # A OR B
-c2 = {-1}        # NOT A
-
-result = resolution(c1, c2)
-
-print("Clause 1:", c1)
-print("Clause 2:", c2)
-print("Result:", result)
-`
-},
-
-{
-name: "First Order Logic Inference using Forward/Backward Chaining",
-level: "Moderate",
-skill: "S3",
-co: "CO2",
-marks: 2,
-aim: "To implement inference using Forward and Backward Chaining.",
-description: "Forward Chaining starts from known facts and derives conclusions. Backward Chaining starts from a goal and checks whether it can be proved.",
-concepts: "First Order Logic, Facts, Rules, Forward Chaining, Backward Chaining.",
-code: String.raw`# Forward and Backward Chaining
-
-facts = {"Human(Socrates)"}
-
-rules = {
-    "Mortal(Socrates)": ["Human(Socrates)"]
-}
-
-# Forward Chaining
-def forward():
-    for result, conditions in rules.items():
-        if all(x in facts for x in conditions):
-            facts.add(result)
-    print("Forward:", facts)
-
-# Backward Chaining
-def backward(goal):
-    if goal in facts:
-        return True
-
-    if goal in rules:
-        return all(backward(x) for x in rules[goal])
-
-    return False
-
-forward()
-
-print("Backward:", backward("Mortal(Socrates)"))
-`
-},
-
-{
-name: "Bayesian Inference using Bayes' Rule and Bayesian Networks",
-level: "Moderate",
-skill: "S4",
-co: "CO3",
-marks: 2,
-aim: "To implement Bayesian inference using probability.",
-description: "Bayes' Rule calculates conditional probability. Bayesian Networks represent probabilistic relationships between variables.",
-concepts: "Probability, Conditional Probability, Bayes' Rule, Bayesian Network.",
-code: String.raw`# Bayesian Inference using Bayes' Rule
-
-# Probability values
-P_D = 0.01       # Disease
-P_Pos_D = 0.90   # Positive if disease
-P_Pos_ND = 0.05  # Positive without disease
-
-# Bayes' Rule
-P_Pos = (P_Pos_D * P_D) + (P_Pos_ND * (1-P_D))
-
-result = (P_Pos_D * P_D) / P_Pos
-
-print("Probability of Disease:", round(result, 4))
-
-
-# Simple Bayesian Network
-network = {
-    "Rain": 0.3,
-    "WetGrass_given_Rain": 0.9
-}
-
-prob = network["Rain"] * network["WetGrass_given_Rain"]
-
-print("Bayesian Network:", round(prob, 2))
-`
-},
-
-{
-name: "Simple Machine Learning Algorithm (Naive Bayes / Decision Tree)",
-level: "Moderate",
-skill: "S3",
-co: "CO3",
-marks: 3,
-aim: "To implement a basic Machine Learning algorithm for prediction.",
-description: "Naive Bayes uses probability for classification, while Decision Tree uses a tree-like structure to make predictions.",
-concepts: "Machine Learning, Training Data, Classification, Naive Bayes, Decision Tree, Prediction.",
-code: String.raw`from sklearn.naive_bayes import GaussianNB
-
-# Training Data
-X = [[2], [3], [4], [5], [6], [7]]
-y = ['Fail', 'Fail', 'Fail', 'Pass', 'Pass', 'Pass']
-
-# Create Model
-model = GaussianNB()
-
-# Train Model
-model.fit(X, y)
-
-# Prediction
-result = model.predict([[6]])
-
-print("Prediction:", result[0])
-`
-},
-
-{
-name: "AI Planning Problem (STRIPS-based)",
-level: "Complex",
-skill: "S5",
-co: "CO3",
-marks: 4,
-aim: "To study and implement an AI planning problem using STRIPS.",
-description: "STRIPS is a planning representation used in Artificial Intelligence. It represents actions through preconditions, add effects and delete effects.",
-concepts: "Initial State, Goal State, Actions, Preconditions, Add List, Delete List.",
-code: String.raw`# STRIPS-based AI Planning (Blocks World)
-
-# Initial State and Goal State
-initial = {"On(A,Table)", "On(B,Table)", "Clear(A)", "Clear(B)", "HandEmpty"}
-goal = {"On(A,B)"}
-
-# Actions: preconditions, add list, delete list
-actions = {
-    "Pickup(A)": {
-        "pre": {"On(A,Table)", "Clear(A)", "HandEmpty"},
-        "add": {"Holding(A)"},
-        "delete": {"On(A,Table)", "Clear(A)", "HandEmpty"}
-    },
-    "Pickup(B)": {
-        "pre": {"On(B,Table)", "Clear(B)", "HandEmpty"},
-        "add": {"Holding(B)"},
-        "delete": {"On(B,Table)", "Clear(B)", "HandEmpty"}
-    },
-    "Stack(A,B)": {
-        "pre": {"Holding(A)", "Clear(B)"},
-        "add": {"On(A,B)", "Clear(A)", "HandEmpty"},
-        "delete": {"Holding(A)", "Clear(B)"}
-    },
-    "Stack(B,A)": {
-        "pre": {"Holding(B)", "Clear(A)"},
-        "add": {"On(B,A)", "Clear(B)", "HandEmpty"},
-        "delete": {"Holding(B)", "Clear(A)"}
+const KW = new Set('import from as def return for in if else elif not and or is None True False lambda with while class try except'.split(' '));
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const RE = /(#[^\n]*)|([rRfFbBuU]{0,2}'(?:\\.|[^'\\\n])*'|[rRfFbBuU]{0,2}"(?:\\.|[^"\\\n])*")|(\b\d+(?:\.\d+)?\b)|([A-Za-z_]\w*)/g;
+function hl(src) {
+  let out = '', last = 0, m;
+  RE.lastIndex = 0;
+  while ((m = RE.exec(src))) {
+    out += esc(src.slice(last, m.index));
+    if (m[1]) out += '<span class="c">' + esc(m[1]) + '</span>';
+    else if (m[2]) out += '<span class="s">' + esc(m[2]) + '</span>';
+    else if (m[3]) out += '<span class="n">' + m[3] + '</span>';
+    else {
+      const w = m[4];
+      out += KW.has(w) ? '<span class="k">' + w + '</span>' : (src[RE.lastIndex] === '(' ? '<span class="f">' + w + '</span>' : w);
     }
+    last = RE.lastIndex;
+  }
+  return out + esc(src.slice(last));
 }
-
-# Planner (BFS over states)
-def plan(initial, goal):
-    queue = [(initial, [])]
-    visited = [initial]
-
-    while queue:
-        state, steps = queue.pop(0)
-
-        if goal <= state:
-            return steps
-
-        for name, a in actions.items():
-            if a["pre"] <= state:
-                new_state = (state - a["delete"]) | a["add"]
-                if new_state not in visited:
-                    visited.append(new_state)
-                    queue.append((new_state, steps + [name]))
-
-    return None
-
-print("Initial State:", initial)
-print("Goal State:", goal)
-
-result = plan(initial, goal)
-
-print("\nPlan:")
-for i, step in enumerate(result, 1):
-    print(i, step)
-`
-},
-
-{
-name: "Research Paper Study and Presentation in AI",
-level: "Complex",
-skill: "S5",
-co: "CO4",
-marks: 4,
-aim: "To study and present a recent research paper related to Artificial Intelligence.",
-description: "Study a research paper and understand its problem statement, methodology, results and applications.",
-concepts: "AI Search, Reasoning, Ethics, Applications, Research Methodology, Presentation.",
-code: ""
-}
-
-];
-
-const list = document.getElementById("practicalList");
-
-function render(items) {
-
-    list.innerHTML = "";
-
-    items.forEach((p) => {
-
-        const idx = practicals.indexOf(p);
-
-        const card = document.createElement("div");
-        card.className = "practical";
-
-        card.innerHTML = `
-            <h2>Practical ${idx + 1}: ${p.name}</h2>
-
-            <div class="meta">
-                <span class="tag">${p.level} Level</span>
-                <span class="tag">Skill: ${p.skill}</span>
-                <span class="tag">${p.co}</span>
-                <span class="tag">${p.marks} ISE Marks</span>
-            </div>
-
-            <div class="info">
-                <strong>Aim:</strong> ${p.aim}
-            </div>
-
-            <div class="info">
-                <strong>About:</strong> ${p.description}
-            </div>
-
-            <div class="info">
-                <strong>Important Concepts:</strong> ${p.concepts}
-            </div>
-
-            <div class="info">
-                <strong>Python Code:</strong>
-            </div>
-
-            <textarea id="code${idx}" spellcheck="false"
-            placeholder="# Paste your Python code here..."></textarea>
-
-            <div class="actions">
-                <button class="copy" id="copyBtn${idx}" onclick="copyCode(${idx})">
-                    📋 Copy Code
-                </button>
-
-                <button class="clear" onclick="clearCode(${idx})">
-                    Clear Code
-                </button>
-            </div>
-        `;
-
-        list.appendChild(card);
-
-        // Fill saved code and keep it in sync with edits
-        const ta = card.querySelector("textarea");
-        ta.value = p.code;
-        ta.addEventListener("input", () => { p.code = ta.value; });
-    });
-}
-
-function copyCode(index) {
-
-    const code = document.getElementById("code" + index).value;
-    const btn = document.getElementById("copyBtn" + index);
-
-    if (!code.trim()) {
-        alert("Please add code before copying!");
-        return;
-    }
-
-    const showDone = () => {
-        btn.textContent = "✅ Copied!";
-        btn.classList.add("done");
-        setTimeout(() => {
-            btn.textContent = "📋 Copy Code";
-            btn.classList.remove("done");
-        }, 1500);
-    };
-
-    const fallback = () => {
-        const ta = document.getElementById("code" + index);
-        ta.select();
-        try {
-            document.execCommand("copy");
-            showDone();
-        } catch (e) {
-            alert("Copy failed. Please copy manually.");
-        }
-    };
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(code).then(showDone).catch(fallback);
-    } else {
-        fallback();
-    }
-}
-
-function clearCode(index) {
-
-    if (confirm("Are you sure you want to clear this code?")) {
-        document.getElementById("code" + index).value = "";
-        practicals[index].code = "";
-    }
-}
-
-document.getElementById("search").addEventListener("input", function() {
-
-    const value = this.value.toLowerCase().trim();
-
-    const filtered = practicals.filter((p, i) =>
-        p.name.toLowerCase().includes(value) ||
-        p.level.toLowerCase().includes(value) ||
-        p.aim.toLowerCase().includes(value) ||
-        String(i + 1) === value
-    );
-
-    render(filtered);
+document.querySelectorAll('pre code').forEach(c => {
+  const src = c.textContent, raw = src.split('\n');
+  c.innerHTML = hl(src).split('\n').map((h, i) => /^\w*PATH\s*=/.test(raw[i]) ? '<span class="pl">' + h + '</span>' : h).join('\n');
 });
 
-render(practicals);
-
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly', '');
+  ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+  document.body.appendChild(ta); ta.select();
+  let ok = false;
+  try { ok = document.execCommand('copy'); } catch (e) {}
+  ta.remove();
+  return ok;
+}
+function selectEl(el) {
+  const r = document.createRange(); r.selectNodeContents(el);
+  const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-copy]');
+  if (!b) return;
+  const el = document.getElementById(b.dataset.copy);
+  const text = el.textContent;
+  const label = b.querySelector('span'), orig = b.dataset.label || (b.dataset.label = label.textContent);
+  const done = ok => {
+    if (!ok) selectEl(el);
+    b.classList.toggle('done', ok);
+    label.textContent = ok ? 'Copied!' : 'Selected - press Ctrl+C';
+    clearTimeout(b._t);
+    b._t = setTimeout(() => { b.classList.remove('done'); label.textContent = orig; }, 1800);
+  };
+  try {
+    navigator.clipboard.writeText(text).then(() => done(true), () => done(fallbackCopy(text)));
+  } catch (err) { done(fallbackCopy(text)); }
+});
+}
 </script>
-
-</body>
-</html>
+</body></html>
