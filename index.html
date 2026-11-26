@@ -1,66 +1,54 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Data Analytics Practical Codes</title>
+<title>Data Analytics Practicals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-/* VOICE: calm lab manual, clear and practical
-   IDEA: a printed practical journal, one numbered experiment after another
-   PICTURE: the code blocks themselves, each with a big copy button
-   COLOUR and TYPE: white / ink / ultramarine; Spectral titles, Inter body, JetBrains Mono code
-   LAYOUT: one reading column, sticky experiment links, cards stacked by level */
-:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d0e18);--ink:light-dark(#14110f,#e8e9f2);--mute:light-dark(#5b5f6e,#9ea1b5);--line:light-dark(#e2e4ec,#252941);--blue:light-dark(#1d2bd8,#8f99ff);--onblue:light-dark(#ffffff,#0d0e18);--codebg:light-dark(#f5f6fb,#13152a);--chip:light-dark(#eef0fd,#1a1e3b);
---k:light-dark(#1d2bd8,#9aa3ff);--s:light-dark(#a3361b,#ffb38f);--c:light-dark(#7a7e8d,#7d819b);--n:light-dark(#8a2fb8,#dcaaff);--f:light-dark(#0b6577,#79d3e2);--mark:light-dark(#fff1b8,#3d3514)}
+/* VOICE: calm lab manual, short and practical
+   IDEA: a practical journal index, two tabs (code / theory)
+   PICTURE: the list of practicals itself, each with one big copy button
+   COLOUR and TYPE: white / ink / ultramarine; Spectral titles, Inter body
+   LAYOUT: one column, segmented tab switch under the title, rows grouped by level */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#0d0e18);--ink:light-dark(#14110f,#e8e9f2);--mute:light-dark(#5b5f6e,#9ea1b5);--line:light-dark(#e2e4ec,#252941);--blue:light-dark(#1d2bd8,#8f99ff);--onblue:light-dark(#ffffff,#0d0e18);--codebg:light-dark(#f5f6fb,#13152a);--chip:light-dark(#eef0fd,#1a1e3b)}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
-html{scroll-padding-top:72px;scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
-.wrap{max-width:1040px;margin:0 auto;padding:0 max(4vw,16px)}
-header{padding:clamp(28px,5vw,56px) 0 20px}
-h1{font:600 clamp(32px,5vw,46px)/1.05 Spectral,Georgia,serif;margin:0 0 12px;text-wrap:balance;letter-spacing:-.01em}
+.wrap{max-width:900px;margin:0 auto;padding:0 max(4vw,16px)}
+header{padding:clamp(28px,5vw,52px) 0 8px}
+h1{font:600 clamp(32px,5vw,44px)/1.05 Spectral,Georgia,serif;margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em}
 .lead{color:var(--mute);max-width:62ch;margin:0 0 20px}
-.install{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 16px}
-.install code{flex:1 1 280px;font:14px/1.5 'JetBrains Mono',ui-monospace,monospace}
-nav{position:relative;z-index:5;background:var(--bg);border-block:1px solid var(--line)}
-@media(min-width:900px){nav{position:sticky;top:0}}
-.scroll{display:flex;gap:4px;overflow-x:auto;padding:8px 0;scrollbar-width:thin}
-.scroll a{flex:none;padding:10px 14px;border-radius:8px;color:var(--ink);text-decoration:none;font-weight:500;font-size:15px}
-.scroll a:hover,.scroll a:focus-visible{background:var(--chip);color:var(--blue)}
-h2{font:600 22px/1.2 Spectral,Georgia,serif;color:var(--blue);margin:34px 0 4px}
-.exp{border-top:1px solid var(--line);padding:18px 0}
-.head{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.num{font:600 44px/1 Spectral,Georgia,serif;color:var(--blue);width:44px;flex:none;text-align:center}
-.ttl{flex:1 1 360px}
-h3{font:600 22px/1.25 Spectral,Georgia,serif;margin:2px 0 6px;text-wrap:balance}
-.meta{margin:0;color:var(--mute);font-size:14px}
-.meta a{color:var(--blue);font-weight:500}
-.file{font:13px 'JetBrains Mono',ui-monospace,monospace;background:var(--chip);color:var(--ink);padding:2px 7px;border-radius:6px;white-space:nowrap;margin-right:4px}
-.note{margin:8px 0 0;font-size:14px;padding:8px 12px;border-left:3px solid var(--blue);background:var(--codebg);border-radius:0 8px 8px 0}
-.note code{font:13px 'JetBrains Mono',ui-monospace,monospace}
-.copy{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 18px;border-radius:10px;border:1.5px solid var(--blue);background:transparent;color:var(--blue);font:600 15px Inter,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.lead code{font:14px 'JetBrains Mono',ui-monospace,monospace}
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:var(--chip);border:1px solid var(--line)}
+.tabs button{min-height:44px;min-width:130px;padding:0 22px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:600 16px Inter,system-ui,sans-serif;cursor:pointer}
+.tabs button[aria-pressed=true]{background:var(--blue);color:var(--onblue)}
+.tabs button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.install{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:8px 8px 8px 16px;margin-top:22px}
+.install code{flex:1 1 260px;font:14px/1.5 'JetBrains Mono',ui-monospace,monospace}
+h2{font:600 21px/1.2 Spectral,Georgia,serif;color:var(--blue);margin:30px 0 4px}
+.exp{border-top:1px solid var(--line);padding:14px 0}
+.head{display:flex;gap:16px;align-items:center}
+.num{font:600 34px/1 Spectral,Georgia,serif;color:var(--blue);width:36px;flex:none;text-align:center}
+h3{flex:1;font:600 20px/1.3 Spectral,Georgia,serif;margin:0;text-wrap:balance}
+.copy{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;min-width:150px;padding:0 18px;border-radius:10px;border:1.5px solid var(--blue);background:transparent;color:var(--blue);font:600 15px Inter,system-ui,sans-serif;cursor:pointer;transition:background .15s,color .15s}
 .copy svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
 .copy:hover{background:var(--chip)}
 .copy:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 .copy.done{background:var(--blue);color:var(--onblue)}
-pre{margin:0;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:18px 20px;overflow-x:auto;tab-size:4}
-pre code{font:13.5px/1.65 'JetBrains Mono',ui-monospace,monospace;white-space:pre}
-.pl{background:var(--mark);box-shadow:0 0 0 4px var(--mark);border-radius:3px}
-.k{color:var(--k);font-weight:600}.s{color:var(--s)}.c{color:var(--c);font-style:italic}.n{color:var(--n)}.f{color:var(--f)}
-footer{color:var(--mute);font-size:14px;padding:28px 0 48px;border-top:1px solid var(--line);margin-top:20px}
-@media(max-width:600px){.head{gap:10px}.num{font-size:34px;width:34px}.ttl{flex-basis:calc(100% - 50px)}.copy{width:100%;justify-content:center}pre{padding:14px;border-radius:10px}pre code{font-size:12.5px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.copy{transition:none}}
+pre{margin:12px 0 0;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto}
+pre code{font:13px/1.6 'JetBrains Mono',ui-monospace,monospace;white-space:pre-wrap}
+footer{color:var(--mute);font-size:14px;padding:24px 0 44px;border-top:1px solid var(--line);margin-top:18px}
+@media(max-width:600px){.head{flex-wrap:wrap;gap:8px 12px}.num{font-size:28px;width:30px}h3{flex-basis:calc(100% - 44px);font-size:18px}.copy{width:100%}.tabs{display:flex}.tabs button{flex:1;min-width:0}}
+@media(prefers-reduced-motion:reduce){.copy{transition:none}}
 </style></head><body>
 <header class="wrap">
-<h1>Data Analytics Practicals &mdash; Short Python Codes</h1>
-<p class="lead">Saare 9 experiments ka chhota, ready-to-run code. <b>Copy code</b> dabao aur Jupyter / VS Code mein paste karo. Code mein upar <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
-<div class="install"><code id="code-0">pip install pandas numpy matplotlib seaborn scikit-learn scipy statsmodels</code><button class="copy" type="button" data-copy="code-0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div>
+<h1>Data Analytics Practicals</h1>
+<p class="lead"><b>Code</b> tab mein har practical ka Python code copy karo. <b>Theory</b> tab mein uska English content copy karo (problem statement, aim, theory, procedure, conclusion).</p>
+<div class="tabs" role="group" aria-label="View"><button type="button" data-tab="code" aria-pressed="true">Code</button><button type="button" data-tab="theory" aria-pressed="false">Theory</button></div>
 </header>
 <main class="wrap">
-<section class="group"><h2>Level: Basic (all)</h2><article class="exp" id="exp-1">
-<div class="head"><div class="num">1</div><div class="ttl"><h3>Missing values, duplicate records &amp; inconsistent entries</h3>
-<p class="meta">Healthcare · S1 · CO1 · <span class="file">healthcare_dataset.csv</span> · <a href="https://www.kaggle.com/datasets/prasad22/healthcare-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
-<button class="copy" type="button" data-copy="code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
+<div id="view-code">
+<div class="install"><code id="code-0">pip install pandas numpy matplotlib seaborn scikit-learn scipy statsmodels</code><button class="copy" type="button" data-copy="code-0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div>
+<section class="group"><h2>Level: Basic (all)</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Missing values, duplicate records &amp; inconsistent entries</h3><button class="copy" type="button" data-copy="code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
 import pandas as pd
 
 # Dataset path - download ke baad yahan apna path likho
@@ -99,12 +87,7 @@ for col in df.columns:                                   # fill missing values
     else:
         df[col] = df[col].fillna(df[col].mode()[0])
 print("\nShape after cleaning:", df.shape)
-print("Missing after cleaning:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())</code></pre>
-</article><article class="exp" id="exp-2">
-<div class="head"><div class="num">2</div><div class="ttl"><h3>Pearson correlation between variables</h3>
-<p class="meta">PIMA Indians Diabetes · S1 · CO1, CO3 · <span class="file">diabetes.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/pima-indians-diabetes-database" target="_blank" rel="noopener">Dataset</a></p></div>
-<button class="copy" type="button" data-copy="code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
+print("Missing after cleaning:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -139,12 +122,7 @@ plt.show()
 
 sns.regplot(x='Glucose', y='BMI', data=df, line_kws={'color': 'red'})
 plt.title(f"Glucose vs BMI (r = {df['Glucose'].corr(df['BMI']):.2f})")
-plt.show()</code></pre>
-</article><article class="exp" id="exp-3">
-<div class="head"><div class="num">3</div><div class="ttl"><h3>Principal Component Analysis (PCA) to reduce features</h3>
-<p class="meta">Mall Customers · S1 · CO1, CO2 · <span class="file">Mall_Customers.csv</span> · <a href="https://www.kaggle.com/datasets/vjchoudhary7/customer-segmentation-tutorial-in-python" target="_blank" rel="noopener">Dataset</a></p></div>
-<button class="copy" type="button" data-copy="code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
+plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
@@ -181,12 +159,7 @@ print("\nPC loadings:\n", pd.DataFrame(pca.components_, columns=X.columns, index
 plt.scatter(X_pca[:, 0], X_pca[:, 1], c=df['Spending Score (1-100)'], cmap='viridis')
 plt.colorbar(label='Spending Score')
 plt.xlabel('PC1'); plt.ylabel('PC2'); plt.title('Customers in 2D (PCA)')
-plt.show()</code></pre>
-</article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp" id="exp-4">
-<div class="head"><div class="num">4</div><div class="ttl"><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3>
-<p class="meta">Energy Efficiency · S2 · CO2 · <span class="file">ENB2012_data.csv</span> · <a href="https://www.kaggle.com/datasets/elikplim/eergy-efficiency-dataset" target="_blank" rel="noopener">Dataset</a></p></div>
-<button class="copy" type="button" data-copy="code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
+plt.show()</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -227,12 +200,7 @@ print("\nLinear Regression coefficients:\n", pd.Series(models['Linear Regression
 plt.scatter(y_test, pred, alpha=0.6)
 plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
 plt.xlabel('Actual Heating Load'); plt.ylabel('Predicted Heating Load')
-plt.title('Actual vs Predicted (Random Forest)'); plt.show()</code></pre>
-</article><article class="exp" id="exp-5">
-<div class="head"><div class="num">5</div><div class="ttl"><h3>SVM: is a tumour benign or malignant?</h3>
-<p class="meta">Breast Cancer Wisconsin · S2 · CO2 · <span class="file">data.csv</span> · <a href="https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data" target="_blank" rel="noopener">Dataset</a></p></div>
-<button class="copy" type="button" data-copy="code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
+plt.title('Actual vs Predicted (Random Forest)'); plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -267,12 +235,7 @@ plt.title('SVM - Confusion Matrix'); plt.show()
 
 # Predict a new sample (first test row)
 result = model.predict(X_test[:1])[0]
-print("Sample prediction:", "Malignant" if result == 1 else "Benign")</code></pre>
-</article><article class="exp" id="exp-6">
-<div class="head"><div class="num">6</div><div class="ttl"><h3>Logistic Regression: is a customer likely to default?</h3>
-<p class="meta">Credit Card (mlg-ulb) · S2 · CO2 · <span class="file">creditcard.csv</span> · <a href="https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is link par credit-card dataset hai, isliye <code>Class = 1</code> ko default / fraud maana gaya hai.</p></div>
-<button class="copy" type="button" data-copy="code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
+print("Sample prediction:", "Malignant" if result == 1 else "Benign")</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
@@ -306,12 +269,7 @@ print("\nAccuracy:", round(accuracy_score(y_test, pred) * 100, 2), "%")
 print("ROC-AUC :", round(roc_auc_score(y_test, prob), 4))
 print(classification_report(y_test, pred, target_names=['No Default', 'Default']))
 ConfusionMatrixDisplay.from_predictions(y_test, pred, display_labels=['No Default', 'Default'], cmap='Blues')
-plt.title('Logistic Regression - Confusion Matrix'); plt.show()</code></pre>
-</article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp" id="exp-7">
-<div class="head"><div class="num">7</div><div class="ttl"><h3>End-to-end predictive analytics: build, evaluate, visualize</h3>
-<p class="meta">Finance Data · S3 · CO1, CO2, CO3 · <span class="file">Finance_data.csv</span> · <a href="https://www.kaggle.com/datasets/nitindatta/finance-data" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>TARGET</code> mein jo column predict karna hai woh likho. Column na mile to last column target ban jata hai.</p></div>
-<button class="copy" type="button" data-copy="code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
+plt.title('Logistic Regression - Confusion Matrix'); plt.show()</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -361,12 +319,7 @@ rf = models['Random Forest']
 ConfusionMatrixDisplay.from_predictions(y_test, rf.predict(X_test), cmap='Blues')
 plt.title('Random Forest - Confusion Matrix'); plt.show()
 pd.Series(rf.feature_importances_, index=X.columns).nlargest(10).sort_values().plot.barh()
-plt.title('Top 10 Important Features'); plt.tight_layout(); plt.show()</code></pre>
-</article><article class="exp" id="exp-8">
-<div class="head"><div class="num">8</div><div class="ttl"><h3>Twitter sentiment analysis</h3>
-<p class="meta">Twitter Entity Sentiment · S3 · CO1, CO2, CO3 · <span class="file">twitter_training.csv</span> <span class="file">twitter_validation.csv</span> · <a href="https://www.kaggle.com/datasets/jp797498e/twitter-entity-sentiment-analysis" target="_blank" rel="noopener">Dataset</a></p><p class="note">Is code mein do path hain: <code>TRAIN_PATH</code> aur <code>TEST_PATH</code>.</p></div>
-<button class="copy" type="button" data-copy="code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
+plt.title('Top 10 Important Features'); plt.tight_layout(); plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -411,12 +364,7 @@ plt.title('Confusion Matrix'); plt.tight_layout(); plt.show()
 
 # Try your own tweets
 for tweet in ["I love this game, it's amazing!", "Worst update ever, totally broken"]:
-    print(tweet, "-&gt;", model.predict(vec.transform([clean(tweet)]))[0])</code></pre>
-</article><article class="exp" id="exp-9">
-<div class="head"><div class="num">9</div><div class="ttl"><h3>Time series analysis &amp; forecasting with ARIMA</h3>
-<p class="meta">Transportation · S3 · CO2, CO3 · <span class="file">transport.csv</span> · <a href="https://www.kaggle.com/datasets/abdelazizsami/time-series-analysis-for-transportation" target="_blank" rel="noopener">Dataset</a></p><p class="note"><code>DATA_PATH</code> mein downloaded CSV ka path likho. Date aur value column khud detect ho jate hain (chaho to <code>DATE_COL</code> / <code>VALUE_COL</code> set kar do).</p></div>
-<button class="copy" type="button" data-copy="code-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div>
-<pre class="src" hidden><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
+    print(tweet, "-&gt;", model.predict(vec.transform([clean(tweet)]))[0])</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="code-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
 import warnings
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -478,10 +426,207 @@ print("\nNext 30 forecasts:\n", future.round(2))
 plt.figure(figsize=(12, 5))
 plt.plot(train, label='Train'); plt.plot(test, label='Test')
 plt.plot(pred, label='ARIMA Prediction'); plt.plot(future, '--', label='Future Forecast')
-plt.legend(); plt.title('ARIMA Forecast'); plt.show()</code></pre>
-</article></section>
+plt.legend(); plt.title('ARIMA Forecast'); plt.show()</code></pre></article></section>
+<p class="hint" style="color:var(--mute);font-size:14px;margin:18px 0 0">Code paste karne ke baad upar <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
+</div>
+<div id="view-theory" hidden>
+<section class="group"><h2>Level: Basic (all)</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Missing values, duplicate records &amp; inconsistent entries</h3><button class="copy" type="button" data-copy="theory-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-1">Practical 1: Missing values, duplicate records &amp; inconsistent entries
+
+Problem Statement:
+Download a real-world dataset (Healthcare / Finance) from an open data repository and detect missing values, duplicate records, and inconsistent entries.
+
+Aim:
+To detect and handle missing values, duplicate records and inconsistent entries in a real-world healthcare dataset.
+
+Theory:
+Real-world data is rarely clean. Missing values are empty cells caused by skipped fields or system errors. Duplicate records are rows that appear more than once. Inconsistent entries are values written in different formats (e.g. names in mixed case) or values that are not possible (e.g. a negative bill amount, or a discharge date before the admission date).
+
+Data preprocessing detects and fixes these problems so that the analysis gives correct results (“garbage in, garbage out”). Missing numeric values are usually filled with the median, because it is not affected by outliers, and missing categorical values with the mode.
+
+Procedure:
+1. Load the healthcare dataset using pandas and view its shape, first rows and data types.
+2. Count the missing values in each column using isnull().sum().
+3. Count the duplicate rows using duplicated().sum().
+4. Find inconsistent entries: irregular name case, negative billing amount, invalid age and discharge date before admission date.
+5. Clean the data: standardise names, drop duplicates, remove invalid rows and fill the missing values.
+6. Check the cleaned data again for missing values and duplicates.
+
+Conclusion:
+Missing values, duplicate records and inconsistent entries were detected and handled, and the dataset is now clean and ready for analysis.</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="theory-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-2">Practical 2: Pearson correlation between variables
+
+Problem Statement:
+Using a suitable real-world dataset (e.g., PIMA Indians Diabetes), implement Pearson correlation in Python to study relationships between variables.
+
+Aim:
+To study the relationships between the variables of the PIMA Indians Diabetes dataset using the Pearson correlation coefficient.
+
+Theory:
+The Pearson correlation coefficient (r) measures the strength and direction of the linear relationship between two numeric variables: r = Σ(x − x̄)(y − ȳ) / √[Σ(x − x̄)² · Σ(y − ȳ)²].
+
+The value of r lies between −1 and +1. +1 means a perfect positive relationship, −1 a perfect negative relationship and 0 no linear relationship. A p-value below 0.05 means the relationship is statistically significant. Correlation does not imply causation.
+
+Procedure:
+1. Load diabetes.csv using pandas.
+2. Compute r between Glucose and Outcome using the formula, and verify it with scipy.stats.pearsonr (r and p-value).
+3. Compute the correlation matrix of all variables using df.corr(method='pearson').
+4. Sort the correlation of each feature with Outcome.
+5. Plot the correlation heatmap and a regression plot.
+
+Conclusion:
+Pearson correlation showed how the variables are related to each other and to diabetes. Glucose has the strongest positive correlation with the Outcome.</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="theory-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-3">Practical 3: Principal Component Analysis (PCA) to reduce features
+
+Problem Statement:
+Using the Mall customer segmentation data, apply Principal Component Analysis (PCA) to reduce the number of features.
+
+Aim:
+To reduce the number of features of the Mall Customers dataset using Principal Component Analysis (PCA).
+
+Theory:
+PCA is an unsupervised dimensionality reduction technique. It converts the original, possibly correlated features into a new set of uncorrelated features called principal components. PC1 captures the maximum variance in the data, PC2 the next highest, and so on.
+
+The data is standardised first because PCA is sensitive to the scale of the features. The explained variance ratio (eigenvalue of a component / sum of all eigenvalues) shows how much information each component keeps, and the number of components is chosen using the scree plot.
+
+Procedure:
+1. Load Mall_Customers.csv, drop CustomerID and encode Gender as 0/1.
+2. Standardise the features using StandardScaler.
+3. Fit PCA with all components; print the explained and cumulative variance and draw the scree plot.
+4. Apply PCA with 2 components and transform the data.
+5. Print the component loadings and plot the customers in 2D.
+
+Conclusion:
+The features were reduced to 2 principal components. The explained variance ratio shows how much of the original information is retained, and the 2D plot makes the customers easy to visualise.</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="theory-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-4">Practical 4: Energy efficiency: relationship analysis + regression for Heating Load
+
+Problem Statement:
+Use the Energy Efficiency Dataset to analyse the relationship between building design parameters and energy consumption. And apply an appropriate regression model to predict the Heating.
+
+Aim:
+To analyse the relationship between building design parameters and energy consumption, and to predict the Heating Load using regression.
+
+Theory:
+Regression is a supervised learning technique used to predict a continuous value. Multiple Linear Regression fits y = b₀ + b₁x₁ + … + bₙxₙ by minimising the sum of squared errors (least squares). Random Forest Regressor builds many decision trees and averages their predictions, so it can also capture non-linear relationships.
+
+Models are evaluated with R² (closer to 1 is better), MAE and RMSE (lower is better). The dataset has 768 buildings with 8 design features (X1–X8) and two targets: Heating Load (Y1) and Cooling Load (Y2).
+
+Procedure:
+1. Load ENB2012_data.csv and give the columns meaningful names.
+2. Study the relationship between design parameters and heating load using the correlation matrix and heatmap.
+3. Split the data into 80% training and 20% testing sets.
+4. Train Linear Regression and Random Forest Regressor to predict the Heating Load.
+5. Evaluate both models using R², MAE and RMSE, and plot actual vs predicted values.
+
+Conclusion:
+Design parameters such as overall height, relative compactness and roof area strongly affect the heating load. The regression models predicted the Heating Load with a high R², and Random Forest usually performs better than Linear Regression.</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="theory-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-5">Practical 5: SVM: is a tumour benign or malignant?
+
+Problem Statement:
+Using the Cancer Dataset, implement a Support Vector Machine (SVM) model to predict whether a tumour is benign or malignant based on given diagnostic features.
+
+Aim:
+To implement a Support Vector Machine (SVM) model that predicts whether a tumour is benign or malignant.
+
+Theory:
+SVM is a supervised classification algorithm. It finds the hyperplane that separates the two classes with the maximum margin. The data points closest to the hyperplane are called support vectors. When the data cannot be separated by a straight line, a kernel function (such as RBF) maps it to a higher dimension where it can be separated.
+
+Features are scaled because SVM depends on distances. Performance is measured with accuracy, precision, recall and the confusion matrix. In medical diagnosis, recall for malignant tumours is the most important metric, because missing a cancer case is the costliest error.
+
+Procedure:
+1. Load data.csv, drop the id and empty columns, and map diagnosis M → 1 and B → 0.
+2. Split the data into stratified training and testing sets.
+3. Scale the features using StandardScaler.
+4. Train an SVC model with the RBF kernel.
+5. Predict on the test data and print the accuracy, classification report and confusion matrix.
+
+Conclusion:
+The SVM model classified tumours as benign or malignant with high accuracy, showing that SVM is effective for medical diagnosis data.</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="theory-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-6">Practical 6: Logistic Regression: is a customer likely to default?
+
+Problem Statement:
+Using a real-world finance dataset related to loan applicants. Build a Logistic Regression model to classify whether a customer is likely to default on a loan based on selected economic and demographic attributes.
+
+Aim:
+To build a Logistic Regression model that classifies whether a customer is likely to default.
+
+Theory:
+Logistic Regression is a classification algorithm. It calculates z = b₀ + b₁x₁ + … + bₙxₙ and passes it through the sigmoid function σ(z) = 1 / (1 + e^(−z)) to get a probability between 0 and 1. If the probability is 0.5 or more, the customer is predicted as a defaulter (class 1).
+
+The given dataset is highly imbalanced (very few class 1 records), so class_weight='balanced' is used, and the model is judged by recall, precision and ROC-AUC instead of accuracy alone.
+
+Procedure:
+1. Load creditcard.csv and check the class distribution (Class = 1 is treated as default).
+2. Split the data into stratified training and testing sets.
+3. Scale the features using StandardScaler.
+4. Train LogisticRegression with class_weight='balanced'.
+5. Predict and evaluate using accuracy, ROC-AUC, the classification report and the confusion matrix.
+
+Conclusion:
+The Logistic Regression model was able to identify most of the default (class 1) cases. For imbalanced data, recall and ROC-AUC give a better picture of performance than accuracy.</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="theory-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-7">Practical 7: End-to-end predictive analytics: build, evaluate, visualize
+
+Problem Statement:
+Using a real-world finance dataset related to loan default, perform an end-to-end predictive analytics task. The experiment should include: Model building, evaluation and visualization.
+
+Aim:
+To perform an end-to-end predictive analytics task on a finance dataset, including model building, evaluation and visualisation.
+
+Theory:
+Predictive analytics uses historical data to predict unknown or future outcomes. An end-to-end project follows a lifecycle: problem understanding, data collection, data cleaning, exploratory data analysis (EDA), encoding of categorical data, train/test split, model building, evaluation and visualisation.
+
+Comparing more than one model (here Logistic Regression and Random Forest) helps in choosing the best one. Feature importance shows which attributes influence the prediction the most.
+
+Procedure:
+1. Load Finance_data.csv and select the TARGET column.
+2. Remove duplicate rows and fill the missing values.
+3. Perform EDA by plotting the target distribution.
+4. Label-encode the text columns and split the data into training and testing sets.
+5. Train Logistic Regression and Random Forest; print the accuracy and classification report.
+6. Visualise the confusion matrix and the top 10 important features.
+
+Conclusion:
+The complete predictive analytics pipeline was implemented: the data was prepared, two models were built and compared, and the most important features were identified.</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="theory-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-8">Practical 8: Twitter sentiment analysis
+
+Problem Statement:
+Using real-world Twitter dataset, perform sentiment analysis to classify tweets based on their sentiment polarity.
+
+Aim:
+To classify tweets according to their sentiment polarity (Positive, Negative, Neutral or Irrelevant).
+
+Theory:
+Sentiment analysis is a Natural Language Processing (NLP) task that identifies the opinion or emotion expressed in text. Tweets are first cleaned: converted to lower case, and links, mentions, symbols and stop words are removed.
+
+The text is then converted into numbers using TF-IDF (TF × IDF), which gives a higher weight to words that are frequent in a tweet but rare across all tweets. A machine learning classifier such as Logistic Regression is trained on these features using the labelled tweets.
+
+Procedure:
+1. Load twitter_training.csv and twitter_validation.csv and assign column names.
+2. Clean the tweet text using regular expressions.
+3. Plot the distribution of sentiments.
+4. Convert the text into TF-IDF vectors (unigrams and bigrams).
+5. Train Logistic Regression and evaluate it on the validation set.
+6. Predict the sentiment of new sample tweets.
+
+Conclusion:
+Tweets were successfully classified into sentiment classes using TF-IDF features and a Logistic Regression classifier.</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="theory-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-9">Practical 9: Time series analysis &amp; forecasting with ARIMA
+
+Problem Statement:
+Using a suitable real-world time series dataset related to transportation traffic (such as road traffic volume, metro passenger count, railway ridership, or air traffic statistics), perform time series analysis (using ARIMA) and forecasting.
+
+Aim:
+To perform time series analysis and forecasting of transportation traffic data using the ARIMA model.
+
+Theory:
+A time series is data recorded over time at regular intervals. It has four components: trend, seasonality, cyclic variation and irregular variation. ARIMA(p, d, q) combines AutoRegression (p past values), Integration (d differencing steps to make the series stationary) and Moving Average (q past errors).
+
+Stationarity is checked with the ADF test (p &lt; 0.05 means the series is stationary). ACF and PACF plots help in choosing q and p. The data is split in time order and is never shuffled.
+
+Procedure:
+1. Load the dataset, find the date and value columns, and convert the date column to datetime.
+2. Aggregate and sort the series (hourly data is converted to daily totals).
+3. Plot the series and run the ADF test to decide the value of d.
+4. Plot the ACF and PACF.
+5. Split the series into 80% train and 20% test, fit ARIMA(2, d, 2) and evaluate it using MAE and RMSE.
+6. Fit the model on the full data and forecast the next 30 periods.
+
+Conclusion:
+The ARIMA model captured the pattern of the traffic data and produced a forecast for the next 30 periods, which can help in transport planning.</code></pre></article></section>
+</div>
 </main>
-<footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels. Plots <code>plt.show()</code> se khulenge (Jupyter mein inline).</footer>
+<footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels</footer>
 <script>
 {
 function fallbackCopy(text) {
@@ -505,7 +650,7 @@ document.addEventListener('click', e => {
   const text = el.textContent;
   const label = b.querySelector('span'), orig = b.dataset.label || (b.dataset.label = label.textContent);
   const done = ok => {
-    if (!ok) { el.parentElement.hidden = false; selectEl(el); }
+    if (!ok && el.parentElement.tagName === 'PRE') { el.parentElement.hidden = false; selectEl(el); }
     b.classList.toggle('done', ok);
     label.textContent = ok ? 'Copied!' : 'Selected - press Ctrl+C';
     clearTimeout(b._t);
@@ -515,6 +660,18 @@ document.addEventListener('click', e => {
     navigator.clipboard.writeText(text).then(() => done(true), () => done(fallbackCopy(text)));
   } catch (err) { done(fallbackCopy(text)); }
 });
+const views = { code: document.getElementById('view-code'), theory: document.getElementById('view-theory') };
+function show(name) {
+  if (!views[name]) name = 'code';
+  for (const k in views) views[k].hidden = k !== name;
+  document.querySelectorAll('[data-tab]').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.tab === name)));
+}
+document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => {
+  show(t.dataset.tab);
+  try { if (location.hash !== '#' + t.dataset.tab) history.replaceState(null, '', '#' + t.dataset.tab); } catch (e) {}
+}));
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
 }
 </script>
 </body></html>
