@@ -436,194 +436,230 @@ Problem Statement:
 Download a real-world dataset (Healthcare / Finance) from an open data repository and detect missing values, duplicate records, and inconsistent entries.
 
 Aim:
-To detect and handle missing values, duplicate records and inconsistent entries in a real-world healthcare dataset.
+To find and fix empty values, repeated rows and wrong entries in a healthcare dataset.
 
 Theory:
-Real-world data is rarely clean. Missing values are empty cells caused by skipped fields or system errors. Duplicate records are rows that appear more than once. Inconsistent entries are values written in different formats (e.g. names in mixed case) or values that are not possible (e.g. a negative bill amount, or a discharge date before the admission date).
+Real-world data is often messy. Before we use it, we must check it and clean it.
 
-Data preprocessing detects and fixes these problems so that the analysis gives correct results (“garbage in, garbage out”). Missing numeric values are usually filled with the median, because it is not affected by outliers, and missing categorical values with the mode.
+Missing values are empty cells in the data. Duplicate records are rows that are repeated. Inconsistent entries are values written in different ways (like “Male” and “male”) or values that are not possible (like a negative bill amount).
+
+To fix these problems, we remove repeated rows, correct or remove wrong values, and fill the empty cells. Number columns are filled with the median (the middle value). Text columns are filled with the mode (the most common value).
+
+If the data is bad, the result will also be bad. So data cleaning is the first step of any analysis.
 
 Procedure:
-1. Load the healthcare dataset using pandas and view its shape, first rows and data types.
-2. Count the missing values in each column using isnull().sum().
-3. Count the duplicate rows using duplicated().sum().
-4. Find inconsistent entries: irregular name case, negative billing amount, invalid age and discharge date before admission date.
-5. Clean the data: standardise names, drop duplicates, remove invalid rows and fill the missing values.
-6. Check the cleaned data again for missing values and duplicates.
+1. Load the dataset and look at its rows and columns.
+2. Count the empty cells in each column.
+3. Count the repeated rows.
+4. Find wrong entries, like names in mixed case, negative bill amounts and wrong dates.
+5. Clean the data: fix the names, remove repeated and wrong rows, and fill the empty cells.
+6. Check the data again to make sure it is clean.
 
 Conclusion:
-Missing values, duplicate records and inconsistent entries were detected and handled, and the dataset is now clean and ready for analysis.</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="theory-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-2">Practical 2: Pearson correlation between variables
+We found the empty values, repeated rows and wrong entries, and fixed them. The data is now clean and ready to use.</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="theory-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-2">Practical 2: Pearson correlation between variables
 
 Problem Statement:
 Using a suitable real-world dataset (e.g., PIMA Indians Diabetes), implement Pearson correlation in Python to study relationships between variables.
 
 Aim:
-To study the relationships between the variables of the PIMA Indians Diabetes dataset using the Pearson correlation coefficient.
+To find how the columns of the diabetes dataset are related to each other using Pearson correlation.
 
 Theory:
-The Pearson correlation coefficient (r) measures the strength and direction of the linear relationship between two numeric variables: r = Σ(x − x̄)(y − ȳ) / √[Σ(x − x̄)² · Σ(y − ȳ)²].
+Correlation tells us how two things change together. Pearson correlation gives this as a number called r.
 
-The value of r lies between −1 and +1. +1 means a perfect positive relationship, −1 a perfect negative relationship and 0 no linear relationship. A p-value below 0.05 means the relationship is statistically significant. Correlation does not imply causation.
+The value of r is between -1 and +1. If r is near +1, both values go up together. If r is near -1, one value goes up when the other goes down. If r is near 0, there is no clear relation.
+
+Formula: r = Σ(x − x̄)(y − ȳ) / √[Σ(x − x̄)² × Σ(y − ȳ)²], where x̄ and ȳ are the average values of x and y.
+
+If the p-value is less than 0.05, the relation is real and not by chance. Correlation only shows a relation. It does not prove that one thing causes the other.
 
 Procedure:
-1. Load diabetes.csv using pandas.
-2. Compute r between Glucose and Outcome using the formula, and verify it with scipy.stats.pearsonr (r and p-value).
-3. Compute the correlation matrix of all variables using df.corr(method='pearson').
-4. Sort the correlation of each feature with Outcome.
-5. Plot the correlation heatmap and a regression plot.
+1. Load the diabetes dataset.
+2. Find r between Glucose and Outcome using the formula, and check it with a Python function.
+3. Find r for every pair of columns (this is called the correlation matrix).
+4. See which columns are most related to diabetes.
+5. Draw a heatmap (a coloured table) to show all the values.
 
 Conclusion:
-Pearson correlation showed how the variables are related to each other and to diabetes. Glucose has the strongest positive correlation with the Outcome.</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="theory-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-3">Practical 3: Principal Component Analysis (PCA) to reduce features
+We found how the columns are related to each other. Glucose has the strongest relation with diabetes.</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="theory-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-3">Practical 3: Principal Component Analysis (PCA) to reduce features
 
 Problem Statement:
 Using the Mall customer segmentation data, apply Principal Component Analysis (PCA) to reduce the number of features.
 
 Aim:
-To reduce the number of features of the Mall Customers dataset using Principal Component Analysis (PCA).
+To reduce the number of columns in the Mall Customers data using PCA.
 
 Theory:
-PCA is an unsupervised dimensionality reduction technique. It converts the original, possibly correlated features into a new set of uncorrelated features called principal components. PC1 captures the maximum variance in the data, PC2 the next highest, and so on.
+PCA (Principal Component Analysis) is a method to reduce the number of columns in data.
 
-The data is standardised first because PCA is sensitive to the scale of the features. The explained variance ratio (eigenvalue of a component / sum of all eigenvalues) shows how much information each component keeps, and the number of components is chosen using the scree plot.
+It makes a few new columns called principal components. The first one (PC1) keeps the most information. The second one (PC2) keeps the next most, and so on.
+
+Before PCA, we bring all columns to the same scale. If we do not, a column with big numbers (like income) will look more important than it really is.
+
+Explained variance tells us how much information each new column keeps. We keep only the first few new columns.
 
 Procedure:
-1. Load Mall_Customers.csv, drop CustomerID and encode Gender as 0/1.
-2. Standardise the features using StandardScaler.
-3. Fit PCA with all components; print the explained and cumulative variance and draw the scree plot.
-4. Apply PCA with 2 components and transform the data.
-5. Print the component loadings and plot the customers in 2D.
+1. Load the data. Remove the CustomerID column and change Gender to 0 and 1.
+2. Bring all columns to the same scale.
+3. Apply PCA and see how much information each component keeps.
+4. Keep only 2 components.
+5. Draw a graph of the customers using these 2 components.
 
 Conclusion:
-The features were reduced to 2 principal components. The explained variance ratio shows how much of the original information is retained, and the 2D plot makes the customers easy to visualise.</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="theory-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-4">Practical 4: Energy efficiency: relationship analysis + regression for Heating Load
+We reduced the data from 4 columns to 2 columns. This makes the data easier to understand and to show on a graph.</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="theory-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-4">Practical 4: Energy efficiency: relationship analysis + regression for Heating Load
 
 Problem Statement:
 Use the Energy Efficiency Dataset to analyse the relationship between building design parameters and energy consumption. And apply an appropriate regression model to predict the Heating.
 
 Aim:
-To analyse the relationship between building design parameters and energy consumption, and to predict the Heating Load using regression.
+To see how the design of a building affects its energy use, and to predict its heating load.
 
 Theory:
-Regression is a supervised learning technique used to predict a continuous value. Multiple Linear Regression fits y = b₀ + b₁x₁ + … + bₙxₙ by minimising the sum of squared errors (least squares). Random Forest Regressor builds many decision trees and averages their predictions, so it can also capture non-linear relationships.
+Regression is used to predict a number. Here we predict the heating load, which is the energy needed to keep a building warm.
 
-Models are evaluated with R² (closer to 1 is better), MAE and RMSE (lower is better). The dataset has 768 buildings with 8 design features (X1–X8) and two targets: Heating Load (Y1) and Cooling Load (Y2).
+Linear Regression draws the best straight line through the data. Its formula is y = b₀ + b₁x₁ + … + bₙxₙ.
+
+Random Forest makes many small decision trees and takes the average of their answers. It can also learn curved patterns.
+
+We check the model with R² (closer to 1 is better) and with the errors MAE and RMSE (smaller is better).
+
+The dataset has 768 buildings. Each building has 8 design values, like height, wall area and glass area.
 
 Procedure:
-1. Load ENB2012_data.csv and give the columns meaningful names.
-2. Study the relationship between design parameters and heating load using the correlation matrix and heatmap.
-3. Split the data into 80% training and 20% testing sets.
-4. Train Linear Regression and Random Forest Regressor to predict the Heating Load.
-5. Evaluate both models using R², MAE and RMSE, and plot actual vs predicted values.
+1. Load the dataset and give the columns simple names.
+2. Find how each design value is related to the heating load, and draw a heatmap.
+3. Split the data: 80% to train the model and 20% to test it.
+4. Train Linear Regression and Random Forest.
+5. Check the results and draw a graph of actual vs predicted values.
 
 Conclusion:
-Design parameters such as overall height, relative compactness and roof area strongly affect the heating load. The regression models predicted the Heating Load with a high R², and Random Forest usually performs better than Linear Regression.</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="theory-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-5">Practical 5: SVM: is a tumour benign or malignant?
+Height, compactness and roof area affect the heating load the most. Both models predicted the heating load well, and Random Forest usually gave better results.</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="theory-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-5">Practical 5: SVM: is a tumour benign or malignant?
 
 Problem Statement:
 Using the Cancer Dataset, implement a Support Vector Machine (SVM) model to predict whether a tumour is benign or malignant based on given diagnostic features.
 
 Aim:
-To implement a Support Vector Machine (SVM) model that predicts whether a tumour is benign or malignant.
+To predict whether a tumour is benign (not cancer) or malignant (cancer) using SVM.
 
 Theory:
-SVM is a supervised classification algorithm. It finds the hyperplane that separates the two classes with the maximum margin. The data points closest to the hyperplane are called support vectors. When the data cannot be separated by a straight line, a kernel function (such as RBF) maps it to a higher dimension where it can be separated.
+SVM (Support Vector Machine) is used to put data into groups, called classes. Here the two classes are benign and malignant.
 
-Features are scaled because SVM depends on distances. Performance is measured with accuracy, precision, recall and the confusion matrix. In medical diagnosis, recall for malignant tumours is the most important metric, because missing a cancer case is the costliest error.
+SVM draws a line that separates the two groups. It chooses the line with the widest gap between the groups. This gap is called the margin. The points closest to the line are called support vectors.
+
+If the groups cannot be separated by a straight line, SVM uses a kernel. A kernel helps it draw a curved boundary.
+
+We check the model with accuracy and a confusion matrix (a table of right and wrong answers). Here, missing a cancer case is the worst mistake.
 
 Procedure:
-1. Load data.csv, drop the id and empty columns, and map diagnosis M → 1 and B → 0.
-2. Split the data into stratified training and testing sets.
-3. Scale the features using StandardScaler.
-4. Train an SVC model with the RBF kernel.
-5. Predict on the test data and print the accuracy, classification report and confusion matrix.
+1. Load the dataset. Remove the extra columns and change M to 1 and B to 0.
+2. Split the data into training and testing parts.
+3. Bring all columns to the same scale.
+4. Train the SVM model.
+5. Test the model and check the accuracy and the confusion matrix.
 
 Conclusion:
-The SVM model classified tumours as benign or malignant with high accuracy, showing that SVM is effective for medical diagnosis data.</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="theory-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-6">Practical 6: Logistic Regression: is a customer likely to default?
+The SVM model predicted benign and malignant tumours with high accuracy.</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="theory-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-6">Practical 6: Logistic Regression: is a customer likely to default?
 
 Problem Statement:
 Using a real-world finance dataset related to loan applicants. Build a Logistic Regression model to classify whether a customer is likely to default on a loan based on selected economic and demographic attributes.
 
 Aim:
-To build a Logistic Regression model that classifies whether a customer is likely to default.
+To predict whether a customer will default (not pay back) using Logistic Regression.
 
 Theory:
-Logistic Regression is a classification algorithm. It calculates z = b₀ + b₁x₁ + … + bₙxₙ and passes it through the sigmoid function σ(z) = 1 / (1 + e^(−z)) to get a probability between 0 and 1. If the probability is 0.5 or more, the customer is predicted as a defaulter (class 1).
+Logistic Regression is used for yes/no questions. Here the question is: will the customer default or not?
 
-The given dataset is highly imbalanced (very few class 1 records), so class_weight='balanced' is used, and the model is judged by recall, precision and ROC-AUC instead of accuracy alone.
+It gives a probability between 0 and 1 using the sigmoid function: σ(z) = 1 / (1 + e^(−z)). If the probability is 0.5 or more, the answer is yes (default).
+
+In our data, defaulters are very few. So a model can get high accuracy just by saying “no” every time. That is why we give more importance to the rare class, and we also check recall and ROC-AUC, not only accuracy.
 
 Procedure:
-1. Load creditcard.csv and check the class distribution (Class = 1 is treated as default).
-2. Split the data into stratified training and testing sets.
-3. Scale the features using StandardScaler.
-4. Train LogisticRegression with class_weight='balanced'.
-5. Predict and evaluate using accuracy, ROC-AUC, the classification report and the confusion matrix.
+1. Load the dataset and count the customers in each class (Class 1 = default).
+2. Split the data into training and testing parts.
+3. Bring all columns to the same scale.
+4. Train the Logistic Regression model and give more importance to the rare class.
+5. Test the model and check accuracy, recall, ROC-AUC and the confusion matrix.
 
 Conclusion:
-The Logistic Regression model was able to identify most of the default (class 1) cases. For imbalanced data, recall and ROC-AUC give a better picture of performance than accuracy.</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="theory-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-7">Practical 7: End-to-end predictive analytics: build, evaluate, visualize
+The model was able to find most of the defaulters. When one class is very small, recall and ROC-AUC are better to check than accuracy.</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="theory-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-7">Practical 7: End-to-end predictive analytics: build, evaluate, visualize
 
 Problem Statement:
 Using a real-world finance dataset related to loan default, perform an end-to-end predictive analytics task. The experiment should include: Model building, evaluation and visualization.
 
 Aim:
-To perform an end-to-end predictive analytics task on a finance dataset, including model building, evaluation and visualisation.
+To do a complete prediction project on finance data: build a model, test it and show the results in graphs.
 
 Theory:
-Predictive analytics uses historical data to predict unknown or future outcomes. An end-to-end project follows a lifecycle: problem understanding, data collection, data cleaning, exploratory data analysis (EDA), encoding of categorical data, train/test split, model building, evaluation and visualisation.
+Predictive analytics means using old data to predict something unknown, like whether a customer will pay back a loan.
 
-Comparing more than one model (here Logistic Regression and Random Forest) helps in choosing the best one. Feature importance shows which attributes influence the prediction the most.
+A complete project has these steps: understand the problem, collect the data, clean it, explore it with graphs, change text into numbers, split the data, build the model, test it and show the results.
+
+We build two models (Logistic Regression and Random Forest) and compare them. We also find which columns are the most important for the prediction.
 
 Procedure:
-1. Load Finance_data.csv and select the TARGET column.
-2. Remove duplicate rows and fill the missing values.
-3. Perform EDA by plotting the target distribution.
-4. Label-encode the text columns and split the data into training and testing sets.
-5. Train Logistic Regression and Random Forest; print the accuracy and classification report.
-6. Visualise the confusion matrix and the top 10 important features.
+1. Load the dataset and choose the column to predict (the target).
+2. Remove repeated rows and fill the empty cells.
+3. Draw a graph to understand the data.
+4. Change text columns into numbers and split the data into training and testing parts.
+5. Train both models and check their accuracy.
+6. Draw the confusion matrix and a graph of the most important columns.
 
 Conclusion:
-The complete predictive analytics pipeline was implemented: the data was prepared, two models were built and compared, and the most important features were identified.</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="theory-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-8">Practical 8: Twitter sentiment analysis
+We completed all the steps of a prediction project. We built and compared two models and found the most important columns.</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="theory-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-8">Practical 8: Twitter sentiment analysis
 
 Problem Statement:
 Using real-world Twitter dataset, perform sentiment analysis to classify tweets based on their sentiment polarity.
 
 Aim:
-To classify tweets according to their sentiment polarity (Positive, Negative, Neutral or Irrelevant).
+To find the feeling (sentiment) of tweets: Positive, Negative, Neutral or Irrelevant.
 
 Theory:
-Sentiment analysis is a Natural Language Processing (NLP) task that identifies the opinion or emotion expressed in text. Tweets are first cleaned: converted to lower case, and links, mentions, symbols and stop words are removed.
+Sentiment analysis means finding the feeling in a piece of text. For example, “I love this game” is positive and “This update is bad” is negative.
 
-The text is then converted into numbers using TF-IDF (TF × IDF), which gives a higher weight to words that are frequent in a tweet but rare across all tweets. A machine learning classifier such as Logistic Regression is trained on these features using the labelled tweets.
+First we clean the tweets. We make all letters small and remove links, @names, symbols and common words like “the” and “is”.
+
+A computer cannot read words, so we change the text into numbers using TF-IDF. TF-IDF gives more value to words that are important in a tweet, and less value to words that appear everywhere.
+
+Then we train a model (Logistic Regression) on tweets whose feelings are already known, so that it can guess the feeling of new tweets.
 
 Procedure:
-1. Load twitter_training.csv and twitter_validation.csv and assign column names.
-2. Clean the tweet text using regular expressions.
-3. Plot the distribution of sentiments.
-4. Convert the text into TF-IDF vectors (unigrams and bigrams).
-5. Train Logistic Regression and evaluate it on the validation set.
-6. Predict the sentiment of new sample tweets.
+1. Load the training and testing tweet files.
+2. Clean the tweet text.
+3. Draw a graph of how many tweets have each feeling.
+4. Change the text into numbers using TF-IDF.
+5. Train the model and test it.
+6. Try the model on new tweets.
 
 Conclusion:
-Tweets were successfully classified into sentiment classes using TF-IDF features and a Logistic Regression classifier.</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="theory-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-9">Practical 9: Time series analysis &amp; forecasting with ARIMA
+The model was able to find the feeling of tweets correctly in most cases.</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="theory-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-9">Practical 9: Time series analysis &amp; forecasting with ARIMA
 
 Problem Statement:
 Using a suitable real-world time series dataset related to transportation traffic (such as road traffic volume, metro passenger count, railway ridership, or air traffic statistics), perform time series analysis (using ARIMA) and forecasting.
 
 Aim:
-To perform time series analysis and forecasting of transportation traffic data using the ARIMA model.
+To study transport traffic data over time and predict future traffic using ARIMA.
 
 Theory:
-A time series is data recorded over time at regular intervals. It has four components: trend, seasonality, cyclic variation and irregular variation. ARIMA(p, d, q) combines AutoRegression (p past values), Integration (d differencing steps to make the series stationary) and Moving Average (q past errors).
+A time series is data collected over time, like the number of vehicles every day. The order of the data is very important.
 
-Stationarity is checked with the ADF test (p &lt; 0.05 means the series is stationary). ACF and PACF plots help in choosing q and p. The data is split in time order and is never shuffled.
+A time series can have a trend (going up or down over a long time) and seasonality (a pattern that repeats, like less traffic every Sunday).
+
+ARIMA is a model used to predict future values. It has three parts: p uses past values, d makes the data steady by taking differences, and q uses past errors.
+
+ARIMA works best when the data is stationary, which means its average does not change over time. We check this with the ADF test. If the p-value is less than 0.05, the data is stationary.
+
+We never shuffle time series data. We train the model on the older part and test it on the newer part.
 
 Procedure:
-1. Load the dataset, find the date and value columns, and convert the date column to datetime.
-2. Aggregate and sort the series (hourly data is converted to daily totals).
-3. Plot the series and run the ADF test to decide the value of d.
-4. Plot the ACF and PACF.
-5. Split the series into 80% train and 20% test, fit ARIMA(2, d, 2) and evaluate it using MAE and RMSE.
-6. Fit the model on the full data and forecast the next 30 periods.
+1. Load the dataset and find the date and value columns.
+2. Put the data in date order. If the data is hourly, change it to daily totals.
+3. Draw a graph and check if the data is stationary using the ADF test.
+4. Draw the ACF and PACF graphs to help choose the model settings.
+5. Train ARIMA on the first 80% of the data and test it on the last 20%.
+6. Predict the next 30 time periods (for example, the next 30 days).
 
 Conclusion:
-The ARIMA model captured the pattern of the traffic data and produced a forecast for the next 30 periods, which can help in transport planning.</code></pre></article></section>
+The ARIMA model learned the pattern of the traffic data and predicted future values. This can help in planning transport.</code></pre></article></section>
 </div>
 </main>
 <footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels</footer>
