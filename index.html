@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Data Analytics Practicals</title>
+<title>Generative AI Practicals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
 /* VOICE: calm lab manual, short and practical
-   IDEA: a practical journal index, two tabs (code / theory)
+   IDEA: a practical journal index: subject switch, then code / theory tabs
    PICTURE: the list of practicals itself, each with one big copy button
    COLOUR and TYPE: white / ink / ultramarine; Spectral titles, Inter body
    LAYOUT: one column, segmented tab switch under the title, rows grouped by level */
@@ -18,6 +18,8 @@ header{padding:clamp(28px,5vw,52px) 0 8px}
 h1{font:600 clamp(32px,5vw,44px)/1.05 Spectral,Georgia,serif;margin:0 0 10px;text-wrap:balance;letter-spacing:-.01em}
 .lead{color:var(--mute);max-width:62ch;margin:0 0 20px}
 .lead code{font:14px 'JetBrains Mono',ui-monospace,monospace}
+.switches{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
+.subject button{min-width:170px}
 .tabs{display:inline-flex;gap:4px;padding:4px;border-radius:14px;background:var(--chip);border:1px solid var(--line)}
 .tabs button{min-height:44px;min-width:130px;padding:0 22px;border:0;border-radius:10px;background:transparent;color:var(--ink);font:600 16px Inter,system-ui,sans-serif;cursor:pointer}
 .tabs button[aria-pressed=true]{background:var(--blue);color:var(--onblue)}
@@ -37,900 +39,1607 @@ h3{flex:1;font:600 20px/1.3 Spectral,Georgia,serif;margin:0;text-wrap:balance}
 pre{margin:12px 0 0;background:var(--codebg);border:1px solid var(--line);border-radius:12px;padding:14px 16px;overflow-x:auto}
 pre code{font:13px/1.6 'JetBrains Mono',ui-monospace,monospace;white-space:pre-wrap}
 footer{color:var(--mute);font-size:14px;padding:24px 0 44px;border-top:1px solid var(--line);margin-top:18px}
-@media(max-width:600px){.head{flex-wrap:wrap;gap:8px 12px}.num{font-size:28px;width:30px}h3{flex-basis:calc(100% - 44px);font-size:18px}.copy{width:100%}.tabs{display:flex}.tabs button{flex:1;min-width:0}}
+@media(max-width:600px){.switches .tabs{width:100%}.subject button{min-width:0}.head{flex-wrap:wrap;gap:8px 12px}.num{font-size:28px;width:30px}h3{flex-basis:calc(100% - 44px);font-size:18px}.copy{width:100%}.tabs{display:flex}.tabs button{flex:1;min-width:0}}
 @media(prefers-reduced-motion:reduce){.copy{transition:none}}
 </style></head><body>
 <header class="wrap">
-<h1>Data Analytics Practicals</h1>
-<p class="lead"><b>Code</b> tab mein har practical ka Python code copy karo. <b>Theory</b> tab mein uska English content copy karo (problem statement, aim, theory, formulas, applications, procedure, conclusion).</p>
+<h1>Generative AI Practicals</h1>
+<p class="lead"><b>Code</b> tab mein har practical ka Python code copy karo, aur <b>Theory</b> tab mein uska English content (problem statement, aim, theory, formulas, applications, procedure, conclusion).</p>
+<div class="switches">
 <div class="tabs" role="group" aria-label="View"><button type="button" data-tab="code" aria-pressed="true">Code</button><button type="button" data-tab="theory" aria-pressed="false">Theory</button></div>
+</div>
 </header>
 <main class="wrap">
-<div id="view-code">
-<div class="install"><code id="code-0">pip install pandas numpy matplotlib seaborn scikit-learn scipy statsmodels</code><button class="copy" type="button" data-copy="code-0"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div>
-<section class="group"><h2>Level: Basic (all)</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Missing values, duplicate records &amp; inconsistent entries</h3><button class="copy" type="button" data-copy="code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-1"># Exp 1: Detect missing values, duplicate records &amp; inconsistent entries (Healthcare)
-import pandas as pd
-
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/healthcare_dataset.csv"
-
-df = pd.read_csv(DATA_PATH)
-print("Shape:", df.shape)
-print(df.head())
-df.info()
-
-# 1. Missing values
-print("\nMissing values per column:\n", df.isnull().sum())
-print("Total missing values:", df.isnull().sum().sum())
-
-# 2. Duplicate records
-print("\nDuplicate rows:", df.duplicated().sum())
-
-# 3. Inconsistent entries
-print("\nNames with irregular case (e.g. 'BoBBy jacKson'):", (df['Name'] != df['Name'].str.title()).sum())
-print("Negative Billing Amount:", (df['Billing Amount'] &lt; 0).sum())
-print("Invalid Age (&lt;0 or &gt;120):", ((df['Age'] &lt; 0) | (df['Age'] &gt; 120)).sum())
-adm = pd.to_datetime(df['Date of Admission'])
-dis = pd.to_datetime(df['Discharge Date'])
-print("Discharge date before admission:", (dis &lt; adm).sum())
-for col in ['Gender', 'Blood Type', 'Medical Condition', 'Admission Type', 'Test Results']:
-    print(col, "-&gt;", df[col].unique().tolist())
-
-# 4. Cleaning
-df['Name'] = df['Name'].str.strip().str.title()          # fix inconsistent case
-df = df.drop_duplicates()                                # remove duplicates
-df = df[df['Billing Amount'] &gt;= 0]                       # remove invalid billing
-for col in df.columns:                                   # fill missing values
-    if df[col].dtype.kind in 'if':
-        df[col] = df[col].fillna(df[col].median())
-    else:
-        df[col] = df[col].fillna(df[col].mode()[0])
-print("\nShape after cleaning:", df.shape)
-print("Missing after cleaning:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-2"># Exp 2: Pearson correlation on PIMA Indians Diabetes dataset
+<div class="panel" id="view-gen-code" hidden><div class="install"><code id="gen-pip">pip install numpy matplotlib scipy scikit-learn pillow torch torchvision tensorflow transformers datasets diffusers accelerate</code><button class="copy" type="button" data-copy="gen-pip"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy</span></button></div><section class="group"><h2>Generative AI practicals</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Generative AI vs Discriminative Models</h3><button class="copy" type="button" data-copy="gen-code-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-1"># GenAI Practical 1: Generative AI vs Discriminative Models
 import numpy as np
-import pandas as pd
-import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy.stats import pearsonr
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Flatten, Reshape
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/diabetes.csv"
+# --------------------------------------------------
+# 1. Load MNIST Dataset
+# --------------------------------------------------
 
-df = pd.read_csv(DATA_PATH)
-print(df.head())
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
 
-# Pearson formula: r = sum((x - x_mean)(y - y_mean)) / sqrt(sum((x - x_mean)^2) * sum((y - y_mean)^2))
-def pearson(x, y):
-    xd, yd = x - x.mean(), y - y.mean()
-    return (xd * yd).sum() / np.sqrt((xd ** 2).sum() * (yd ** 2).sum())
+# Normalize pixel values: 0-255 -&gt; 0-1
+x_train = x_train.astype("float32") / 255.0
+x_test = x_test.astype("float32") / 255.0
 
-print("\nGlucose vs Outcome (manual formula):", round(pearson(df['Glucose'], df['Outcome']), 4))
-r, p = pearsonr(df['Glucose'], df['Outcome'])
-print(f"Glucose vs Outcome (scipy): r = {r:.4f}, p-value = {p:.4e}")
+print("Training images:", x_train.shape)
+print("Testing images :", x_test.shape)
 
-# Full correlation matrix
-corr = df.corr(method='pearson')
-print("\nCorrelation of each feature with Outcome:\n", corr['Outcome'].sort_values(ascending=False))
 
-plt.figure(figsize=(9, 7))
-sns.heatmap(corr, annot=True, fmt='.2f', cmap='coolwarm')
-plt.title('Pearson Correlation Matrix - PIMA Diabetes')
+# --------------------------------------------------
+# 2. Discriminative Model - Classification
+# --------------------------------------------------
+
+classifier = Sequential([
+    Flatten(input_shape=(28, 28)),
+    Dense(128, activation="relu"),
+    Dense(10, activation="softmax")
+])
+
+classifier.compile(
+    optimizer="adam",
+    loss="sparse_categorical_crossentropy",
+    metrics=["accuracy"]
+)
+
+print("\nTraining Discriminative Model...")
+
+classifier.fit(
+    x_train,
+    y_train,
+    epochs=3,
+    batch_size=128,
+    validation_split=0.1
+)
+
+loss, accuracy = classifier.evaluate(x_test, y_test, verbose=0)
+
+print("\nDiscriminative Model Accuracy:", accuracy)
+
+
+# --------------------------------------------------
+# 3. Generative Model - Autoencoder
+# --------------------------------------------------
+
+autoencoder = Sequential([
+    Flatten(input_shape=(28, 28)),
+
+    # Encoder
+    Dense(128, activation="relu"),
+    Dense(32, activation="relu"),
+
+    # Decoder
+    Dense(128, activation="relu"),
+    Dense(784, activation="sigmoid"),
+
+    Reshape((28, 28))
+])
+
+autoencoder.compile(
+    optimizer="adam",
+    loss="mse"
+)
+
+print("\nTraining Generative Model...")
+
+autoencoder.fit(
+    x_train,
+    x_train,
+    epochs=3,
+    batch_size=128,
+    validation_split=0.1
+)
+
+
+# --------------------------------------------------
+# 4. Image Reconstruction
+# --------------------------------------------------
+
+reconstructed = autoencoder.predict(x_test[:5])
+
+
+# --------------------------------------------------
+# 5. Display Original and Reconstructed Images
+# --------------------------------------------------
+
+plt.figure(figsize=(10, 4))
+
+for i in range(5):
+
+    # Original Image
+    plt.subplot(2, 5, i + 1)
+    plt.imshow(x_test[i], cmap="gray")
+    plt.axis("off")
+    plt.title("Original")
+
+    # Reconstructed Image
+    plt.subplot(2, 5, i + 6)
+    plt.imshow(reconstructed[i], cmap="gray")
+    plt.axis("off")
+    plt.title("Generated")
+
+plt.tight_layout()
+plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Probabilistic modeling and synthetic data</h3><button class="copy" type="button" data-copy="gen-code-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-2"># GenAI Practical 2: Probabilistic modeling and synthetic data generation
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# 1. Gaussian distribution parameters
+mean=50
+std=10
+
+# 2. Sampling: generate synthetic data
+data=np.random.normal(mean,std,1000)
+
+# 3. Probability Density Function
+x=np.linspace(10,90,1000)
+pdf=norm.pdf(x,mean,std)
+
+# 4. Data visualization
+plt.hist(data,bins=30,density=True,alpha=.6,label="Synthetic Data")
+plt.plot(x,pdf,'r',label="Gaussian PDF")
+plt.xlabel("Value")
+plt.ylabel("Probability Density")
+plt.title("Gaussian Distribution and Synthetic Data")
+plt.legend()
+plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Transformer language models and text generation</h3><button class="copy" type="button" data-copy="gen-code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-3"># GenAI Practical 3: Transformer-based language models and text generation
+# Install once (terminal): pip install transformers torch
+# (Jupyter mein "!pip install transformers torch" bhi chala sakte ho)
+
+from transformers import pipeline
+
+print("Transformers library imported successfully!")
+
+from transformers import pipeline
+
+# Load a pretrained GPT-2 text generation model
+generator = pipeline("text-generation", model="gpt2")
+
+print("Pretrained GPT-2 model loaded successfully!")
+
+# Input prompt
+prompt = "Artificial Intelligence is"
+
+# Generate text using the pretrained GPT-2 model
+result = generator(
+    prompt,
+    max_new_tokens=50,
+    num_return_sequences=1,
+    clean_up_tokenization_spaces=False
+)
+
+print("Input Prompt:")
+print(prompt)
+
+print("\nGenerated Text:")
+print(result[0]["generated_text"])
+
+prompts = [
+    "The Technology is  ",
+    "Artifical Intelligence is ",
+    "AI is developing",
+]
+
+for prompt in prompts:
+    result = generator(
+        prompt,
+        max_new_tokens=40,
+        num_return_sequences=1,
+        clean_up_tokenization_spaces=False
+    )
+
+    print("Prompt:", prompt)
+    print("Generated Text:", result[0]["generated_text"])
+    print("-" * 80)</code></pre></article><article class="exp"><div class="head"><div class="num">4</div><h3>Prompt engineering and RAG to reduce hallucination</h3><button class="copy" type="button" data-copy="gen-code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-4"># GenAI Practical 4: Prompt engineering and Retrieval Augmented Generation (RAG)
+import re
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+
+print("=" * 70)
+print("PRACTICAL 4: PROMPT ENGINEERING AND RAG")
+print("=" * 70)
+
+# ----------------------------------------------------------------
+# 1. Prompt Engineering Examples
+# ----------------------------------------------------------------
+print("\n" + "-" * 70)
+print("1. PROMPT ENGINEERING")
+print("-" * 70)
+
+weak_prompt = "Explain AI."
+
+clear_prompt = """
+You are a computer science tutor.
+Explain Generative AI to a B.Tech CSE student.
+Use exactly 4 bullet points.
+Keep each point short and include one simple example.
+"""
+
+few_shot_prompt = """
+Task: classify the following sentence as Positive or Negative.
+
+Example 1:
+Sentence: The application is fast and easy to use.
+Label: Positive
+
+Example 2:
+Sentence: The application crashes frequently.
+Label: Negative
+
+New sentence:
+The application has a simple interface and works smoothly.
+Label:
+"""
+
+print("\nWeak prompt:")
+print(weak_prompt)
+
+print("\nClear structured prompt:")
+print(clear_prompt.strip())
+
+print("\nFew-shot prompt:")
+print(few_shot_prompt.strip())
+
+print("\nPrompt engineering principles demonstrated:")
+print("• Clear role and task")
+print("• Specific output format")
+print("• Constraints on length")
+print("• Examples for few-shot prompting")
+
+# ----------------------------------------------------------------
+# 2. Knowledge Base for RAG
+# ----------------------------------------------------------------
+documents = [
+    {
+        "title": "Generative AI",
+        "text": (
+            "Generative AI is a branch of artificial intelligence "
+            "that learns patterns from data and generates new content "
+            "such as text, images, audio, video, or code."
+        )
+    },
+    {
+        "title": "Large Language Model",
+        "text": (
+            "A large language model is trained on large collections "
+            "of text and predicts tokens to produce natural-language "
+            "sequences."
+        )
+    },
+    {
+        "title": "Prompt Engineering",
+        "text": (
+            "Prompt engineering is the process of designing and "
+            "refining instructions and context supplied to a generative "
+            "model to obtain useful and consistent responses."
+        )
+    },
+    {
+        "title": "Retrieval Augmented Generation",
+        "text": (
+            "Retrieval Augmented Generation, or RAG, retrieves relevant "
+            "information from an external knowledge source and supplies "
+            "that information as context to a generative model."
+        )
+    },
+    {
+        "title": "Hallucination Reduction",
+        "text": (
+            "Grounding an answer in retrieved evidence can reduce "
+            "unsupported claims. A RAG system should refuse to answer "
+            "when the available evidence is insufficient."
+        )
+    },
+    {
+        "title": "Transformer",
+        "text": (
+            "A Transformer is a neural network architecture that uses "
+            "attention mechanisms to model relationships between tokens."
+        )
+    },
+    {
+        "title": "Embeddings",
+        "text": (
+            "Embeddings are numerical vector representations of text "
+            "that can be compared to estimate semantic or lexical "
+            "similarity."
+        )
+    }
+]
+
+corpus = [doc["text"] for doc in documents]
+
+# ----------------------------------------------------------------
+# 3. Build Retriever
+# ----------------------------------------------------------------
+print("\n" + "-" * 70)
+print("2. BUILDING THE RAG RETRIEVER")
+print("-" * 70)
+
+vectorizer = TfidfVectorizer(stop_words="english")
+document_vectors = vectorizer.fit_transform(corpus)
+
+print("Knowledge-base documents:", len(documents))
+print("TF-IDF matrix shape:", document_vectors.shape)
+
+# ----------------------------------------------------------------
+# 4. Retrieval Function
+# ----------------------------------------------------------------
+def retrieve(query, top_k=3):
+    """Return the top-k documents ranked by cosine similarity."""
+    query_vector = vectorizer.transform([query])
+    scores = cosine_similarity(query_vector, document_vectors)[0]
+
+    ranked_indices = np.argsort(scores)[::-1][:top_k]
+
+    results = []
+    for index in ranked_indices:
+        results.append({
+            "title": documents[index]["title"],
+            "text": documents[index]["text"],
+            "score": float(scores[index])
+        })
+
+    return results
+
+
+query = "How does RAG help reduce hallucinations?"
+
+results = retrieve(query, top_k=3)
+
+print("\nQuery:", query)
+print("\nRetrieved documents:")
+
+for rank, item in enumerate(results, start=1):
+    print(f"\nRank {rank}: {item['title']}")
+    print(f"Similarity score: {item['score']:.4f}")
+    print("Text:", item["text"])
+
+# ----------------------------------------------------------------
+# 5. Visualize Retrieval Scores
+# ----------------------------------------------------------------
+titles = [item["title"] for item in results]
+scores = [item["score"] for item in results]
+
+plt.figure(figsize=(9, 5))
+plt.bar(titles, scores)
+plt.title("Top Retrieved Documents")
+plt.xlabel("Document")
+plt.ylabel("Cosine Similarity")
+plt.xticks(rotation=20, ha="right")
 plt.tight_layout()
 plt.show()
 
-sns.regplot(x='Glucose', y='BMI', data=df, line_kws={'color': 'red'})
-plt.title(f"Glucose vs BMI (r = {df['Glucose'].corr(df['BMI']):.2f})")
-plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="code-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-3"># Exp 3: Principal Component Analysis (PCA) on Mall Customer data
-import pandas as pd
+# ----------------------------------------------------------------
+# 6. Grounded RAG Answer Generator
+# ----------------------------------------------------------------
+def grounded_answer(query, top_k=3, threshold=0.10):
+    """
+    Lightweight generation stage.
+
+    The response is created only from retrieved evidence. If the
+    retrieval score is too low, the system refuses to invent an
+    answer. This demonstrates the grounding principle of RAG.
+    """
+    results = retrieve(query, top_k=top_k)
+
+    useful = [item for item in results if item["score"] &gt;= threshold]
+
+    if not useful:
+        return (
+            "I cannot answer this question from the available "
+            "knowledge base because sufficient evidence was not found."
+        ), results
+
+    evidence = " ".join(item["text"] for item in useful)
+
+    answer = (
+        "Grounded answer:\n"
+        + evidence
+        + "\n\nSources: "
+        + ", ".join(item["title"] for item in useful)
+    )
+
+    return answer, results
+
+
+answer, _ = grounded_answer(
+    "How does RAG help reduce hallucinations?"
+)
+
+print("\n" + "-" * 70)
+print("3. GROUNDED RAG ANSWER")
+print("-" * 70)
+print(answer)
+
+# ----------------------------------------------------------------
+# 7. Hallucination-Control Test
+# ----------------------------------------------------------------
+unknown_query = "Who invented quantum computing in the year 1890?"
+
+unknown_answer, unknown_results = grounded_answer(
+    unknown_query,
+    top_k=3,
+    threshold=0.25
+)
+
+print("\n" + "-" * 70)
+print("4. HALLUCINATION CONTROL TEST")
+print("-" * 70)
+print("Query:", unknown_query)
+print("\nResponse:")
+print(unknown_answer)
+
+# ----------------------------------------------------------------
+# 8. RAG Pipeline Summary
+# ----------------------------------------------------------------
+print("\n" + "=" * 70)
+print("RAG PIPELINE")
+print("=" * 70)
+print("""
+User Query
+    |
+    v
+TF-IDF Vectorization
+    |
+    v
+Cosine Similarity Retrieval
+    |
+    v
+Top-K Relevant Documents
+    |
+    v
+Grounded Prompt / Context
+    |
+    v
+Evidence-based Answer
+    |
+    v
+If evidence is insufficient -&gt; Refuse instead of inventing facts
+""")
+
+print("=" * 70)
+print("OBSERVATION")
+print("=" * 70)
+print("1. Clear prompts provide better task instructions and constraints.")
+print("2. Few-shot prompts provide examples of the expected behavior.")
+print("3. TF-IDF retrieval identifies relevant knowledge-base documents.")
+print("4. Retrieved evidence is used as context for a grounded answer.")
+print("5. A confidence threshold prevents unsupported answers when")
+print("   relevant evidence is not available.")
+
+print("\n" + "=" * 70)
+print("CONCLUSION")
+print("=" * 70)
+print("Prompt engineering improves the clarity and consistency of")
+print("generative-AI instructions. RAG grounds responses in retrieved")
+print("information and can reduce hallucination by requiring evidence")
+print("from an external knowledge source.")
+print("=" * 70)</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>Generative Adversarial Networks (GAN)</h3><button class="copy" type="button" data-copy="gen-code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-5"># GenAI Practical 5: Generative Adversarial Network (GAN) on MNIST
+import torch
+import torch.nn as nn
+import torchvision
+import torchvision.transforms as transforms
+from torch.utils.data import DataLoader
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/Mall_Customers.csv"
+# -------------------------------
+# 1. Device
+# -------------------------------
+device = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
 
-df = pd.read_csv(DATA_PATH)
-print(df.head())
+# -------------------------------
+# 2. Load MNIST Dataset
+# -------------------------------
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.5,), (0.5,))
+])
 
-# Drop ID, encode Gender, scale features
-X = pd.get_dummies(df.drop(columns='CustomerID'), drop_first=True).astype(float)
-print("Features used:", list(X.columns))
-X_scaled = StandardScaler().fit_transform(X)
+dataset = torchvision.datasets.MNIST(
+    root="./data",
+    train=True,
+    transform=transform,
+    download=True
+)
 
-# PCA with all components -&gt; check explained variance
-pca_full = PCA().fit(X_scaled)
-print("\nExplained variance ratio:", pca_full.explained_variance_ratio_.round(3))
-print("Cumulative variance     :", pca_full.explained_variance_ratio_.cumsum().round(3))
+dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
 
-plt.plot(range(1, X.shape[1] + 1), pca_full.explained_variance_ratio_.cumsum(), marker='o')
-plt.xlabel('Number of components'); plt.ylabel('Cumulative explained variance')
-plt.title('Scree Plot'); plt.grid(); plt.show()
+# -------------------------------
+# 3. Generator
+# -------------------------------
+class Generator(nn.Module):
+    def __init__(self):
+        super(Generator, self).__init__()
 
-# Reduce to 2 components
-pca = PCA(n_components=2)
-X_pca = pca.fit_transform(X_scaled)
-print("\nOriginal shape:", X.shape, "-&gt; Reduced shape:", X_pca.shape)
-print("Variance kept by 2 PCs:", round(pca.explained_variance_ratio_.sum() * 100, 2), "%")
-print("\nPC loadings:\n", pd.DataFrame(pca.components_, columns=X.columns, index=['PC1', 'PC2']).round(3))
+        self.model = nn.Sequential(
+            nn.Linear(100, 256),
+            nn.ReLU(),
 
-plt.scatter(X_pca[:, 0], X_pca[:, 1], c=df['Spending Score (1-100)'], cmap='viridis')
-plt.colorbar(label='Spending Score')
-plt.xlabel('PC1'); plt.ylabel('PC2'); plt.title('Customers in 2D (PCA)')
-plt.show()</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="code-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-4"># Exp 4: Energy Efficiency - relationship analysis + regression to predict Heating Load
-import pandas as pd
-import seaborn as sns
+            nn.Linear(256, 512),
+            nn.ReLU(),
+
+            nn.Linear(512, 784),
+            nn.Tanh()
+        )
+
+    def forward(self, x):
+        return self.model(x)
+
+
+# -------------------------------
+# 4. Discriminator
+# -------------------------------
+class Discriminator(nn.Module):
+    def __init__(self):
+        super(Discriminator, self).__init__()
+
+        self.model = nn.Sequential(
+            nn.Linear(784, 512),
+            nn.LeakyReLU(0.2),
+
+            nn.Linear(512, 256),
+            nn.LeakyReLU(0.2),
+
+            nn.Linear(256, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        return self.model(x)
+
+
+# Create models
+G = Generator().to(device)
+D = Discriminator().to(device)
+
+# -------------------------------
+# 5. Loss and Optimizers
+# -------------------------------
+criterion = nn.BCELoss()
+
+optimizer_G = torch.optim.Adam(G.parameters(), lr=0.0002)
+optimizer_D = torch.optim.Adam(D.parameters(), lr=0.0002)
+
+# -------------------------------
+# 6. Training
+# -------------------------------
+epochs = 10
+
+for epoch in range(epochs):
+
+    for real_images, _ in dataloader:
+
+        # Flatten image: 28x28 -&gt; 784
+        real_images = real_images.view(-1, 784).to(device)
+
+        batch_size = real_images.size(0)
+
+        # Labels
+        real_labels = torch.ones(batch_size, 1).to(device)
+        fake_labels = torch.zeros(batch_size, 1).to(device)
+
+        # --------------------------------
+        # Train Discriminator
+        # --------------------------------
+
+        # Real images
+        real_output = D(real_images)
+        loss_real = criterion(real_output, real_labels)
+
+        # Fake images
+        noise = torch.randn(batch_size, 100).to(device)
+        fake_images = G(noise)
+
+        fake_output = D(fake_images.detach())
+        loss_fake = criterion(fake_output, fake_labels)
+
+        # Total discriminator loss
+        loss_D = loss_real + loss_fake
+
+        optimizer_D.zero_grad()
+        loss_D.backward()
+        optimizer_D.step()
+
+        # --------------------------------
+        # Train Generator
+        # --------------------------------
+
+        noise = torch.randn(batch_size, 100).to(device)
+        fake_images = G(noise)
+
+        output = D(fake_images)
+
+        # Generator wants discriminator to think
+        # fake images are real
+        loss_G = criterion(output, real_labels)
+
+        optimizer_G.zero_grad()
+        loss_G.backward()
+        optimizer_G.step()
+
+    print(
+        f"Epoch [{epoch+1}/{epochs}] "
+        f"Loss D: {loss_D.item():.4f} "
+        f"Loss G: {loss_G.item():.4f}"
+    )
+
+# -------------------------------
+# 7. Generate Images
+# -------------------------------
+noise = torch.randn(16, 100).to(device)
+generated_images = G(noise)
+
+generated_images = generated_images.view(-1, 28, 28)
+generated_images = generated_images.detach().cpu()
+
+# -------------------------------
+# 8. Display Generated Images
+# -------------------------------
+plt.figure(figsize=(6, 6))
+
+for i in range(16):
+    plt.subplot(4, 4, i + 1)
+    plt.imshow(generated_images[i], cmap="gray")
+    plt.axis("off")
+
+plt.tight_layout()
+plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Image generation with Stable Diffusion</h3><button class="copy" type="button" data-copy="gen-code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-6"># GenAI Practical 6: Image generation with Stable Diffusion
+import torch
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from diffusers import StableDiffusionPipeline
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/ENB2012_data.csv"
+# Automatically select GPU or CPU
+device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+dtype = torch.float16 if device == "cuda" else torch.float32
 
-df = pd.read_csv(DATA_PATH).dropna(axis=1, how='all').dropna().iloc[:, :10]
-df.columns = ['Relative_Compactness', 'Surface_Area', 'Wall_Area', 'Roof_Area', 'Overall_Height',
-              'Orientation', 'Glazing_Area', 'Glazing_Area_Distribution', 'Heating_Load', 'Cooling_Load']
-print(df.describe())
+print("Using device:", device)
 
-# Relationship between design parameters and energy consumption
-print("\nCorrelation with Heating Load:\n", df.corr()['Heating_Load'].sort_values(ascending=False))
-plt.figure(figsize=(10, 7))
-sns.heatmap(df.corr(), annot=True, fmt='.2f', cmap='YlOrRd')
-plt.title('Correlation Matrix'); plt.tight_layout(); plt.show()
+# Load Stable Diffusion model
+model_id = "stable-diffusion-v1-5/stable-diffusion-v1-5"
 
-# Regression model
-X = df.iloc[:, :8]
-y = df['Heating_Load']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+pipe = StableDiffusionPipeline.from_pretrained(
+    model_id,
+    torch_dtype=dtype
+)
 
-models = {'Linear Regression': LinearRegression(), 'Random Forest': RandomForestRegressor(random_state=42)}
-for name, model in models.items():
-    model.fit(X_train, y_train)
-    pred = model.predict(X_test)
-    print(f"\n{name}: R2 = {r2_score(y_test, pred):.4f}, MAE = {mean_absolute_error(y_test, pred):.3f}, "
-          f"RMSE = {mean_squared_error(y_test, pred) ** 0.5:.3f}")
+pipe = pipe.to(device)
+pipe.enable_attention_slicing()
 
-print("\nLinear Regression coefficients:\n", pd.Series(models['Linear Regression'].coef_, index=X.columns).round(3))
+# Text prompt
+prompt = "A beautiful futuristic city with green gardens, modern buildings, mountains, realistic digital art"
 
-plt.scatter(y_test, pred, alpha=0.6)
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'r--')
-plt.xlabel('Actual Heating Load'); plt.ylabel('Predicted Heating Load')
-plt.title('Actual vs Predicted (Random Forest)'); plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="code-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-5"># Exp 5: SVM to classify tumour as Benign or Malignant (Breast Cancer Wisconsin)
-import pandas as pd
+# Generate image
+image = pipe(
+    prompt,
+    num_inference_steps=15,
+    guidance_scale=7.5
+).images[0]
+
+# Display image
+plt.figure(figsize=(8, 8))
+plt.imshow(image)
+plt.axis("off")
+plt.title("Image Generated Using Stable Diffusion")
+plt.show()
+
+# Save image
+image.save("generated_image.png")
+print("Image saved as generated_image.png")</code></pre></article><article class="exp"><div class="head"><div class="num">7</div><h3>Artistic content with Neural Style Transfer</h3><button class="copy" type="button" data-copy="gen-code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-7"># GenAI Practical 7: Neural style transfer
+import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+from PIL import Image
+import torch
+import torch.nn.functional as F
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/data.csv"
 
-df = pd.read_csv(DATA_PATH).drop(columns=['id', 'Unnamed: 32'], errors='ignore')
-df['diagnosis'] = df['diagnosis'].map({'M': 1, 'B': 0})        # 1 = Malignant, 0 = Benign
-print(df['diagnosis'].value_counts())
+# ============================================================
+# 1. REPRODUCIBILITY
+# ============================================================
 
-X = df.drop(columns='diagnosis')
-y = df['diagnosis']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+np.random.seed(42)
+torch.manual_seed(42)
 
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
 
-model = SVC(kernel='rbf', C=1.0, gamma='scale')
-model.fit(X_train, y_train)
-pred = model.predict(X_test)
+# ============================================================
+# 2. CREATE DEMONSTRATION IMAGES
+# ============================================================
 
-print("\nAccuracy:", round(accuracy_score(y_test, pred) * 100, 2), "%")
-print(classification_report(y_test, pred, target_names=['Benign', 'Malignant']))
-ConfusionMatrixDisplay.from_predictions(y_test, pred, display_labels=['Benign', 'Malignant'], cmap='Blues')
-plt.title('SVM - Confusion Matrix'); plt.show()
+def create_content_image(size=128):
+    """Create a simple content image with geometric structure."""
 
-# Predict a new sample (first test row)
-result = model.predict(X_test[:1])[0]
-print("Sample prediction:", "Malignant" if result == 1 else "Benign")</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="code-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-6"># Exp 6: Logistic Regression to classify default / fraud (Class = 1) - creditcard.csv
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, roc_auc_score, ConfusionMatrixDisplay
+    image = np.zeros((size, size, 3), dtype=np.float32)
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/creditcard.csv"
+    # Background
+    image[:] = [0.85, 0.85, 0.85]
 
-df = pd.read_csv(DATA_PATH)
-print(df.shape)
-print("Class distribution (0 = No default, 1 = Default):\n", df['Class'].value_counts())
+    # Large square
+    image[25:100, 25:100] = [0.2, 0.45, 0.8]
 
-X = df.drop(columns='Class')
-y = df['Class']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    # Center circle
+    y, x = np.ogrid[:size, :size]
+    mask = (x - 64) ** 2 + (y - 64) ** 2 &lt; 18 ** 2
+    image[mask] = [0.95, 0.85, 0.2]
 
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+    return image
 
-# class_weight='balanced' handles the highly imbalanced data
-model = LogisticRegression(max_iter=1000, class_weight='balanced')
-model.fit(X_train, y_train)
-pred = model.predict(X_test)
-prob = model.predict_proba(X_test)[:, 1]
 
-print("\nAccuracy:", round(accuracy_score(y_test, pred) * 100, 2), "%")
-print("ROC-AUC :", round(roc_auc_score(y_test, prob), 4))
-print(classification_report(y_test, pred, target_names=['No Default', 'Default']))
-ConfusionMatrixDisplay.from_predictions(y_test, pred, display_labels=['No Default', 'Default'], cmap='Blues')
-plt.title('Logistic Regression - Confusion Matrix'); plt.show()</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="code-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-7"># Exp 7: End-to-end predictive analytics on finance data (build -&gt; evaluate -&gt; visualize)
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.pipeline import make_pipeline
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+def create_style_image(size=128):
+    """Create a colorful patterned style image."""
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/Finance_data.csv"
+    image = np.zeros((size, size, 3), dtype=np.float32)
 
-df = pd.read_csv(DATA_PATH)
-TARGET = 'Avenue'                       # target column (loan data ho to e.g. 'Loan_Status' / 'default')
-if TARGET not in df.columns:
-    TARGET = df.columns[-1]
+    for y in range(size):
+        for x in range(size):
+            image[y, x, 0] = (np.sin(x / 7.0) + 1) / 2
+            image[y, x, 1] = (np.cos(y / 9.0) + 1) / 2
+            image[y, x, 2] = (np.sin((x + y) / 12.0) + 1) / 2
 
-# 1. Data understanding &amp; cleaning
-print(df.shape); print(df.head())
-print("Missing:", df.isnull().sum().sum(), "| Duplicates:", df.duplicated().sum())
-df = df.drop_duplicates().dropna(axis=1, how='all')
-for col in df.columns:
-    df[col] = df[col].fillna(df[col].mode()[0])
+    return image
 
-# 2. EDA
-sns.countplot(y=df[TARGET].astype(str)); plt.title(f'Target: {TARGET}'); plt.tight_layout(); plt.show()
 
-# 3. Encoding
-for col in df.select_dtypes(exclude='number').columns:
-    df[col] = LabelEncoder().fit_transform(df[col].astype(str))
-X, y = df.drop(columns=TARGET), df[TARGET]
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+content_np = create_content_image()
+style_np = create_style_image()
 
-# 4. Model building &amp; evaluation
-models = {'Logistic Regression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=2000)),
-          'Random Forest': RandomForestClassifier(n_estimators=200, random_state=42)}
-for name, model in models.items():
-    model.fit(X_train, y_train)
-    pred = model.predict(X_test)
-    print(f"\n{name} Accuracy: {accuracy_score(y_test, pred):.3f}")
-    print(classification_report(y_test, pred, zero_division=0))
 
-# 5. Visualization
-rf = models['Random Forest']
-ConfusionMatrixDisplay.from_predictions(y_test, rf.predict(X_test), cmap='Blues')
-plt.title('Random Forest - Confusion Matrix'); plt.show()
-pd.Series(rf.feature_importances_, index=X.columns).nlargest(10).sort_values().plot.barh()
-plt.title('Top 10 Important Features'); plt.tight_layout(); plt.show()</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-8"># Exp 8: Twitter sentiment analysis (Positive / Negative / Neutral / Irrelevant)
-import re
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
+# ============================================================
+# 3. CONVERT TO TENSORS
+# ============================================================
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-TRAIN_PATH = r"/path/to/twitter_training.csv"
-TEST_PATH = r"/path/to/twitter_validation.csv"
+content = torch.tensor(
+    content_np,
+    dtype=torch.float32
+).permute(2, 0, 1).unsqueeze(0)
 
-cols = ['id', 'entity', 'sentiment', 'text']
-train = pd.read_csv(TRAIN_PATH, header=None, names=cols).dropna()
-test = pd.read_csv(TEST_PATH, header=None, names=cols).dropna()
-print(train.head())
+style = torch.tensor(
+    style_np,
+    dtype=torch.float32
+).permute(2, 0, 1).unsqueeze(0)
 
-# Text cleaning
-def clean(t):
-    t = re.sub(r'http\S+|@\w+|#|[^a-zA-Z\s]', ' ', str(t).lower())
-    return re.sub(r'\s+', ' ', t).strip()
 
-train['clean'] = train['text'].apply(clean)
-test['clean'] = test['text'].apply(clean)
+# ============================================================
+# 4. STYLE REPRESENTATION
+# ============================================================
 
-train['sentiment'].value_counts().plot.bar(color=['tab:green', 'tab:red', 'tab:gray', 'tab:blue'])
-plt.title('Sentiment Distribution'); plt.ylabel('Tweets'); plt.show()
+def gram_matrix(tensor):
+    """
+    Compute Gram Matrix.
 
-# TF-IDF + Logistic Regression
-vec = TfidfVectorizer(max_features=20000, ngram_range=(1, 2), stop_words='english')
-X_train = vec.fit_transform(train['clean'])
-X_test = vec.transform(test['clean'])
+    The Gram Matrix represents correlations between feature
+    channels and is commonly used for style representation.
+    """
 
-model = LogisticRegression(max_iter=1000)
-model.fit(X_train, train['sentiment'])
-pred = model.predict(X_test)
+    batch, channels, height, width = tensor.shape
 
-print("\nAccuracy:", round(accuracy_score(test['sentiment'], pred) * 100, 2), "%")
-print(classification_report(test['sentiment'], pred))
-ConfusionMatrixDisplay.from_predictions(test['sentiment'], pred, cmap='Blues', xticks_rotation=45)
-plt.title('Confusion Matrix'); plt.tight_layout(); plt.show()
+    features = tensor.view(
+        batch,
+        channels,
+        height * width
+    )
 
-# Try your own tweets
-for tweet in ["I love this game, it's amazing!", "Worst update ever, totally broken"]:
-    print(tweet, "-&gt;", model.predict(vec.transform([clean(tweet)]))[0])</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="code-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="code-9"># Exp 9: Time series analysis &amp; forecasting with ARIMA (transportation data)
-import warnings
-import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.tsa.stattools import adfuller
-from statsmodels.tsa.arima.model import ARIMA
-from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
-from sklearn.metrics import mean_absolute_error, mean_squared_error
-warnings.filterwarnings('ignore')
+    gram = torch.bmm(
+        features,
+        features.transpose(1, 2)
+    )
 
-# Dataset path - download ke baad yahan apna path likho
-# (Mac: /Users/&lt;name&gt;/Downloads/file.csv | Windows: C:\Users\&lt;name&gt;\Downloads\file.csv)
-DATA_PATH = r"/path/to/transport.csv"
+    return gram / (channels * height * width)
 
-df = pd.read_csv(DATA_PATH)
-print(df.head())
-DATE_COL = None                         # e.g. 'Date'   (None = auto detect)
-VALUE_COL = None                        # e.g. 'Vehicles' (None = auto detect)
 
-if DATE_COL is None:
-    DATE_COL = next(c for c in df.select_dtypes(exclude='number').columns
-                    if pd.to_datetime(df[c], errors='coerce').notna().mean() &gt; 0.8)
-if VALUE_COL is None:
-    nums = [c for c in df.select_dtypes('number').columns if 'id' not in c.lower()]
-    VALUE_COL = max(nums, key=lambda c: df[c].nunique())
-print("Date column:", DATE_COL, "| Value column:", VALUE_COL)
+# ============================================================
+# 5. CONTENT AND STYLE FEATURES
+# ============================================================
 
-# Prepare series
-df[DATE_COL] = pd.to_datetime(df[DATE_COL], errors='coerce')
-ts = df.dropna(subset=[DATE_COL]).groupby(DATE_COL)[VALUE_COL].sum().sort_index()
-step = ts.index.to_series().diff().median()
-if step &lt; pd.Timedelta('1D'):           # hourly/minute data -&gt; daily total
-    ts, step = ts.resample('D').sum(), pd.Timedelta('1D')
-ts = ts.interpolate()
+content_features = content
 
-ts.plot(figsize=(12, 4), title=f'{VALUE_COL} over time'); plt.show()
+style_features = gram_matrix(style)
 
-# Stationarity check (ADF test)
-p_value = adfuller(ts)[1]
-print("ADF p-value:", round(p_value, 4), "-&gt;", "Stationary" if p_value &lt; 0.05 else "Not stationary (use d=1)")
-d = 0 if p_value &lt; 0.05 else 1
-lags = min(30, len(ts) // 2 - 1)
-plot_acf(ts.diff().dropna() if d else ts, lags=lags); plot_pacf(ts.diff().dropna() if d else ts, lags=lags); plt.show()
 
-# Train / test split + ARIMA
-split = int(len(ts) * 0.8)
-train, test = ts[:split], ts[split:]
-model = ARIMA(train, order=(2, d, 2)).fit()
-print(model.summary())
-pred = model.forecast(len(test))
-pred.index = test.index
-print("MAE :", round(mean_absolute_error(test, pred), 3))
-print("RMSE:", round(mean_squared_error(test, pred) ** 0.5, 3))
+# ============================================================
+# 6. INITIALIZE GENERATED IMAGE
+# ============================================================
 
-# Forecast next 30 periods
-future = ARIMA(ts, order=(2, d, 2)).fit().forecast(30)
-future.index = pd.date_range(ts.index[-1], periods=31, freq=pd.infer_freq(ts.index) or step)[1:]
-print("\nNext 30 forecasts:\n", future.round(2))
+generated = torch.rand_like(content)
 
-plt.figure(figsize=(12, 5))
-plt.plot(train, label='Train'); plt.plot(test, label='Test')
-plt.plot(pred, label='ARIMA Prediction'); plt.plot(future, '--', label='Future Forecast')
-plt.legend(); plt.title('ARIMA Forecast'); plt.show()</code></pre></article></section>
-<p class="hint" style="color:var(--mute);font-size:14px;margin:18px 0 0">Code paste karne ke baad upar <code>DATA_PATH</code> line mein downloaded CSV ka path likh do.</p>
-</div>
-<div id="view-theory" hidden>
-<section class="group"><h2>Level: Basic (all)</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Missing values, duplicate records &amp; inconsistent entries</h3><button class="copy" type="button" data-copy="theory-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-1">Practical 1: Missing values, duplicate records &amp; inconsistent entries
+generated.requires_grad_(True)
+
+
+# ============================================================
+# 7. OPTIMIZER
+# ============================================================
+
+optimizer = torch.optim.Adam(
+    [generated],
+    lr=0.05
+)
+
+
+# ============================================================
+# 8. STYLE TRANSFER OPTIMIZATION
+# ============================================================
+
+epochs = 300
+
+content_weight = 1.0
+
+style_weight = 5.0
+
+loss_history = []
+
+print("=" * 60)
+print("PRACTICAL 7: NEURAL STYLE TRANSFER")
+print("=" * 60)
+
+print("Image size:", "128 x 128")
+
+print("Optimization epochs:", epochs)
+
+print()
+
+
+for epoch in range(epochs):
+
+    optimizer.zero_grad()
+
+    # Content loss
+    content_loss = F.mse_loss(
+        generated,
+        content_features
+    )
+
+    # Style loss
+    generated_style = gram_matrix(generated)
+
+    style_loss = F.mse_loss(
+        generated_style,
+        style_features
+    )
+
+    # Total loss
+    total_loss = (
+        content_weight * content_loss
+        + style_weight * style_loss
+    )
+
+    total_loss.backward()
+
+    optimizer.step()
+
+    # Keep pixels between 0 and 1
+    with torch.no_grad():
+        generated.clamp_(0.0, 1.0)
+
+    loss_history.append(
+        total_loss.item()
+    )
+
+    if (epoch + 1) % 50 == 0:
+
+        print(
+            f"Epoch [{epoch + 1:3d}/{epochs}] | "
+            f"Content Loss: {content_loss.item():.6f} | "
+            f"Style Loss: {style_loss.item():.6f} | "
+            f"Total Loss: {total_loss.item():.6f}"
+        )
+
+
+# ============================================================
+# 9. CONVERT GENERATED IMAGE
+# ============================================================
+
+generated_np = (
+    generated.detach()
+    .squeeze(0)
+    .permute(1, 2, 0)
+    .numpy()
+)
+
+
+# ============================================================
+# 10. DISPLAY CONTENT, STYLE AND GENERATED IMAGE
+# ============================================================
+
+plt.figure(figsize=(15, 5))
+
+
+plt.subplot(1, 3, 1)
+
+plt.imshow(content_np)
+
+plt.title("Content Image")
+
+plt.axis("off")
+
+
+plt.subplot(1, 3, 2)
+
+plt.imshow(style_np)
+
+plt.title("Style Image")
+
+plt.axis("off")
+
+
+plt.subplot(1, 3, 3)
+
+plt.imshow(generated_np)
+
+plt.title("Generated Image")
+
+plt.axis("off")
+
+
+plt.tight_layout()
+
+plt.show()
+
+
+# ============================================================
+# 11. LOSS GRAPH
+# ============================================================
+
+plt.figure(figsize=(9, 5))
+
+plt.plot(
+    loss_history,
+    label="Style Transfer Loss"
+)
+
+plt.title("Neural Style Transfer Optimization")
+
+plt.xlabel("Epoch")
+
+plt.ylabel("Loss")
+
+plt.legend()
+
+plt.grid(alpha=0.2)
+
+plt.tight_layout()
+
+plt.show()
+
+
+# ============================================================
+# 12. SAVE GENERATED IMAGE
+# ============================================================
+
+output_image = (
+    np.clip(generated_np, 0, 1) * 255
+).astype(np.uint8)
+
+Image.fromarray(
+    output_image
+).save(
+    "practical_7_generated_style.png"
+)
+
+
+print()
+print("Generated image saved as:")
+print("practical_7_generated_style.png")
+
+
+# ============================================================
+# 13. OBSERVATION
+# ============================================================
+
+print()
+print("OBSERVATION:")
+
+print(
+    "1. Neural Style Transfer separates content and style information."
+)
+
+print(
+    "2. Content loss helps preserve the structure of the content image."
+)
+
+print(
+    "3. Style loss uses feature correlations to represent artistic style."
+)
+
+print(
+    "4. The generated image is optimized to minimize both losses."
+)
+
+print(
+    "5. The final image combines content structure with style characteristics."
+)
+
+
+# ============================================================
+# 14. CONCLUSION
+# ============================================================
+
+print()
+print("CONCLUSION:")
+
+print(
+    "Neural Style Transfer was successfully demonstrated using PyTorch. "
+    "The experiment showed how content and style representations can be "
+    "combined to create a new generated image. The practical also "
+    "demonstrated the role of content loss and Gram-matrix-based style loss."
+)</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Train, fine-tune and deploy an open-source model</h3><button class="copy" type="button" data-copy="gen-code-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy code</span></button></div><pre class="src" hidden><code id="gen-code-8"># GenAI Practical 8: Fine-tune and deploy an open-source generative model (DistilGPT-2)
+import torch
+from datasets import Dataset
+from transformers import (
+    AutoTokenizer,
+    AutoModelForCausalLM,
+    Trainer,
+    TrainingArguments,
+    DataCollatorForLanguageModeling,
+    pipeline
+)
+
+# 1. Select device
+device = "cuda" if torch.cuda.is_available() else "cpu"
+print("Using device:", device)
+
+# 2. Load an open-source pretrained model
+model_name = "distilgpt2"
+
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer.pad_token = tokenizer.eos_token
+
+model = AutoModelForCausalLM.from_pretrained(model_name)
+
+# 3. Prepare a small training dataset
+texts = [
+    "Generative AI creates new content such as text, images, and music.",
+    "Machine learning enables computers to learn patterns from data.",
+    "Hugging Face provides tools for training and deploying AI models.",
+    "Deep learning uses neural networks to solve complex problems.",
+    "Natural language processing helps computers understand human language.",
+    "Transformers are widely used in modern generative AI applications.",
+    "Fine-tuning adapts a pretrained model to a specific task.",
+    "Python is a popular programming language for artificial intelligence."
+] * 10
+
+dataset = Dataset.from_dict({"text": texts})
+
+# 4. Tokenize the dataset
+def tokenize_function(examples):
+    return tokenizer(
+        examples["text"],
+        truncation=True,
+        padding="max_length",
+        max_length=64
+    )
+
+tokenized_dataset = dataset.map(
+    tokenize_function,
+    batched=True,
+    remove_columns=["text"]
+)
+
+# 5. Configure training
+training_args = TrainingArguments(
+    output_dir="./generative_ai_model",
+    num_train_epochs=2,
+    per_device_train_batch_size=2,
+    save_strategy="no",
+    logging_steps=10,
+    report_to="none",
+    use_cpu=(device == "cpu")
+)
+
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer,
+    mlm=False
+)
+
+# 6. Fine-tune the model
+trainer = Trainer(
+    model=model,
+    args=training_args,
+    train_dataset=tokenized_dataset,
+    data_collator=data_collator
+)
+
+print("\nStarting model fine-tuning...")
+trainer.train()
+
+# 7. Save the fine-tuned model
+save_path = "./fine_tuned_generative_model"
+
+trainer.save_model(save_path)
+tokenizer.save_pretrained(save_path)
+
+print("\nModel fine-tuned and saved successfully!")
+
+# 8. Deploy locally using a text-generation pipeline
+generator = pipeline(
+    "text-generation",
+    model=save_path,
+    tokenizer=save_path,
+    device=0 if device == "cuda" else -1
+)
+
+# 9. Generate text using the fine-tuned model
+prompt = "Generative artificial intelligence"
+
+result = generator(
+    prompt,
+    max_new_tokens=50,
+    do_sample=True,
+    temperature=0.8,
+    pad_token_id=tokenizer.eos_token_id
+)
+
+print("\nGenerated Text:")
+print(result[0]["generated_text"])
+
+print("\nDeployment completed: the model is ready for local text generation.")</code></pre></article></section><p class="hint" style="color:var(--mute);font-size:14px;margin:18px 0 0">Pehli baar chalane par MNIST dataset aur GPT-2 / DistilGPT-2 / Stable Diffusion models internet se download honge. Stable Diffusion ka model kai GB ka hai aur GPU par jaldi chalta hai.</p></div>
+<div class="panel" id="view-gen-theory" hidden><section class="group"><h2>Generative AI practicals</h2><article class="exp"><div class="head"><div class="num">1</div><h3>Generative AI vs Discriminative Models</h3><button class="copy" type="button" data-copy="gen-theory-1"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-1">Practical 1: Generative AI vs Discriminative Models
 
 Problem Statement:
-Download a real-world dataset (Healthcare / Finance) from an open data repository and detect missing values, duplicate records, and inconsistent entries.
+To study the concept of Generative Artificial Intelligence and compare Generative Models with Discriminative Models.
 
 Aim:
-To find and fix missing values, duplicate records and inconsistent (wrong) entries in a real-world healthcare dataset.
+To understand what Generative AI is, and to compare generative models and discriminative models using the MNIST dataset.
 
 Theory:
-Real-world data is often messy. It can have empty cells, repeated rows and wrong values. Before we use the data for analysis, we must check it and clean it. This step is called data cleaning or data preprocessing.
+Artificial Intelligence (AI) makes computers do tasks that need human intelligence. Machine Learning (ML) is a part of AI in which computers learn patterns from data.
 
-The healthcare dataset has patient details like name, age, gender, blood type, medical condition, admission date, discharge date, billing amount and test results.
+Generative AI is a type of AI that can create new content, like text, images, music, audio, video and code. It learns the patterns of the training data and then makes new data that looks similar to it. Examples are chatbots that write text and tools that make images from a text description.
 
-The main data quality problems are:
-- Missing values: an empty cell in the data. It can happen when someone skips a field in a form, when a machine fails, or when two files are joined.
-- Duplicate records: a row that appears more than once. Duplicates make counts wrong and give extra weight to the same record. Some duplicates only show up after cleaning, for example “Bobby” and “BOBBY” are the same name.
-- Inconsistent entries: the same thing written in different ways, like “Male”, “male” and “M”, or dates in different formats.
-- Invalid values: values that are not possible, like a negative age, a negative bill amount, or a discharge date before the admission date.
-- Outliers: values that are very different from the others, like an age of 150. Outliers are not always wrong, so we check them before removing them.
+There are two main types of models:
+- Discriminative models learn the boundary between classes. They answer the question “Which class does this input belong to?”. They learn P(y | x), the probability of the label y for a given input x. Examples: Logistic Regression, SVM, Decision Tree, a neural network classifier.
+- Generative models learn how the data itself is made (the data distribution). They learn P(x) or P(x, y). Because of this, they can create new data. Examples: GAN, VAE (Variational Autoencoder), diffusion models and large language models (LLMs).
 
-How to handle missing values: we can remove the rows that have them (when there are very few), or we can fill them. Number columns are usually filled with the median (middle value), because the median is not affected by very large or very small values. Text columns are filled with the mode (most common value).
+Comparison of the two:
+- Goal: generative models create new data; discriminative models classify or predict.
+- What they learn: generative models learn P(x) or P(x, y); discriminative models learn P(y | x).
+- Output: a generative model gives a new sample (an image, a sentence); a discriminative model gives a label (like “digit 7”).
+- Cost: generative models usually need more data and more computing power.
+- Examples: GAN, VAE, LLM vs Logistic Regression, SVM, Decision Tree.
 
-If the data is bad, the result will also be bad. This is called “garbage in, garbage out”. So data cleaning is always the first step of any analysis.
+Dataset: MNIST has 70,000 images of handwritten digits (0 to 9). Each image is 28 × 28 pixels in grayscale. 60,000 images are for training and 10,000 for testing.
+
+Discriminative part of this practical: a small neural network (Flatten → Dense 128 with ReLU → Dense 10 with softmax) learns to tell which digit is in an image.
+
+Generative part of this practical: an autoencoder. The encoder squeezes the 784 pixels into only 32 numbers (a compressed code). The decoder rebuilds the image from these 32 numbers. The rebuilt (generated) images look like the originals. An autoencoder is a simple generative-style model; its fully generative version, the VAE, can make brand-new images.
+
+Activation functions used: ReLU gives max(0, x). Softmax turns scores into probabilities that add up to 1. Sigmoid gives a value between 0 and 1.
 
 Formulas:
-1. Missing % of a column = (number of empty cells ÷ total rows) × 100
-2. Mean = (sum of all values) ÷ (number of values) = Σx ÷ n
-3. Median = the middle value after sorting the data (if there are two middle values, take their average)
-4. Mode = the value that appears the most times
-5. Outlier rule (IQR method): IQR = Q3 − Q1. A value is an outlier if it is less than Q1 − 1.5 × IQR or more than Q3 + 1.5 × IQR
-6. Example: salaries 20, 25, 30 and 1000 (in thousands). Mean = 1075 ÷ 4 = 268.75, but Median = (25 + 30) ÷ 2 = 27.5. The median gives the better picture.
+1. Discriminative model learns: P(y | x)
+2. Generative model learns: P(x) or P(x, y) = P(x | y) × P(y)
+3. Bayes' rule (link between the two): P(y | x) = P(x | y) × P(y) ÷ P(x)
+4. Pixel normalisation: x_new = x ÷ 255 (pixel values change from 0–255 to 0–1)
+5. ReLU: f(x) = max(0, x)
+6. Softmax: P(class k) = e^(zk) ÷ Σ e^(zj)
+7. Cross-entropy loss (classifier): Loss = −Σ y × log(ŷ)
+8. Autoencoder loss (MSE): Loss = (1 ÷ n) × Σ(x − x̂)², where x̂ is the rebuilt image
+9. Accuracy = correct predictions ÷ total predictions
 
 Applications:
-- Cleaning hospital and patient records
-- Cleaning bank and customer data
-- The first step of every data analysis and machine learning project
+- Generative models: chatbots, image and music creation, synthetic data, code writing
+- Discriminative models: spam detection, face recognition, disease diagnosis, sentiment analysis
 
 Procedure:
-1. Load the healthcare dataset using pandas.
-2. Look at the number of rows and columns, the first few rows and the data type of each column.
-3. Count the empty cells in each column.
-4. Count the repeated (duplicate) rows.
-5. Find wrong entries: names in mixed case, negative bill amounts, impossible ages and discharge dates before admission dates.
-6. Clean the data: fix the names, remove repeated rows and wrong rows, and fill the empty cells (median for numbers, mode for text).
-7. Check the data again to make sure there are no empty cells or repeated rows left.
+1. Load the MNIST dataset and normalise the pixel values to the range 0 to 1.
+2. Build the discriminative model: Flatten, Dense 128 (ReLU) and Dense 10 (softmax).
+3. Compile it with the Adam optimizer and sparse categorical cross-entropy loss, and train it for 3 epochs.
+4. Test the classifier on the test images and print its accuracy.
+5. Build the autoencoder: encoder 784 → 128 → 32 and decoder 32 → 128 → 784.
+6. Train it with MSE loss, using the same images as input and output.
+7. Rebuild 5 test images and show the original and generated images.
 
 Conclusion:
-We found the missing values, duplicate records and wrong entries in the healthcare dataset and fixed them. The data is now clean and ready for analysis.</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Pearson correlation between variables</h3><button class="copy" type="button" data-copy="theory-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-2">Practical 2: Pearson correlation between variables
+We learned the difference between generative and discriminative models. The classifier (discriminative model) predicted the digits with high accuracy, and the autoencoder (generative model) rebuilt digit images that look like the originals.</code></pre></article><article class="exp"><div class="head"><div class="num">2</div><h3>Probabilistic modeling and synthetic data</h3><button class="copy" type="button" data-copy="gen-theory-2"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-2">Practical 2: Probabilistic modeling and synthetic data
 
 Problem Statement:
-Using a suitable real-world dataset (e.g., PIMA Indians Diabetes), implement Pearson correlation in Python to study relationships between variables.
+To implement probabilistic modeling techniques and generate synthetic data samples.
 
 Aim:
-To find how the columns of the PIMA Indians Diabetes dataset are related to each other using Pearson correlation.
+To model data using a probability distribution (the Gaussian or normal distribution) and generate synthetic data samples from it.
 
 Theory:
-Correlation tells us how two things change together. For example, when height goes up, weight usually goes up too.
+Probability tells us how likely something is to happen. Its value is between 0 (impossible) and 1 (certain).
 
-Pearson correlation measures this relation as a number called r (the correlation coefficient). It works on number columns and checks for a straight-line (linear) relation.
+A random variable is a value that comes from a random process, like the height of a student. A probability distribution tells us which values are common and which are rare.
 
-The PIMA dataset has 768 patients. It has 8 medical values (pregnancies, glucose, blood pressure, skin thickness, insulin, BMI, diabetes pedigree function and age) and an Outcome column (1 = diabetes, 0 = no diabetes).
+Probabilistic modeling means describing data with a probability distribution. Once we know the distribution, we can create new data by picking random values from it. This is called sampling.
 
-The value of r is always between −1 and +1:
-- r = +1: perfect positive relation (both values go up together)
-- r = −1: perfect negative relation (one value goes up, the other goes down)
-- r = 0: no straight-line relation
+Synthetic data is artificial data made by a computer that behaves like real data. It is useful when real data is small, costly or private (like medical data). Generative AI models are also probabilistic models: they learn the distribution of the data and then sample new data from it.
 
-Strength of the relation (ignore the + or − sign): 0 to 0.3 is weak, 0.3 to 0.7 is moderate, and 0.7 to 1 is strong.
+Gaussian (normal) distribution: the most common distribution. Its graph is a bell-shaped curve. It has two parameters:
+- Mean (μ): the centre of the curve. In this practical μ = 50.
+- Standard deviation (σ): how spread out the data is. In this practical σ = 10.
 
-p-value: it tells us if the relation is real or just by chance. If the p-value is less than 0.05, the relation is called statistically significant.
+68–95–99.7 rule: about 68% of the values lie within 1σ of the mean (40 to 60 here), about 95% within 2σ (30 to 70), and about 99.7% within 3σ (20 to 80).
 
-Correlation matrix: a table that shows r for every pair of columns. The diagonal is always 1, because every column is perfectly related to itself. When we colour this table, it is called a heatmap.
+PDF (Probability Density Function): a curve that shows how likely each value is. The higher the curve at a point, the more likely that value is. The total area under the curve is 1.
 
-Important: correlation does not mean causation. Two things can change together without one causing the other. For example, ice-cream sales and swimming accidents both go up in summer, but ice-cream does not cause accidents.
+In this practical we generate 1000 samples with mean 50 and standard deviation 10. We draw a histogram of the samples and draw the Gaussian PDF curve on top. If the histogram follows the curve, the synthetic data matches the model.
+
+Other common distributions: uniform (all values equally likely), binomial (number of successes in fixed tries) and Poisson (number of events in a time period).
 
 Formulas:
-1. Mean: x̄ = Σx ÷ n
-2. Covariance: Cov(x, y) = Σ(x − x̄)(y − ȳ) ÷ (n − 1)
-3. Standard deviation: s = √[Σ(x − x̄)² ÷ (n − 1)]
-4. Pearson correlation: r = Cov(x, y) ÷ (sx × sy)
-5. Same formula in one line: r = Σ(x − x̄)(y − ȳ) ÷ √[Σ(x − x̄)² × Σ(y − ȳ)²]
-6. Significance test: t = r × √(n − 2) ÷ √(1 − r²)
+1. Gaussian PDF: f(x) = [1 ÷ (σ√(2π))] × e^(−(x − μ)² ÷ (2σ²))
+2. Mean: μ = Σx ÷ n
+3. Variance: σ² = Σ(x − μ)² ÷ n
+4. Standard deviation: σ = √variance
+5. Z-score: z = (x − μ) ÷ σ
+6. 68–95–99.7 rule: P(μ − σ &lt; X &lt; μ + σ) ≈ 0.68, P(μ − 2σ &lt; X &lt; μ + 2σ) ≈ 0.95, P(μ − 3σ &lt; X &lt; μ + 3σ) ≈ 0.997
+7. Area under any PDF = 1
 
 Applications:
-- Finding risk factors for diseases in medical research
-- Finding which stocks move together in finance
-- Choosing useful columns (feature selection) before building a model
+- Making synthetic data for testing and training models
+- Data privacy (sharing realistic but fake data)
+- Simulations in science, engineering and finance
+- The base idea behind generative models like VAEs and diffusion models
 
 Procedure:
-1. Load the diabetes dataset using pandas and look at the first few rows.
-2. Find r between Glucose and Outcome using the formula.
-3. Check the answer using the pearsonr function, which also gives the p-value.
-4. Find r for every pair of columns (the correlation matrix).
-5. Sort the columns by their relation with Outcome to see which ones are most related to diabetes.
-6. Draw a heatmap of the correlation matrix and a scatter plot with a line for two columns.
+1. Set the parameters of the Gaussian distribution: mean = 50 and standard deviation = 10.
+2. Generate 1000 synthetic samples using np.random.normal.
+3. Make 1000 points between 10 and 90 and find the Gaussian PDF value of each point using norm.pdf.
+4. Draw a histogram of the synthetic data (30 bins, density = True).
+5. Draw the PDF curve on the same graph and compare it with the histogram.
 
 Conclusion:
-We used Pearson correlation to find how the columns are related. Glucose has the strongest positive relation with diabetes (Outcome).</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Principal Component Analysis (PCA) to reduce features</h3><button class="copy" type="button" data-copy="theory-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-3">Practical 3: Principal Component Analysis (PCA) to reduce features
+We modelled data with a Gaussian distribution and generated 1000 synthetic samples from it. The histogram of the samples closely follows the Gaussian curve, which shows that the synthetic data matches the probability model.</code></pre></article><article class="exp"><div class="head"><div class="num">3</div><h3>Transformer language models and text generation</h3><button class="copy" type="button" data-copy="gen-theory-3"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-3">Practical 3: Transformer language models and text generation
 
 Problem Statement:
-Using the Mall customer segmentation data, apply Principal Component Analysis (PCA) to reduce the number of features.
+To study the architecture of transformer-based language models and generate text using pretrained models.
 
 Aim:
-To reduce the number of columns (features) in the Mall Customers data using PCA.
+To study the architecture of transformer-based language models and generate text using the pretrained GPT-2 model.
 
 Theory:
-Dimensionality means the number of columns (features) in the data. When there are too many columns, the model becomes slow, the data is hard to show on a graph, and the model can learn noise. This problem is called the curse of dimensionality.
+A language model predicts the next word (token) in a piece of text. For example, after “The sky is”, a likely next word is “blue”.
 
-PCA (Principal Component Analysis) is a method to reduce the number of columns while keeping most of the information. It is an unsupervised method, which means it does not use any target (answer) column.
+The Transformer is a deep learning architecture introduced in 2017 in the paper “Attention Is All You Need”. Older models (RNNs) read words one by one. A Transformer uses attention to look at all the words at once, so it trains faster and understands long text better.
 
-The Mall Customers dataset has 200 customers with these columns: CustomerID, gender, age, annual income and spending score.
+Main parts of a Transformer:
+- Tokenization: the text is broken into small pieces called tokens (words or parts of words).
+- Embeddings: each token is changed into a list of numbers (a vector).
+- Positional encoding: adds the position of each token, because attention alone does not know the word order.
+- Self-attention: each word looks at all the other words and decides which ones matter for its meaning. For example, in “The cat drank milk because it was hungry”, attention links “it” to “cat”.
+- Multi-head attention: many attention “heads” run side by side, and each one looks at a different kind of relation.
+- Feed-forward network: a small neural network applied to each token after attention.
+- Residual connections and layer normalisation: help information flow through many layers and keep training stable.
 
-PCA makes new columns called principal components (PCs). Each PC is a mix of the old columns.
+Types of transformer models:
+- Encoder-only (like BERT): good for understanding text, such as classification.
+- Decoder-only (like GPT): good for generating text.
+- Encoder-decoder (like T5): good for translation and summarisation.
 
-- PC1 is the direction in which the data is spread out the most.
-- PC2 is at a right angle to PC1 and keeps the next most spread, and so on.
-- The PCs are not related to each other.
+GPT-2 (Generative Pre-trained Transformer 2) is a decoder-only model made by OpenAI in 2019. It was pretrained on a large amount of internet text. It is autoregressive: it predicts one token at a time, adds it to the text, and repeats until enough tokens are made.
 
-Variance means how spread out the data is. In PCA, more variance means more information.
+Text generation settings: max_new_tokens (how many new tokens to make), temperature (low = safe and repetitive, high = creative and random), and top-k / top-p (choose only from the most likely tokens).
 
-Before PCA, we standardise the data, so that every column has mean 0 and standard deviation 1. If we do not, a column with big numbers (like income) will look more important than it really is.
-
-Explained variance ratio tells us how much information each PC keeps. A scree plot shows this on a graph. We usually keep enough PCs to cover about 80% to 95% of the information.
-
-Advantages: faster models, easy 2D or 3D graphs and less noise. Disadvantages: the new columns are hard to explain, and a little information is lost.
+The Hugging Face pipeline loads the tokenizer and the model together, so we can generate text in only a few lines of code.
 
 Formulas:
-1. Standardisation: z = (x − mean) ÷ standard deviation
-2. Covariance matrix: C = (Z^T × Z) ÷ (n − 1), where Z is the standardised data
-3. Eigen equation: C × v = λ × v (v = eigenvector = direction of a PC, λ = eigenvalue = information in that PC)
-4. Explained variance ratio of PC i = λi ÷ (λ1 + λ2 + … + λk)
-5. New column: PC1 = a1·x1 + a2·x2 + … + ak·xk (the a values are called loadings)
+1. Self-attention: Attention(Q, K, V) = softmax(Q × K^T ÷ √dk) × V (Q = query, K = key, V = value, dk = size of the key vector)
+2. Softmax: softmax(zi) = e^(zi) ÷ Σ e^(zj)
+3. Multi-head attention = join(head1, head2, …, headh) × W
+4. Positional encoding: PE(pos, 2i) = sin(pos ÷ 10000^(2i/d)) and PE(pos, 2i+1) = cos(pos ÷ 10000^(2i/d))
+5. Autoregressive model: P(w1, w2, …, wn) = P(w1) × P(w2 | w1) × … × P(wn | w1 … wn−1)
+6. Temperature: P(token i) = e^(zi/T) ÷ Σ e^(zj/T) (T = temperature)
+7. Perplexity = e^(average loss) (lower is better)
 
 Applications:
-- Customer segmentation in marketing
-- Image compression
-- Face recognition
-- Showing data with many columns on a 2D graph
+- Chatbots and virtual assistants
+- Writing help, summaries and translation
+- Code generation
+- Question answering
 
 Procedure:
-1. Load the Mall Customers dataset.
-2. Remove the CustomerID column and change Gender into numbers (0 and 1).
-3. Standardise all columns so that they are on the same scale.
-4. Apply PCA with all components and print the explained variance of each one.
-5. Draw the scree plot (cumulative explained variance).
-6. Apply PCA again with 2 components and print the loadings.
-7. Draw a 2D scatter plot of the customers using PC1 and PC2.
+1. Install the transformers and torch libraries.
+2. Import pipeline from the transformers library.
+3. Load the pretrained GPT-2 model using pipeline("text-generation", model="gpt2").
+4. Give the prompt “Artificial Intelligence is” and generate 50 new tokens.
+5. Print the prompt and the generated text.
+6. Try more prompts and compare the generated outputs.
 
 Conclusion:
-We reduced the data from 4 columns to 2 principal components. The explained variance shows how much information is kept, and the 2D graph makes the customers easy to see and compare.</code></pre></article></section><section class="group"><h2>Level: Moderate (all)</h2><article class="exp"><div class="head"><div class="num">4</div><h3>Energy efficiency: relationship analysis + regression for Heating Load</h3><button class="copy" type="button" data-copy="theory-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-4">Practical 4: Energy efficiency: relationship analysis + regression for Heating Load
+We studied the main parts of the Transformer architecture and used the pretrained GPT-2 model to generate text. GPT-2 continued each prompt by predicting one token at a time, and different prompts gave different text.</code></pre></article><article class="exp"><div class="head"><div class="num">4</div><h3>Prompt engineering and RAG to reduce hallucination</h3><button class="copy" type="button" data-copy="gen-theory-4"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-4">Practical 4: Prompt engineering and RAG to reduce hallucination
 
 Problem Statement:
-Use the Energy Efficiency Dataset to analyse the relationship between building design parameters and energy consumption. And apply an appropriate regression model to predict the Heating.
+To design effective prompts and implement Retrieval Augmented Generation to reduce hallucination in large language models.
 
 Aim:
-To find how the design of a building affects its energy use, and to predict its heating load using regression.
+To write effective prompts and build a simple Retrieval Augmented Generation (RAG) system that reduces hallucination.
 
 Theory:
-Regression is a supervised learning method used to predict a number (a continuous value), like price, temperature or energy use. Here we predict the heating load, which is the energy needed to keep a building warm.
+A Large Language Model (LLM) is a very big transformer model trained on a huge amount of text. A prompt is the input or instruction that we give to the model.
 
-The dataset has 768 buildings. Each building has 8 design values (inputs): relative compactness, surface area, wall area, roof area, overall height, orientation, glazing (glass) area and glazing area distribution. There are 2 outputs: heating load and cooling load.
+Prompt engineering means writing prompts in a clear and smart way to get better and more consistent answers.
 
-First we study the relation between the design values and the heating load using correlation. This shows which design values affect energy use the most.
+Principles of a good prompt:
+- Give a role, like “You are a computer science tutor”.
+- Give a clear task.
+- Say the output format, like “use exactly 4 bullet points”.
+- Add limits, like length or style.
+- Give examples when needed.
 
-Linear Regression: it finds the best straight line (or flat plane) through the data. Each input gets a coefficient (b). The coefficient shows how much the output changes when that input goes up by 1. The best line is the one with the smallest total squared error. This method is called least squares.
+Types of prompts:
+- Zero-shot: only the instruction, with no examples.
+- Few-shot: a few solved examples are given first, then the new question.
+- Role prompt: the model is asked to act as someone, like a teacher.
+- Chain-of-thought: the model is asked to show its steps before the final answer.
 
-Random Forest Regression: a decision tree splits the data using simple yes/no questions, like “Is the height more than 5 m?”. A random forest makes many such trees, each on a random part of the data, and takes the average of their answers. It can learn curved (non-linear) patterns, so it usually gives better results.
+Hallucination: sometimes an LLM gives an answer that sounds right but is false or made up. This happens because the model predicts likely words, not checked facts, and its knowledge can be old or missing.
 
-Train and test split: we train the model on 80% of the data and test it on the other 20%, which the model has never seen. This shows how well the model works on new data.
+RAG (Retrieval Augmented Generation) reduces hallucination. Before answering, the system searches a knowledge base (a set of documents) for relevant information and gives it to the model as context. The answer is then based on real evidence. This is called grounding.
 
-We check the models using MAE, RMSE (both smaller is better) and R² (closer to 1 is better).
+RAG pipeline in this practical:
+1. The user asks a question (query).
+2. The query and the documents are changed into vectors using TF-IDF.
+3. Cosine similarity finds how close each document is to the query.
+4. The top-k documents are selected (here k = 3).
+5. The answer is built only from these documents, and the sources are shown.
+6. If no document is similar enough (score below a threshold), the system refuses to answer instead of making something up.
 
-Formulas:
-1. Simple linear regression: y = m·x + c (m = slope, c = intercept)
-2. Multiple linear regression: y = b0 + b1·x1 + b2·x2 + … + b8·x8
-3. Error (residual) = actual value − predicted value = y − ŷ
-4. Least squares: choose the b values that make Σ(y − ŷ)² as small as possible
-5. MAE = Σ|y − ŷ| ÷ n
-6. MSE = Σ(y − ŷ)² ÷ n
-7. RMSE = √MSE
-8. R² = 1 − [Σ(y − ŷ)² ÷ Σ(y − ȳ)²]
-9. Random Forest prediction = (sum of all tree predictions) ÷ (number of trees)
-
-Applications:
-- Designing energy-saving buildings
-- Predicting house prices
-- Predicting sales or demand
-
-Procedure:
-1. Load the energy efficiency dataset and give the columns simple names.
-2. Look at the summary of the data (mean, minimum, maximum).
-3. Find the correlation of each design value with the heating load and draw a heatmap.
-4. Take the 8 design values as inputs (X) and the heating load as the output (y).
-5. Split the data: 80% for training and 20% for testing.
-6. Train a Linear Regression model and a Random Forest model.
-7. Find R², MAE and RMSE for both models and compare them.
-8. Draw a graph of actual vs predicted heating load.
-
-Conclusion:
-Overall height, relative compactness and roof area affect the heating load the most. Both models predicted the heating load well, and Random Forest usually gave a higher R² and lower error than Linear Regression.</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>SVM: is a tumour benign or malignant?</h3><button class="copy" type="button" data-copy="theory-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-5">Practical 5: SVM: is a tumour benign or malignant?
-
-Problem Statement:
-Using the Cancer Dataset, implement a Support Vector Machine (SVM) model to predict whether a tumour is benign or malignant based on given diagnostic features.
-
-Aim:
-To predict whether a tumour is benign (not cancer) or malignant (cancer) using a Support Vector Machine (SVM).
-
-Theory:
-Classification means putting data into groups, called classes. Here there are two classes: benign (not cancer) and malignant (cancer). SVM (Support Vector Machine) is a supervised method used for classification.
-
-The dataset has 569 patients (357 benign and 212 malignant). For each patient there are 30 values measured from images of cells, like radius, texture, perimeter, area and smoothness.
-
-Main ideas of SVM:
-- Hyperplane: the boundary that separates the two classes. With 2 columns it is a line, with 3 columns it is a flat plane, and with more columns it is called a hyperplane.
-- Margin: many lines can separate the classes. SVM chooses the line with the widest gap between the two classes. This gap is called the margin. A wider margin usually gives fewer mistakes on new data.
-- Support vectors: the points closest to the boundary. The boundary depends only on these points. That is why the method is called Support Vector Machine.
-- Soft margin and C: real data is not perfectly separated, so SVM allows a few mistakes. A big C allows fewer mistakes but gives a narrow margin. A small C gives a wider margin but allows more mistakes.
-- Kernel: if the classes cannot be separated by a straight line, SVM uses a kernel. A kernel moves the data to a higher dimension where a straight boundary can separate it. Common kernels are linear, polynomial and RBF. RBF is the most common.
-
-Scaling: SVM works with distances, so all columns are brought to the same scale before training.
-
-Confusion matrix: a table that shows right and wrong predictions.
-
-- TP (True Positive): cancer, and the model said cancer
-- TN (True Negative): not cancer, and the model said not cancer
-- FP (False Positive): not cancer, but the model said cancer
-- FN (False Negative): cancer, but the model missed it
-
-In medical tests, FN is the most dangerous mistake, because a cancer patient is missed. So recall is a very important measure here.
+In real systems, embeddings from neural networks and a vector database are used instead of TF-IDF, and the retrieved text is given to an LLM to write the final answer.
 
 Formulas:
-1. Hyperplane: w·x + b = 0 (w = weights, b = bias)
-2. Prediction rule: if w·x + b ≥ 0 then malignant, else benign
-3. Margin width = 2 ÷ ||w|| (SVM makes this as large as possible)
-4. Linear kernel: K(x, y) = x·y
-5. RBF kernel: K(x, y) = exp(−γ × ||x − y||²)
-6. Accuracy = (TP + TN) ÷ (TP + TN + FP + FN)
-7. Precision = TP ÷ (TP + FP)
-8. Recall = TP ÷ (TP + FN)
-9. F1 score = 2 × Precision × Recall ÷ (Precision + Recall)
-
-Applications:
-- Cancer and disease detection
-- Face detection
-- Spam email filtering
-- Handwriting recognition
-
-Procedure:
-1. Load the breast cancer dataset.
-2. Remove the id column and the empty column.
-3. Change the diagnosis column into numbers: M (malignant) = 1 and B (benign) = 0.
-4. Split the data into training (80%) and testing (20%) parts, keeping the same ratio of classes in both.
-5. Bring all columns to the same scale using StandardScaler.
-6. Train the SVM model with the RBF kernel.
-7. Predict on the test data and find accuracy, precision, recall and F1 score.
-8. Draw the confusion matrix.
-
-Conclusion:
-The SVM model predicted whether a tumour is benign or malignant with high accuracy. This shows that SVM works well for medical diagnosis data.</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Logistic Regression: is a customer likely to default?</h3><button class="copy" type="button" data-copy="theory-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-6">Practical 6: Logistic Regression: is a customer likely to default?
-
-Problem Statement:
-Using a real-world finance dataset related to loan applicants. Build a Logistic Regression model to classify whether a customer is likely to default on a loan based on selected economic and demographic attributes.
-
-Aim:
-To predict whether a customer will default (not pay back) using a Logistic Regression model.
-
-Theory:
-Logistic Regression is a supervised method used for classification, mostly for yes/no questions. Here the question is: will the customer default or not?
-
-Even though its name has “regression”, it is used for classification. It does not give a number like a price. It gives a probability between 0 and 1.
-
-How it works:
-- Step 1: it multiplies each input by a weight and adds them to get a score z.
-- Step 2: it passes z through the sigmoid function, which changes any number into a value between 0 and 1. This value is the probability of default.
-- Step 3: if the probability is 0.5 or more, the answer is “default” (1). Otherwise it is “no default” (0). This 0.5 is called the threshold, and it can be changed.
-
-How it learns: the model changes its weights to make the log loss as small as possible. Log loss is high when the model is wrong and very sure about its answer.
-
-Imbalanced data: the given dataset has 284,807 records, and only 492 of them are in class 1, which we treat as default. When one class is very small, the data is called imbalanced. A model can get 99.8% accuracy just by saying “no” every time, but it will miss every defaulter.
-
-To handle this, we use class_weight = balanced, which gives more importance to the rare class. Other ways are oversampling (making more examples of the rare class, like SMOTE) and undersampling (using fewer examples of the big class).
-
-So we do not trust accuracy alone. We also check precision, recall, F1 score and ROC-AUC. The ROC curve shows the true positive rate against the false positive rate at different thresholds. AUC is the area under this curve: 0.5 means random guessing and 1 means a perfect model.
-
-Formulas:
-1. Score: z = b0 + b1·x1 + b2·x2 + … + bn·xn
-2. Sigmoid: p = σ(z) = 1 ÷ (1 + e^(−z))
-3. Decision rule: if p ≥ 0.5 then default (1), else no default (0)
-4. Odds = p ÷ (1 − p), and log(odds) = z
-5. Log loss (for one record) = −[y × log(p) + (1 − y) × log(1 − p)]
-6. Class weight (balanced) = total records ÷ (number of classes × records in that class)
-7. Recall (True Positive Rate) = TP ÷ (TP + FN)
-8. False Positive Rate = FP ÷ (FP + TN)
-9. Precision = TP ÷ (TP + FP), F1 = 2 × Precision × Recall ÷ (Precision + Recall)
-
-Applications:
-- Loan approval and credit risk checking in banks
-- Credit card fraud detection
-- Disease prediction (yes/no)
-- Spam email detection
-
-Procedure:
-1. Load the dataset and check how many records are in each class (Class 1 = default).
-2. Take all columns except Class as inputs (X) and Class as the output (y).
-3. Split the data into training (80%) and testing (20%) parts, keeping the same ratio of classes in both.
-4. Bring all columns to the same scale using StandardScaler.
-5. Train the Logistic Regression model with class_weight = balanced.
-6. Predict on the test data and find the probability of default for each record.
-7. Find accuracy, ROC-AUC, precision, recall and F1 score.
-8. Draw the confusion matrix.
-
-Conclusion:
-The Logistic Regression model was able to find most of the defaulters. For imbalanced data, recall and ROC-AUC give a truer picture of the model than accuracy.</code></pre></article></section><section class="group"><h2>Level: Complex (any two)</h2><article class="exp"><div class="head"><div class="num">7</div><h3>End-to-end predictive analytics: build, evaluate, visualize</h3><button class="copy" type="button" data-copy="theory-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-7">Practical 7: End-to-end predictive analytics: build, evaluate, visualize
-
-Problem Statement:
-Using a real-world finance dataset related to loan default, perform an end-to-end predictive analytics task. The experiment should include: Model building, evaluation and visualization.
-
-Aim:
-To do a complete (end-to-end) prediction project on finance data: build models, test them and show the results with graphs.
-
-Theory:
-Predictive analytics means using old (historical) data to predict something unknown or something in the future. For example, a bank can predict whether a new customer will pay back a loan.
-
-There are four types of analytics:
-- Descriptive: what happened? (for example, how many loans were not paid last year)
-- Diagnostic: why did it happen?
-- Predictive: what will happen? (this practical)
-- Prescriptive: what should we do?
-
-An end-to-end project means doing all the steps from start to finish:
-1. Understand the problem
-2. Collect the data
-3. Clean the data (remove duplicates, fill empty cells)
-4. Explore the data with graphs (EDA)
-5. Change text into numbers (encoding)
-6. Split the data into training and testing parts
-7. Build the models
-8. Test (evaluate) the models
-9. Show the results with graphs
-10. Use the model in real life (deployment)
-
-EDA (Exploratory Data Analysis): we use graphs and simple numbers to understand the data, like how many records are in each class and how the values are spread.
-
-Encoding: models only understand numbers. Label encoding gives each category a number (like Male = 0, Female = 1). One-hot encoding makes a separate 0/1 column for each category.
-
-Models: Logistic Regression is simple and fast, so it is used as the first (baseline) model. Random Forest builds many decision trees and takes a majority vote. It is usually more accurate.
-
-Overfitting and underfitting: if the model is very good on training data but bad on test data, it is overfitting (it has memorised the data). If it is bad on both, it is underfitting. Cross-validation (training and testing many times on different parts of the data) gives a more reliable score.
-
-Feature importance shows which columns help the most in the prediction. This helps people understand the result and make decisions.
-
-Formulas:
-1. Accuracy = correct predictions ÷ total predictions = (TP + TN) ÷ (TP + TN + FP + FN)
-2. Precision = TP ÷ (TP + FP)
-3. Recall = TP ÷ (TP + FN)
-4. F1 score = 2 × Precision × Recall ÷ (Precision + Recall)
-5. Gini impurity (used by decision trees to choose a split) = 1 − Σ(pi)², where pi is the share of class i in a group
-6. Random Forest answer = majority vote of all the trees
-7. Train/test split used here: 75% training data and 25% testing data
-
-Applications:
-- Loan default prediction in banks
-- Customer churn prediction (who will leave)
-- Sales prediction
-- Fraud detection
-
-Procedure:
-1. Load the finance dataset and choose the column to predict (the target).
-2. Check the number of rows and columns, empty cells and repeated rows.
-3. Remove repeated rows and fill the empty cells with the most common value.
-4. Draw a graph of the target column to understand the data (EDA).
-5. Change all text columns into numbers using label encoding.
-6. Split the data into training (75%) and testing (25%) parts.
-7. Train two models: Logistic Regression and Random Forest.
-8. Find the accuracy and classification report of both models and compare them.
-9. Draw the confusion matrix and a bar graph of the 10 most important columns.
-
-Conclusion:
-We completed all the steps of a predictive analytics project: data cleaning, EDA, encoding, model building, evaluation and visualisation. We compared two models and found the columns that matter most for the prediction.</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Twitter sentiment analysis</h3><button class="copy" type="button" data-copy="theory-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-8">Practical 8: Twitter sentiment analysis
-
-Problem Statement:
-Using real-world Twitter dataset, perform sentiment analysis to classify tweets based on their sentiment polarity.
-
-Aim:
-To find the feeling (sentiment polarity) of tweets: Positive, Negative, Neutral or Irrelevant.
-
-Theory:
-NLP (Natural Language Processing) helps computers understand human language. Sentiment analysis is an NLP task that finds the feeling in a piece of text.
-
-Sentiment polarity means the type of feeling:
-- Positive: “I love this game”
-- Negative: “This update is so bad”
-- Neutral: “The new patch comes out today”
-- Irrelevant: tweets that are not about the topic (this extra class is in our dataset)
-
-The dataset has about 74,000 training tweets and a separate validation file. Each tweet has an entity (the brand or game it talks about), a sentiment label and the tweet text.
-
-There are three ways to do sentiment analysis:
-- Rule-based (lexicon): each word has a score, like good = +1 and bad = −1, and the scores are added. Examples: TextBlob, VADER.
-- Machine learning: a model learns from tweets whose feelings are already known. We use this way.
-- Deep learning: models like LSTM and BERT. They are more accurate but need more computing power.
-
-Text cleaning (preprocessing): make all letters small, remove links, @names, # symbols, numbers and punctuation, split the text into words (tokenization), and remove common words like “the”, “is” and “a” (stop words). Sometimes words are also cut to their root, like playing → play (stemming).
-
-Text to numbers: a computer cannot read words, so we change the text into numbers. Bag of Words just counts each word. TF-IDF also counts words, but gives less value to words that are in almost every tweet and more value to words that are special to a tweet. We also use bigrams (two-word phrases like “not good”), so the model understands negative phrases.
-
-Model: we train Logistic Regression on the TF-IDF numbers. Naive Bayes is another common choice. We check the model with accuracy, precision, recall and a confusion matrix.
-
-Challenges: sarcasm (“Great, my phone died again”), slang, spelling mistakes, emojis and tweets with mixed feelings.
-
-Formulas:
-1. TF (term frequency) = (times the word appears in the tweet) ÷ (total words in the tweet)
-2. IDF (inverse document frequency) = log(N ÷ number of tweets that have the word), where N = total tweets
+1. TF = (times the word appears in a document) ÷ (total words in the document)
+2. IDF = log(N ÷ number of documents that contain the word), where N = total documents (basic form)
 3. TF-IDF = TF × IDF
-4. Example (log base 10): N = 1000 tweets. “awesome” is in 10 tweets, so IDF = log(1000 ÷ 10) = log(100) = 2. “game” is in 500 tweets, so IDF = log(2) = 0.30. So “awesome” gets more value.
-5. Softmax (for more than two classes): P(class k) = e^(zk) ÷ (sum of e^(z) for all classes)
-6. Accuracy = correct predictions ÷ total predictions
+4. Cosine similarity: cos(θ) = (A · B) ÷ (||A|| × ||B||) (1 = very similar, 0 = not related)
+5. Top-k retrieval: choose the k documents with the highest cosine similarity
+6. Grounding rule: answer only if similarity ≥ threshold (0.10 in the main test, 0.25 in the hallucination test), otherwise refuse
 
 Applications:
-- Brand and product monitoring on social media
-- Analysing product reviews
-- Understanding customer feedback
-- Studying public opinion and trends
+- Company chatbots that answer from their own documents
+- Customer support systems
+- Search engines with AI answers
+- Study, legal and medical assistants that must give correct facts
 
 Procedure:
-1. Load the training and validation tweet files and give names to the columns.
-2. Remove empty rows.
-3. Clean the tweet text: small letters, remove links, @names, # and symbols.
-4. Draw a bar graph of how many tweets have each sentiment.
-5. Change the text into numbers using TF-IDF (single words and two-word phrases).
-6. Train the Logistic Regression model on the training tweets.
-7. Test the model on the validation tweets and find accuracy, precision and recall.
-8. Draw the confusion matrix.
-9. Try the model on some new tweets.
+1. Write a weak prompt, a clear structured prompt and a few-shot prompt, and compare them.
+2. Create a small knowledge base of 7 documents about AI topics.
+3. Change the documents into TF-IDF vectors (with English stop words removed).
+4. Write a retrieve function that finds the top 3 documents for a query using cosine similarity.
+5. Ask “How does RAG help reduce hallucinations?”, show the retrieved documents with their scores, and draw a bar graph of the scores.
+6. Build a grounded answer using only the documents whose score is above the threshold, and show the sources.
+7. Ask an unrelated question (“Who invented quantum computing in the year 1890?”) and check that the system refuses to answer.
 
 Conclusion:
-We cleaned the tweets, changed them into TF-IDF numbers and trained a Logistic Regression model. The model was able to find the sentiment of most tweets correctly.</code></pre></article><article class="exp"><div class="head"><div class="num">9</div><h3>Time series analysis &amp; forecasting with ARIMA</h3><button class="copy" type="button" data-copy="theory-9"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="theory-9">Practical 9: Time series analysis &amp; forecasting with ARIMA
+Clear, structured and few-shot prompts give better instructions to a model. The RAG system found the right documents using TF-IDF and cosine similarity and answered only from them. For an unrelated question it refused to answer, which shows how RAG reduces hallucination.</code></pre></article><article class="exp"><div class="head"><div class="num">5</div><h3>Generative Adversarial Networks (GAN)</h3><button class="copy" type="button" data-copy="gen-theory-5"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-5">Practical 5: Generative Adversarial Networks (GAN)
 
 Problem Statement:
-Using a suitable real-world time series dataset related to transportation traffic (such as road traffic volume, metro passenger count, railway ridership, or air traffic statistics), perform time series analysis (using ARIMA) and forecasting.
+To study the architecture and training process of Generative Adversarial Networks.
 
 Aim:
-To study transport traffic data over time and predict (forecast) future traffic using the ARIMA model.
+To study the architecture and training process of a Generative Adversarial Network (GAN) and use it to generate handwritten digit images.
 
 Theory:
-A time series is data recorded at regular times, like every hour, every day or every month. Examples are daily metro passengers, monthly air passengers and hourly road traffic. In a time series, the order of the data is very important, because past values affect future values.
+A GAN (Generative Adversarial Network) was introduced by Ian Goodfellow in 2014. It has two neural networks that compete with each other, like players in a game.
 
-Components of a time series:
-- Trend: a long-term rise or fall (for example, passengers increase every year).
-- Seasonality: a pattern that repeats at fixed times (more traffic on weekdays, more flights in December).
-- Cyclic: long ups and downs without a fixed time (like economic cycles).
-- Irregular (noise): random changes that cannot be predicted.
+- Generator (G): takes random noise (here a list of 100 random numbers) and turns it into a fake image. Its goal is to make images so real that the discriminator is fooled.
+- Discriminator (D): takes an image and says whether it is real (from the dataset) or fake (from the generator). It gives a probability between 0 and 1 (1 = real, 0 = fake).
 
-Stationarity: a time series is stationary when its average and spread do not change over time. ARIMA needs stationary data. We check this with the ADF (Augmented Dickey-Fuller) test. If the p-value is less than 0.05, the data is stationary. If not, we take the difference (subtract the previous value from each value) to remove the trend.
+Simple example: the generator is like a person making fake currency notes, and the discriminator is like the police checking them. Both keep getting better, until the fake notes look real.
 
-ACF and PACF: ACF shows how a value is related to its past values. PACF shows the direct relation with one past value, after removing the effect of the values in between. PACF helps us choose p, and ACF helps us choose q.
+Architecture in this practical:
+- Generator: 100 → 256 (ReLU) → 512 (ReLU) → 784 (Tanh). The 784 outputs form a 28 × 28 image. Tanh gives values between −1 and 1.
+- Discriminator: 784 → 512 (LeakyReLU) → 256 (LeakyReLU) → 1 (Sigmoid). Sigmoid gives the probability that the image is real.
 
-ARIMA(p, d, q) has three parts:
-- AR (AutoRegressive), p: today's value depends on the last p values.
-- I (Integrated), d: the number of times we take the difference to make the data stationary.
-- MA (Moving Average), q: today's value depends on the last q errors.
+Training process (for each batch of 64 images):
+1. Train D on real images with label 1 and on fake images with label 0.
+2. Add both losses and update D.
+3. Make new fake images and pass them to D, but this time use label 1 (real). This loss teaches G how to fool D.
+4. Update G. Repeat this for all batches, for 10 epochs.
 
-For example, ARIMA(2, 1, 2) uses 2 past values, 1 difference and 2 past errors. To choose the best model, we try different values of p, d and q and pick the one with the lowest AIC.
+The MNIST images are normalised to the range −1 to 1, so that they match the Tanh output of the generator.
 
-Train and test: we never shuffle time series data. We train on the older 80% of the data and test on the newer 20%. Then we train on all the data and forecast the future.
+Loss used: Binary Cross-Entropy (BCE). Optimizer: Adam with learning rate 0.0002 for both networks.
 
-If the data has strong seasonality, we can use SARIMA, which adds a seasonal part to ARIMA.
+Common problems: mode collapse (the generator makes only a few kinds of images), unstable training, and vanishing gradients when D becomes much stronger than G.
+
+Types of GANs: DCGAN (uses convolution layers), Conditional GAN (makes images of a chosen class), CycleGAN (changes style, like photo to painting) and StyleGAN (very realistic faces).
 
 Formulas:
-1. Time series: Y(t) = Trend + Seasonality + Noise
-2. Differencing: y′(t) = y(t) − y(t−1)
-3. AR(p): y(t) = c + φ1·y(t−1) + φ2·y(t−2) + … + φp·y(t−p) + e(t)
-4. MA(q): y(t) = c + e(t) + θ1·e(t−1) + θ2·e(t−2) + … + θq·e(t−q)
-5. AIC = 2k − 2·ln(L) (k = number of parameters, L = likelihood; lower AIC is better)
-6. MAE = Σ|y − ŷ| ÷ n
-7. RMSE = √[Σ(y − ŷ)² ÷ n]
-8. MAPE = (100 ÷ n) × Σ|(y − ŷ) ÷ y| %
+1. GAN objective (minimax game): min over G, max over D of V(D, G) = E[log D(x)] + E[log(1 − D(G(z)))]
+2. Here x = real image, z = random noise, G(z) = fake image, D(·) = probability of being real
+3. Binary cross-entropy: BCE = −[y × log(p) + (1 − y) × log(1 − p)]
+4. Discriminator loss: Loss_D = BCE(D(x), 1) + BCE(D(G(z)), 0)
+5. Generator loss: Loss_G = BCE(D(G(z)), 1)
+6. Normalisation: x_new = (x − 0.5) ÷ 0.5 (changes 0 to 1 into −1 to 1)
+7. ReLU = max(0, x); LeakyReLU = x if x &gt; 0, else 0.2x; Tanh = (e^x − e^(−x)) ÷ (e^x + e^(−x)); Sigmoid = 1 ÷ (1 + e^(−x))
 
 Applications:
-- Planning metro, bus and train services
-- Traffic control in cities
-- Airline seat and flight planning
-- Sales and weather forecasting
+- Making realistic images and faces
+- Data augmentation (making extra training data)
+- Image-to-image translation and style change
+- Improving image quality (super-resolution)
 
 Procedure:
-1. Load the transport dataset and find the date column and the value column.
-2. Change the date column into proper dates and sort the data by date.
-3. If the data is hourly, add it up to get daily totals. Fill any missing days.
-4. Draw a graph of the data to see the trend and the pattern.
-5. Check stationarity with the ADF test. If it is not stationary, use d = 1.
-6. Draw the ACF and PACF graphs.
-7. Split the data in time order: first 80% for training and last 20% for testing.
-8. Train the ARIMA(2, d, 2) model and predict the test period.
-9. Find MAE and RMSE to check the error.
-10. Train the model on all the data, forecast the next 30 time periods and draw the graph.
+1. Select the device (GPU, Apple MPS or CPU).
+2. Load the MNIST dataset, change the images to tensors, normalise them to −1 to 1, and make batches of 64.
+3. Build the Generator (100 → 256 → 512 → 784) and the Discriminator (784 → 512 → 256 → 1).
+4. Set the BCE loss and an Adam optimizer (learning rate 0.0002) for each network.
+5. For each batch, train the discriminator on real and fake images, then train the generator to fool the discriminator.
+6. Train for 10 epochs and print the losses of D and G after each epoch.
+7. Give 16 random noise vectors to the generator and show the 16 generated digit images in a 4 × 4 grid.
 
 Conclusion:
-The ARIMA model learned the trend and pattern of the traffic data and forecast future values with a small error. Such forecasts help in planning transport services.</code></pre></article></section>
-</div>
+We studied the generator–discriminator structure of a GAN and trained it on MNIST. After training, the generator produced new images that look like handwritten digits, which shows how adversarial training helps a model create realistic data.</code></pre></article><article class="exp"><div class="head"><div class="num">6</div><h3>Image generation with Stable Diffusion</h3><button class="copy" type="button" data-copy="gen-theory-6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-6">Practical 6: Image generation with Stable Diffusion
+
+Problem Statement:
+To generate images using diffusion-based generative models such as Stable Diffusion.
+
+Aim:
+To generate an image from a text prompt using the Stable Diffusion model.
+
+Theory:
+Diffusion models are generative models that create images by slowly removing noise. Many modern image generators are based on them.
+
+A diffusion model has two processes:
+- Forward process (adding noise): a real image is covered with a little random noise at each step, until after many steps it becomes pure noise.
+- Reverse process (removing noise): a neural network learns to remove the noise step by step. To make a new image, we start from pure noise and remove the noise again and again until a clear image appears.
+
+During training, the model is shown a noisy image and learns to predict the noise that was added. A model that can predict the noise well can clean any noisy image.
+
+Stable Diffusion is a latent diffusion model. Instead of working on the full-size image, it works on a much smaller compressed version of it, called the latent space. This makes it faster and lighter.
+
+Main parts of Stable Diffusion:
+- Text encoder (CLIP): changes the text prompt into numbers (embeddings) that describe its meaning.
+- U-Net: the main network. It predicts and removes the noise in the latent space, guided by the text embeddings through cross-attention.
+- Scheduler: decides how much noise to remove at each step.
+- VAE decoder: changes the final clean latent back into a full image (512 × 512 pixels for version 1.5).
+- Safety checker: checks the image for unsafe content.
+
+Important settings:
+- Prompt: the text description of the image we want.
+- num_inference_steps: the number of denoising steps (here 15). More steps usually give more detail but take more time.
+- guidance_scale: how strongly the image should follow the prompt (here 7.5). A higher value follows the prompt more closely but can look less natural.
+- Device and data type: on a GPU, float16 is used to save memory and time; on a CPU or Apple MPS, float32 is used.
+
+enable_attention_slicing() calculates attention in small parts, so the model needs less memory.
+
+Formulas:
+1. Forward step: q(xt | xt−1) = N(√(1 − βt) × xt−1, βt × I) (βt = small amount of noise added at step t)
+2. Jump to any step: xt = √(ᾱt) × x0 + √(1 − ᾱt) × ε, where ε = random noise and ᾱt = (1 − β1) × (1 − β2) × … × (1 − βt)
+3. Training loss: L = || ε − εθ(xt, t, text) ||² (the model εθ predicts the added noise)
+4. Classifier-free guidance: ε = ε_uncond + s × (ε_cond − ε_uncond) (s = guidance scale = 7.5)
+5. Latent size: a 512 × 512 × 3 image becomes a 64 × 64 × 4 latent, which is 48 times smaller
+
+Applications:
+- Art, posters and illustrations
+- Product and fashion design ideas
+- Image editing (inpainting) and upscaling
+- Concept art for games and films
+
+Procedure:
+1. Import torch, matplotlib and StableDiffusionPipeline from the diffusers library.
+2. Select the device (CUDA GPU, Apple MPS or CPU) and the data type (float16 on GPU, float32 otherwise).
+3. Load the pretrained Stable Diffusion v1.5 model and move it to the device.
+4. Turn on attention slicing to save memory.
+5. Write a text prompt that describes the image.
+6. Generate the image with 15 inference steps and a guidance scale of 7.5.
+7. Show the image using matplotlib and save it as generated_image.png.
+
+Conclusion:
+We used the Stable Diffusion model to turn a text prompt into an image. The model started from random noise and removed it step by step, guided by the prompt, to create a detailed image that matches the description.</code></pre></article><article class="exp"><div class="head"><div class="num">7</div><h3>Artistic content with Neural Style Transfer</h3><button class="copy" type="button" data-copy="gen-theory-7"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-7">Practical 7: Artistic content with Neural Style Transfer
+
+Problem Statement:
+To generate artistic content using neural style transfer and GAN-based models.
+
+Aim:
+To generate artistic images using Neural Style Transfer (NST), which mixes the content of one image with the style of another.
+
+Theory:
+Neural Style Transfer (NST) takes two images: a content image (what to draw, like shapes and objects) and a style image (how to draw it, like colours, textures and brush strokes). It creates a new image that has the content of the first image and the style of the second. It was introduced by Gatys and others in 2015.
+
+Content means the structure of the image, like where the objects and edges are. Style means the colours, textures and patterns that repeat across the image.
+
+Content loss measures how different the generated image is from the content image. Style loss measures how different the styles of the generated image and the style image are.
+
+Gram matrix: style is measured with a Gram matrix. It shows how much the different feature channels (here the red, green and blue channels) appear together. It keeps the colour and texture information but forgets where things are, which is exactly what style means.
+
+Total loss = content weight × content loss + style weight × style loss. Here the content weight is 1 and the style weight is 5.
+
+How the image is made: we start from a random noise image and treat its pixels as the values to learn. In each step the losses are calculated, the gradients are found with backpropagation, and the Adam optimizer changes the pixels a little (learning rate 0.05). Pixel values are kept between 0 and 1. After 300 steps, the image has the structure of the content image with the colours and patterns of the style image.
+
+Note on this practical: to keep it simple and fast, it uses two small 128 × 128 images made by code (a square-and-circle content image and a colourful wave-pattern style image) and compares the raw colour channels. The original NST method uses features from a pretrained CNN called VGG-19, which gives richer artistic results.
+
+GAN-based art: GANs can also create art. CycleGAN can turn photos into paintings (for example, into a Monet-style painting) without needing matching image pairs. StyleGAN can make new, realistic faces and artworks. Unlike NST, a GAN learns a style from many images, and after training it can apply it very quickly.
+
+Formulas:
+1. Content loss: L_content = (1 ÷ N) × Σ(G − C)² (G = generated image, C = content image)
+2. Gram matrix: Gram(i, j) = Σk F(i, k) × F(j, k) ÷ (channels × height × width) (F = values of channels i and j)
+3. Style loss: L_style = (1 ÷ N) × Σ(Gram(G) − Gram(S))² (S = style image)
+4. Total loss: L_total = α × L_content + β × L_style (here α = 1 and β = 5)
+5. Update rule (gradient descent idea): pixels = pixels − learning rate × ∂L_total/∂pixels
+6. Clamp: pixel = min(max(pixel, 0), 1)
+
+Applications:
+- Turning photos into paintings
+- Photo filters in art and design apps
+- Creating textures for games and films
+- Making creative posters and wallpapers
+
+Procedure:
+1. Set the random seeds so that the results are the same every time.
+2. Create a 128 × 128 content image (grey background, blue square, yellow circle) and a colourful wave-pattern style image.
+3. Convert both images into PyTorch tensors.
+4. Write a function for the Gram matrix and find the Gram matrix of the style image.
+5. Start the generated image from random noise and allow its pixels to be learned (requires_grad).
+6. Use the Adam optimizer (learning rate 0.05) for 300 steps: find the content loss, style loss and total loss, backpropagate, update the pixels and keep them between 0 and 1.
+7. Print the losses every 50 steps.
+8. Show the content, style and generated images side by side, and draw the loss graph.
+9. Save the generated image as practical_7_generated_style.png.
+
+Conclusion:
+Neural Style Transfer was done using PyTorch. The content loss kept the structure of the content image, and the Gram-matrix-based style loss added the colours and patterns of the style image. The final image combines both.</code></pre></article><article class="exp"><div class="head"><div class="num">8</div><h3>Train, fine-tune and deploy an open-source model</h3><button class="copy" type="button" data-copy="gen-theory-8"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span>Copy theory</span></button></div><pre class="src" hidden><code id="gen-theory-8">Practical 8: Train, fine-tune and deploy an open-source model
+
+Problem Statement:
+To train, fine-tune, and deploy open-source generative AI models.
+
+Aim:
+To fine-tune an open-source generative AI model (DistilGPT-2) on our own text data, save it, and deploy it locally for text generation.
+
+Theory:
+Open-source models are AI models whose weights are free to download and use, like GPT-2, DistilGPT-2, LLaMA, Mistral and Stable Diffusion. Hugging Face is a popular platform that hosts these models and gives easy libraries to use them.
+
+Three stages in the life of a model:
+- Training (pre-training): the model learns from a very large amount of general data. This needs a lot of time and computing power.
+- Fine-tuning: a pretrained model is trained a little more on a small, task-specific dataset, so that it adapts to that task or style. This is a type of transfer learning and is much cheaper than training from scratch.
+- Deployment: the trained model is saved and made ready for use, for example through a local pipeline, an API or a web app.
+
+DistilGPT-2 is a smaller and faster version of GPT-2, made with knowledge distillation (a small “student” model learns from a big “teacher” model). It has about 82 million parameters, while the smallest GPT-2 has about 124 million.
+
+Causal language modelling: the model learns to predict the next token from the tokens before it. That is why mlm = False is used (MLM, masked language modelling, is the method used by BERT).
+
+Fine-tuning in this practical:
+- Dataset: 8 sentences about AI, repeated 10 times (80 examples).
+- Tokenization: each sentence is changed into tokens and cut or padded to a length of 64. GPT-2 has no padding token, so the end-of-sentence token is used for padding.
+- Training settings: 2 epochs, batch size 2, a log every 10 steps.
+- The Hugging Face Trainer runs the training loop: forward pass, loss, backpropagation and weight update.
+
+Important training words:
+- Epoch: one full pass over the training data.
+- Batch size: the number of examples used in one update.
+- Learning rate: how big each weight update is.
+- Loss: how wrong the model is; it should go down during training.
+- Overfitting: with a very small dataset the model may just memorise the sentences, and we can see this in the generated text.
+
+Deployment in this practical: the fine-tuned model and tokenizer are saved in a folder and loaded with a text-generation pipeline. The prompt “Generative artificial intelligence” is given, and the model generates up to 50 new tokens using sampling with temperature 0.8.
+
+Other ways to fine-tune big models cheaply: LoRA / PEFT (train only a few extra weights) and quantisation (store the weights with fewer bits).
+
+Formulas:
+1. Causal LM loss: L = −(1 ÷ N) × Σ log P(token t | tokens before t)
+2. Perplexity = e^L (lower means the model is less confused)
+3. Weight update (gradient descent): w = w − learning rate × ∂L/∂w
+4. Training steps = (number of examples ÷ batch size) × epochs = (80 ÷ 2) × 2 = 80 steps
+5. Temperature sampling: P(token i) = e^(zi/T) ÷ Σ e^(zj/T), with T = 0.8
+6. Knowledge distillation (idea): student loss = loss on the true data + loss for matching the teacher's outputs
+
+Applications:
+- Custom chatbots for a company or a college
+- Domain-specific writing (medical, legal, education)
+- Running AI models privately on your own computer
+- Quick prototypes of AI products
+
+Procedure:
+1. Select the device (GPU or CPU).
+2. Load the DistilGPT-2 tokenizer and model from Hugging Face, and set the padding token to the end-of-sentence token.
+3. Make a small dataset of 8 AI sentences repeated 10 times and convert it into a Hugging Face Dataset.
+4. Tokenize the text with truncation and padding to 64 tokens.
+5. Set the training arguments (2 epochs, batch size 2, no checkpoint saving) and the data collator for causal language modelling (mlm = False).
+6. Fine-tune the model using the Trainer.
+7. Save the fine-tuned model and tokenizer in a folder.
+8. Deploy the model locally with a text-generation pipeline and generate text for the prompt “Generative artificial intelligence”.
+
+Conclusion:
+We fine-tuned the open-source DistilGPT-2 model on our own small dataset, saved it and deployed it locally with a pipeline. The generated text uses the sentences from our training data, which shows that fine-tuning changed the model's behaviour. Because the dataset is very small, the model also memorises it, so a bigger dataset is needed for real use.</code></pre></article></section></div>
 </main>
-<footer class="wrap">Python 3 · pandas, scikit-learn, statsmodels</footer>
+<footer class="wrap">Python 3 · PyTorch, TensorFlow, Hugging Face</footer>
 <script>
 {
 function fallbackCopy(text) {
@@ -964,16 +1673,20 @@ document.addEventListener('click', e => {
     navigator.clipboard.writeText(text).then(() => done(true), () => done(fallbackCopy(text)));
   } catch (err) { done(fallbackCopy(text)); }
 });
-const views = { code: document.getElementById('view-code'), theory: document.getElementById('view-theory') };
-function show(name) {
-  if (!views[name]) name = 'code';
-  for (const k in views) views[k].hidden = k !== name;
-  document.querySelectorAll('[data-tab]').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.tab === name)));
+let state = { subj: 'gen', kind: 'code' };
+function show(hash) {
+  const m = /^(gen)-(code|theory)$/.exec(hash || '');
+  if (m) state = { subj: m[1], kind: m[2] };
+  document.querySelectorAll('.panel').forEach(p => { p.hidden = p.id !== 'view-' + state.subj + '-' + state.kind; });
+  document.querySelectorAll('[data-tab]').forEach(t => t.setAttribute('aria-pressed', String(t.dataset.tab === state.kind)));
 }
-document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => {
-  show(t.dataset.tab);
-  try { if (location.hash !== '#' + t.dataset.tab) history.replaceState(null, '', '#' + t.dataset.tab); } catch (e) {}
-}));
+function go(patch) {
+  Object.assign(state, patch);
+  const h = state.subj + '-' + state.kind;
+  show(h);
+  try { if (location.hash !== '#' + h) history.replaceState(null, '', '#' + h); } catch (e) {}
+}
+document.querySelectorAll('[data-tab]').forEach(t => t.addEventListener('click', () => go({ kind: t.dataset.tab })));
 window.addEventListener('hashchange', () => show(location.hash.slice(1)));
 show(location.hash.slice(1));
 }
